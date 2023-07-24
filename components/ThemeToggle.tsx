@@ -32,7 +32,7 @@ export default function ThemeToggle() {
           <motion.div
             animate={isToggled ? 'open' : 'closed'}
             variants={variants}
-            className='w-3.5 h-3.5 top-[3px] absolute bg-white rounded-full'
+            className='w-3.5 h-3.5 left-[3px] top-[3px] absolute bg-white rounded-full'
             transition={{ duration: 0.15 }}
             onClick={() => console.log('swap')}
           />
