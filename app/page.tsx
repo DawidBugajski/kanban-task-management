@@ -4,6 +4,7 @@ export default function Home() {
   return (
     <main className='flex flex-col items-center justify-center min-h-screen'>
       <Sidebar />
+      <h1 className='text-4xl text-center '>Current branch: feature/sidebar</h1>
       <p className='font-heading text-heading-xl '>
         HEADING XL - 24PX/30PX - BOLD
       </p>
