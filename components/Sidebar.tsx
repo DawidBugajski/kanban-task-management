@@ -11,6 +11,19 @@ interface SidebarToggleProps {
   toggleSidebar: () => void;
 }
 
+function VisibleSidebar({ toggleSidebar }: SidebarToggleProps) {
+  return (
+    <motion.aside
+      className='w-[300px] flex flex-col fixed top-0 left-0 z-10 h-screen overflow-hidden bg-white border-r-[1px] border-r-light-lines'
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.2 }}
+    >
+      <SidebarContent toggleSidebar={toggleSidebar} />
+    </motion.aside>
+  );
+}
+
 function SidebarContent({ toggleSidebar }: SidebarToggleProps) {
   return (
     <motion.aside
@@ -31,19 +44,6 @@ function SidebarContent({ toggleSidebar }: SidebarToggleProps) {
         <ThemeToggle />
         <SidebarToggle toggleSidebar={toggleSidebar} />
       </div>
-    </motion.aside>
-  );
-}
-
-function VisibleSidebar({ toggleSidebar }: SidebarToggleProps) {
-  return (
-    <motion.aside
-      className='w-[300px] flex flex-col fixed top-0 left-0 z-10 h-screen overflow-hidden bg-white border-r-[1px] border-r-light-lines'
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.2 }}
-    >
-      <SidebarContent toggleSidebar={toggleSidebar} />
     </motion.aside>
   );
 }
@@ -70,7 +70,6 @@ function ClosedSidebarButton({ toggleSidebar }: SidebarToggleProps) {
 
 function Sidebar() {
   const [isOpen, setIsOpen] = useState(true);
-
   const toggleSidebar = () => setIsOpen(!isOpen);
 
   return (
