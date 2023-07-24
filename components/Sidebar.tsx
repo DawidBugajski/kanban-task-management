@@ -11,7 +11,31 @@ function Sidebar() {
 
   const handleSidebar = () => setIsOpen(!isOpen);
 
-  const HiddenSidebar = () => {
+  const VisibleSidebar = () => {
+    return (
+      <motion.aside
+        className='flex flex-col fixed top-0 left-0 z-10 h-screen overflow-hidden bg-white border-r-[1px] border-r-light-lines'
+        initial={{ width: '300px' }}
+        animate={{ width: isOpen ? '300px' : '0px' }}
+        transition={{ duration: 0.2 }}
+      >
+        <Image
+          alt='kanban logo'
+          src={'/logo-dark.svg'}
+          width={150}
+          height={25}
+          className='ml-[34px] mt-[32px] mb-[54px]'
+        />
+        <Boards />
+        <div className='mt-auto mb-12'>
+          <ThemeToggle />
+          <SidebarToggle toggleSidebar={handleSidebar} />
+        </div>
+      </motion.aside>
+    );
+  };
+
+  const ClosedSidebarButton = () => {
     return (
       <button
         onClick={handleSidebar}
@@ -28,33 +52,7 @@ function Sidebar() {
     );
   };
 
-  return (
-    <>
-      {isOpen ? (
-        <motion.aside
-          className='flex flex-col fixed top-0 left-0 z-10 h-screen overflow-hidden bg-white border-r-[1px] border-r-light-lines'
-          initial={{ width: '300px' }}
-          animate={{ width: isOpen ? '300px' : '0px' }}
-          transition={{ duration: 0.2 }}
-        >
-          <Image
-            alt='kanban logo'
-            src={'/logo-dark.svg'}
-            width={150}
-            height={25}
-            className='ml-[34px] mt-[32px] mb-[54px]'
-          />
-          <Boards />
-          <div className='mt-auto mb-12'>
-            <ThemeToggle />
-            <SidebarToggle toggleSidebar={handleSidebar} />
-          </div>
-        </motion.aside>
-      ) : (
-        <HiddenSidebar />
-      )}
-    </>
-  );
+  return <>{isOpen ? <VisibleSidebar /> : <ClosedSidebarButton />}</>;
 }
 
 export default Sidebar;
