@@ -19,13 +19,6 @@ export interface Task {
   subtasks: Subtask[];
 }
 
-// export enum Status {
-//   Doing = 'Doing',
-//   Done = 'Done',
-//   Empty = '',
-//   Todo = 'Todo',
-// }
-
 export interface Subtask {
   title: string;
   isCompleted: boolean;
