@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Image from 'next/image';
-import Boards from './Boards';
+import Boards from './Boards/Boards';
 import SidebarToggle from './SidebarToggle';
 import ThemeToggle from './ThemeToggle';
 import { LOGO_DARK_SVG, ICON_SHOW_SIDEBAR_SVG } from '@/constans';

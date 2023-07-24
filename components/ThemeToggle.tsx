@@ -26,16 +26,15 @@ export default function ThemeToggle() {
           src={ICON_LIGHT_THEME_SVG}
         />
         <button
-          className='w-10 h-5 left-[106px] top-[14px] absolute cursor-pointer'
+          className='w-10 h-5 left-[106px] top-[14px] absolute cursor-pointer group'
           onClick={handleToggle}
         >
-          <div className='absolute top-0 left-0 w-10 h-5 bg-purple rounded-xl' />
+          <div className='absolute top-0 left-0 w-10 h-5 transition-colors duration-100 bg-purple rounded-xl group-hover:bg-purple-hover' />
           <motion.div
             animate={isToggled ? 'open' : 'closed'}
             variants={variants}
             className='w-3.5 h-3.5 left-[3px] top-[3px] absolute bg-white rounded-full'
             transition={{ duration: 0.15 }}
-            onClick={() => console.log('swap')}
           />
         </button>
         <Image
