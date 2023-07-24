@@ -11,6 +11,21 @@ interface SidebarToggleProps {
   toggleSidebar: () => void;
 }
 
+function Sidebar() {
+  const [isOpen, setIsOpen] = useState(true);
+  const toggleSidebar = () => setIsOpen(!isOpen);
+
+  return (
+    <AnimatePresence initial={false}>
+      {isOpen ? (
+        <VisibleSidebar toggleSidebar={toggleSidebar} />
+      ) : (
+        <ClosedSidebarButton toggleSidebar={toggleSidebar} />
+      )}
+    </AnimatePresence>
+  );
+}
+
 function VisibleSidebar({ toggleSidebar }: SidebarToggleProps) {
   return (
     <motion.aside
@@ -65,21 +80,6 @@ function ClosedSidebarButton({ toggleSidebar }: SidebarToggleProps) {
         className='mr-2'
       />
     </motion.button>
-  );
-}
-
-function Sidebar() {
-  const [isOpen, setIsOpen] = useState(true);
-  const toggleSidebar = () => setIsOpen(!isOpen);
-
-  return (
-    <AnimatePresence initial={false}>
-      {isOpen ? (
-        <VisibleSidebar toggleSidebar={toggleSidebar} />
-      ) : (
-        <ClosedSidebarButton toggleSidebar={toggleSidebar} />
-      )}
-    </AnimatePresence>
   );
 }
 
