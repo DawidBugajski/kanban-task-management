@@ -1,6 +1,9 @@
+import Sidebar from '@/components/Sidebar';
+
 export default function Home() {
   return (
     <main className='flex flex-col items-center justify-center min-h-screen'>
+      <Sidebar />
       <p className='font-heading text-heading-xl '>
         HEADING XL - 24PX/30PX - BOLD
       </p>
