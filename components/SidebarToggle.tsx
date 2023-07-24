@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import { ICON_HIDE_SIDEBAR_SVG } from '@/constans';
 
 interface SidebarToggleProps {
   toggleSidebar: () => void;
@@ -15,7 +16,7 @@ export default function SidebarToggle({ toggleSidebar }: SidebarToggleProps) {
         alt='eye icon'
         height={18}
         width={16}
-        src={'/icon-hide-sidebar.svg'}
+        src={ICON_HIDE_SIDEBAR_SVG}
       />
       <p className='text-heading-m font-heading text-medium-grey group-hover:text-purple'>
         Hide Sidebar

@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { ICON_LIGHT_THEME_SVG, ICON_DARK_THEME_SVG } from '@/constans';
 
 export default function ThemeToggle() {
   const [isToggled, setIsToggled] = useState(false);
@@ -22,7 +23,7 @@ export default function ThemeToggle() {
           alt='logo'
           height={19}
           width={19}
-          src={'/icon-light-theme.svg'}
+          src={ICON_LIGHT_THEME_SVG}
         />
         <button
           className='w-10 h-5 left-[106px] top-[14px] absolute cursor-pointer'
@@ -42,7 +43,7 @@ export default function ThemeToggle() {
           alt='logo'
           height={19}
           width={19}
-          src={'/icon-dark-theme.svg'}
+          src={ICON_DARK_THEME_SVG}
         />
       </div>
     </div>
