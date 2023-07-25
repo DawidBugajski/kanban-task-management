@@ -1,17 +1,18 @@
 import React from 'react';
-import data from '../../data.json';
+import { STARTING_DATA } from '@/constans';
 import './board.css';
 import { Board } from '@/types';
 export default function Boards() {
-  const activeBoard = data.boards[0];
+  const { boards } = STARTING_DATA;
+  const activeBoard = boards[0];
 
   return (
     <div className='w-[276px]'>
       <span className='ml-[34px] block mb-5 uppercase font-heading text-heading-s tracking-heading-s text-medium-grey'>
-        all boards ({data.boards.length})
+        all boards ({boards.length})
       </span>
       <ul className='font-heading text-heading-m text-medium-grey'>
-        {data.boards.map(({ name }: Board, index: number) => (
+        {boards.map(({ name }: Board, index: number) => (
           <li
             key={index}
             className={`group transition-colors duration-100 cursor-pointer overflow-hidden flex items-center h-12 rounded-tr-[100px] rounded-br-[100px] 
