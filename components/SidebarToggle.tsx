@@ -17,9 +17,9 @@ export default function SidebarToggle({ toggleSidebar }: SidebarToggleProps) {
         <span className='inline-flex items-center h-12 gap-4 ml-9 text-heading-m font-heading text-medium-grey group-hover:text-purple'>
           <Image
             alt='eye icon'
-            height={18}
-            width={16}
             src={ICON_HIDE_SIDEBAR_SVG}
+            height={16}
+            width={18}
           />
           Hide Sidebar
         </span>

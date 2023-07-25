@@ -17,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang='en' suppressContentEditableWarning>
+    <html lang='en'>
       <body className={plusJakartaSans.className}>
         <ThemeProvider>
           <ReduxProvider>{children}</ReduxProvider>
