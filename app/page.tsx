@@ -1,23 +1,24 @@
 'use client';
 import Sidebar from '@/components/Sidebar';
 import TestLogin from '@/components/TestLogin';
-import { useAppSelector } from '@/redux/hooks';
+import { useAppSelector, useAppDispatch } from '@/redux/hooks';
 import { getName } from '@/redux/slices/authSlice';
+import { setShowBoards } from '@/redux/slices/boardsSlice';
 
 export default function Home() {
+  const dispatch = useAppDispatch();
   //test-slice
   const username = useAppSelector(getName);
   const secondWayToGetUsername = useAppSelector(
     (state) => state.auth.value.username
   );
   const isModerator = useAppSelector((state) => state.auth.value.isModerator);
+  const handleShowBoards = dispatch(setShowBoards());
 
   return (
     <main className='flex flex-col items-center justify-center min-h-screen dark:bg-darkbg-very-dark-grey dark:text-white'>
       <Sidebar />
-      <h1 className='text-4xl text-center '>
-        Current branch: feature/darkmode
-      </h1>
+      <h1 className='text-4xl text-center '>Current branch: feature/redux</h1>
       <p className='font-heading text-heading-xl '>
         HEADING XL - 24PX/30PX - BOLD
       </p>
@@ -48,6 +49,8 @@ export default function Home() {
           <p className='text-green-600'>This user is moderator</p>
         )}
       </div>
+      {/* TEST SHOW INFO ABOUT BOARDS FROM SLICE */}
+      <button onClick={() => dispatch(setShowBoards())}>CURRENT BOARDS</button>
     </main>
   );
 }
