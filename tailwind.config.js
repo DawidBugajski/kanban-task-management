@@ -20,6 +20,7 @@ module.exports = {
         white: '#FFF',
         red: '#EA5555',
         'red-hover': '#FF9898',
+        'lightbg-hover-boards': '#f0effa',
       },
       fontSize: {
         'heading-xl': ['24px', '30px'],

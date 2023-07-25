@@ -6,9 +6,7 @@ import { ICON_LIGHT_THEME_SVG, ICON_DARK_THEME_SVG } from '@/constans';
 export default function ThemeToggle() {
   const [isToggled, setIsToggled] = useState(false);
 
-  const handleToggle = () => {
-    setIsToggled(!isToggled);
-  };
+  const handleToggle = () => setIsToggled(!isToggled);
 
   const variants = {
     open: { left: '22px' },
