@@ -1,10 +1,20 @@
+'use client';
 import Sidebar from '@/components/Sidebar';
+import TestLogin from '@/components/TestLogin';
+import { useAppSelector } from '@/redux/hooks';
+import { getName } from '@/redux/slices/authSlice';
 
 export default function Home() {
+  const username = useAppSelector(getName);
+  const secondWayToGetUsername = useAppSelector(
+    (state) => state.auth.value.username
+  );
+  const isModerator = useAppSelector((state) => state.auth.value.isModerator);
+
   return (
     <main className='flex flex-col items-center justify-center min-h-screen'>
       <Sidebar />
-      <h1 className='text-4xl text-center '>Current branch: feature/sidebar</h1>
+      <h1 className='text-4xl text-center '>Current branch: feature/redux</h1>
       <p className='font-heading text-heading-xl '>
         HEADING XL - 24PX/30PX - BOLD
       </p>
@@ -20,6 +30,20 @@ export default function Home() {
       <br />
       <p className='font-body-l text-body-l'>BODY L - 13PX/23PX - MEDIUM</p>
       <p className='font-body-m text-body-m'>BODY M - 12PX/15PX - BOLD</p>
+      <div>
+        <TestLogin />
+        <h1>
+          First way of get username:
+          <span className='text-red-500'> {username}</span>
+        </h1>
+        <h1>
+          Second way of get username:
+          <span className='text-red-500'> {secondWayToGetUsername}</span>
+        </h1>
+        {isModerator && (
+          <p className='text-green-600'>This user is moderator</p>
+        )}
+      </div>
     </main>
   );
 }
