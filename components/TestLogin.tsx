@@ -6,15 +6,14 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 export default function TestLogin() {
   const dispatch = useAppDispatch();
   const isAuth = useAppSelector((state) => state.auth.value.isAuth);
-  const [username, setUserName] = useState<string>('');
+  const [username, setUserName] = useState('');
 
   const handleClickLogIn = () => {
     dispatch(logIn(username));
     setUserName('');
   };
-  const handleClickToggle = () => {
-    dispatch(toggleModerator());
-  };
+  const handleClickToggle = () => dispatch(toggleModerator());
+
   const handleClickLogOut = () => {
     dispatch(logOut());
     setUserName('');
