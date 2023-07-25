@@ -1,9 +1,12 @@
 import React from 'react';
-import { STARTING_DATA } from '@/constans';
-import './board.css';
+import './SidebarBoard.css';
 import { Board } from '@/types';
-export default function Boards() {
-  const { boards } = STARTING_DATA;
+import { useAppSelector } from '@/redux/hooks';
+import { getBoards } from '@/redux/slices/boardsSlice';
+
+export default function SidebarBoards() {
+  const boards = useAppSelector(getBoards);
+  console.log(boards);
   const activeBoard = boards[0];
 
   return (

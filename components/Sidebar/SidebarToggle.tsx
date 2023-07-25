@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import './Boards/board.css';
+import './Sidebar';
 import { ICON_HIDE_SIDEBAR_SVG } from '@/constans';
 
 interface SidebarToggleProps {

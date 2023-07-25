@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { ICON_LIGHT_THEME_SVG, ICON_DARK_THEME_SVG } from '@/constans';
 import { useToggleTheme } from '@/hooks/useToggleTheme';
 
-export default function ThemeToggle() {
+export default function SidebarThemeToggle() {
   const { isToggled, toggleTheme } = useToggleTheme();
 
   const variants = {

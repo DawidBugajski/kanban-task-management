@@ -1,5 +1,5 @@
 'use client';
-import Sidebar from '@/components/Sidebar';
+import Sidebar from '@/components/Sidebar/Sidebar';
 import TestLogin from '@/components/TestLogin';
 import { useAppSelector, useAppDispatch } from '@/redux/hooks';
 import { getName } from '@/redux/slices/authSlice';

@@ -2,9 +2,9 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Image from 'next/image';
-import Boards from './Boards/Boards';
+import SidebarBoards from './SidebarBoards';
 import SidebarToggle from './SidebarToggle';
-import ThemeToggle from './ThemeToggle';
+import SidebarThemeToggle from './SidebarThemeToggle';
 import {
   LOGO_DARK_SVG,
   ICON_SHOW_SIDEBAR_SVG,
@@ -61,9 +61,9 @@ function SidebarContent({ toggleSidebar }: SidebarToggleProps) {
         height={25}
         className='ml-[34px] mt-[32px] mb-[54px]'
       />
-      <Boards />
+      <SidebarBoards />
       <div className='mt-auto mb-12'>
-        <ThemeToggle />
+        <SidebarThemeToggle />
         <SidebarToggle toggleSidebar={toggleSidebar} />
       </div>
     </motion.aside>
