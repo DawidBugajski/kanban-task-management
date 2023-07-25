@@ -13,9 +13,11 @@ export default function Home() {
   const isModerator = useAppSelector((state) => state.auth.value.isModerator);
 
   return (
-    <main className='flex flex-col items-center justify-center min-h-screen dark:bg-darkbg-very-dark-grey'>
+    <main className='flex flex-col items-center justify-center min-h-screen dark:bg-darkbg-very-dark-grey dark:text-white'>
       <Sidebar />
-      <h1 className='text-4xl text-center '>Current branch: feature/redux</h1>
+      <h1 className='text-4xl text-center '>
+        Current branch: feature/darkmode
+      </h1>
       <p className='font-heading text-heading-xl '>
         HEADING XL - 24PX/30PX - BOLD
       </p>

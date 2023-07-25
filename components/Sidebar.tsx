@@ -5,7 +5,12 @@ import Image from 'next/image';
 import Boards from './Boards/Boards';
 import SidebarToggle from './SidebarToggle';
 import ThemeToggle from './ThemeToggle';
-import { LOGO_DARK_SVG, ICON_SHOW_SIDEBAR_SVG } from '@/constans';
+import {
+  LOGO_DARK_SVG,
+  ICON_SHOW_SIDEBAR_SVG,
+  LOGO_LIGHT_SVG,
+} from '@/constans';
+import { useTheme } from 'next-themes';
 
 interface SidebarToggleProps {
   toggleSidebar: () => void;
@@ -29,7 +34,7 @@ function Sidebar() {
 function VisibleSidebar({ toggleSidebar }: SidebarToggleProps) {
   return (
     <motion.aside
-      className='dark:bg-dark-grey w-[300px] flex flex-col fixed top-0 left-0 z-10 h-screen overflow-hidden bg-white border-r-[1px] border-r-light-lines'
+      className='dark:bg-dark-grey w-[300px] flex flex-col fixed top-0 left-0 z-10 h-screen overflow-hidden bg-white border-r-[1px] border-r-light-lines dark:border-r-dark-lines'
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.2 }}
@@ -40,16 +45,18 @@ function VisibleSidebar({ toggleSidebar }: SidebarToggleProps) {
 }
 
 function SidebarContent({ toggleSidebar }: SidebarToggleProps) {
+  const { resolvedTheme } = useTheme();
+  const logoSrc = resolvedTheme === 'light' ? LOGO_DARK_SVG : LOGO_LIGHT_SVG;
   return (
     <motion.aside
-      className='w-[300px] flex flex-col fixed top-0 left-0 z-10 h-screen overflow-hidden border-r-[1px] border-r-light-lines'
+      className='w-[300px] flex flex-col fixed top-0 left-0 z-10 h-screen overflow-hidden border-r-[1px] border-r-light-lines dark:border-r-dark-lines'
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.2 }}
     >
       <Image
         alt='kanban logo'
-        src={LOGO_DARK_SVG}
+        src={logoSrc}
         width={150}
         height={25}
         className='ml-[34px] mt-[32px] mb-[54px]'

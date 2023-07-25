@@ -17,7 +17,9 @@ export default function Boards() {
             key={index}
             className={`group transition-colors duration-100 cursor-pointer overflow-hidden flex items-center h-12 rounded-tr-[100px] rounded-br-[100px] 
             ${index === 0 && 'bg-purple text-white'}
-            ${index !== 0 && 'hover:bg-lightbg-hover-boards'}
+            ${
+              index !== 0 && 'hover:bg-lightbg-hover-boards dark:hover:bg-white'
+            }
             `}
           >
             <span

@@ -2,7 +2,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Plus_Jakarta_Sans } from 'next/font/google';
 import ReduxProvider from '@/redux/provider';
-import ThemeProviders from './provider';
+import ThemeProvider from './provider';
 
 const plusJakartaSans = Plus_Jakarta_Sans({ subsets: ['latin'] });
 
@@ -19,9 +19,9 @@ export default function RootLayout({
   return (
     <html lang='en' suppressContentEditableWarning>
       <body className={plusJakartaSans.className}>
-        <ThemeProviders>
+        <ThemeProvider>
           <ReduxProvider>{children}</ReduxProvider>
-        </ThemeProviders>
+        </ThemeProvider>
       </body>
     </html>
   );

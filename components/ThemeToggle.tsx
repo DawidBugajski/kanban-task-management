@@ -1,18 +1,10 @@
 import Image from 'next/image';
-import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ICON_LIGHT_THEME_SVG, ICON_DARK_THEME_SVG } from '@/constans';
-import { useTheme } from 'next-themes';
+import { useToggleTheme } from '@/hooks/useToggleTheme';
 
 export default function ThemeToggle() {
-  const [isToggled, setIsToggled] = useState(false);
-
-  const { theme, setTheme } = useTheme();
-
-  const handleToggle = () => {
-    setIsToggled(!isToggled);
-    setTheme(theme === 'dark' ? 'light' : 'dark');
-  };
+  const { isToggled, toggleTheme } = useToggleTheme();
 
   const variants = {
     open: { left: '22px' },
@@ -20,7 +12,7 @@ export default function ThemeToggle() {
   };
 
   return (
-    <div className='h-12 mx-6 rounded-md bg-lightbg-light-grey'>
+    <div className='h-12 mx-6 rounded-md bg-lightbg-light-grey dark:bg-darkbg-very-dark-grey'>
       <div className='relative w-full h-full'>
         <Image
           className='left-[64px] top-[15px] absolute'
@@ -31,7 +23,7 @@ export default function ThemeToggle() {
         />
         <button
           className='w-10 h-5 left-[106px] top-[14px] absolute cursor-pointer group'
-          onClick={handleToggle}
+          onClick={toggleTheme}
         >
           <div className='absolute top-0 left-0 w-10 h-5 transition-colors duration-100 bg-purple rounded-xl group-hover:bg-purple-hover' />
           <motion.div
