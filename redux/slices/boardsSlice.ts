@@ -10,7 +10,7 @@ export const boardsSlice = createSlice({
   initialState,
   reducers: {
     setShowBoards: () => {
-      console.log(initialState);
+      console.log(initialState.boards);
     },
   },
 });
