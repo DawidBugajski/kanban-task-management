@@ -37,7 +37,7 @@ export default function Boards() {
             </span>
           </li>
         ))}
-        <li className='text-purple hover:bg-lightbg-hover-boards rounded-tr-[100px] rounded-br-[100px] transition-colors duration-100 cursor-pointer'>
+        <li className='text-purple dark:hover:bg-white hover:bg-lightbg-hover-boards rounded-tr-[100px] rounded-br-[100px] transition-colors duration-100 cursor-pointer'>
           <span className='inline-flex items-center h-12 gap-4 ml-9'>
             <svg width='16' height='16' xmlns='http://www.w3.org/2000/svg'>
               <path
