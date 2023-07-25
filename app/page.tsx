@@ -5,11 +5,15 @@ import { useAppSelector } from '@/redux/hooks';
 import { getName } from '@/redux/slices/authSlice';
 
 export default function Home() {
+  //test-slice
   const username = useAppSelector(getName);
   const secondWayToGetUsername = useAppSelector(
     (state) => state.auth.value.username
   );
   const isModerator = useAppSelector((state) => state.auth.value.isModerator);
+
+  //test-dark-mode slice
+  const isLightMode = useAppSelector((state) => state.theme.value.isLightMode);
 
   return (
     <main className='flex flex-col items-center justify-center min-h-screen'>
@@ -30,6 +34,7 @@ export default function Home() {
       <br />
       <p className='font-body-l text-body-l'>BODY L - 13PX/23PX - MEDIUM</p>
       <p className='font-body-m text-body-m'>BODY M - 12PX/15PX - BOLD</p>
+      {/* TEST LOGIN FROM REDUX */}
       <div>
         <TestLogin />
         <h1>
@@ -43,6 +48,10 @@ export default function Home() {
         {isModerator && (
           <p className='text-green-600'>This user is moderator</p>
         )}
+      </div>
+      {/* TEST TOGGLE DARK MODE THEME */}
+      <div className='p-2 text-center text-white bg-red'>
+        {isLightMode ? 'LIGHT_MODE' : 'DARK_MODE'}
       </div>
     </main>
   );
