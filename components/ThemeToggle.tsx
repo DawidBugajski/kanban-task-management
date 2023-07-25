@@ -2,11 +2,16 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ICON_LIGHT_THEME_SVG, ICON_DARK_THEME_SVG } from '@/constans';
+import { useAppDispatch } from '@/redux/hooks';
+import { toggleTheme } from '@/redux/slices/themeSlice';
 
 export default function ThemeToggle() {
   const [isToggled, setIsToggled] = useState(false);
+  const dispatch = useAppDispatch();
 
-  const handleToggle = () => setIsToggled(!isToggled);
+  const handleToggle = () => {
+    setIsToggled(!isToggled), dispatch(toggleTheme());
+  };
 
   const variants = {
     open: { left: '22px' },

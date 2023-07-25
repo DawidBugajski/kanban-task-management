@@ -8,10 +8,8 @@ export default function TestLogin() {
   const isAuth = useAppSelector((state) => state.auth.value.isAuth);
   const [username, setUserName] = useState('');
 
-  const handleClickLogIn = () => {
-    dispatch(logIn(username));
-    setUserName('');
-  };
+  const handleClickLogIn = () => dispatch(logIn(username));
+
   const handleClickToggle = () => dispatch(toggleModerator());
 
   const handleClickLogOut = () => {
