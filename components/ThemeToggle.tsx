@@ -2,15 +2,16 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ICON_LIGHT_THEME_SVG, ICON_DARK_THEME_SVG } from '@/constans';
-import { useAppDispatch } from '@/redux/hooks';
-import { toggleTheme } from '@/redux/slices/themeSlice';
+import { useTheme } from 'next-themes';
 
 export default function ThemeToggle() {
   const [isToggled, setIsToggled] = useState(false);
-  const dispatch = useAppDispatch();
+
+  const { theme, setTheme } = useTheme();
 
   const handleToggle = () => {
-    setIsToggled(!isToggled), dispatch(toggleTheme());
+    setIsToggled(!isToggled);
+    setTheme(theme === 'dark' ? 'light' : 'dark');
   };
 
   const variants = {

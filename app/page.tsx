@@ -12,11 +12,8 @@ export default function Home() {
   );
   const isModerator = useAppSelector((state) => state.auth.value.isModerator);
 
-  //test-dark-mode slice
-  const isLightMode = useAppSelector((state) => state.theme.value.isLightMode);
-
   return (
-    <main className='flex flex-col items-center justify-center min-h-screen'>
+    <main className='flex flex-col items-center justify-center min-h-screen dark:bg-darkbg-very-dark-grey'>
       <Sidebar />
       <h1 className='text-4xl text-center '>Current branch: feature/redux</h1>
       <p className='font-heading text-heading-xl '>
@@ -48,10 +45,6 @@ export default function Home() {
         {isModerator && (
           <p className='text-green-600'>This user is moderator</p>
         )}
-      </div>
-      {/* TEST TOGGLE DARK MODE THEME */}
-      <div className='p-2 text-center text-white bg-red'>
-        {isLightMode ? 'LIGHT_MODE' : 'DARK_MODE'}
       </div>
     </main>
   );
