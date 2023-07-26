@@ -12,9 +12,6 @@ export const boardsSlice = createSlice({
   name: 'boards',
   initialState,
   reducers: {
-    setShowBoards: () => {
-      console.log(initialState);
-    },
     setActiveBoard: (state, action: PayloadAction<string>) => {
       state.activeBoardId = action.payload;
       console.log(state.activeBoardId);
@@ -22,7 +19,7 @@ export const boardsSlice = createSlice({
   },
 });
 
-export const { setShowBoards, setActiveBoard } = boardsSlice.actions;
+export const { setActiveBoard } = boardsSlice.actions;
 export const getBoards = (state: RootState): Board[] => state.boards.boards;
 export const getActiveBoard = (state: RootState): Board =>
   state.boards.boards.find((board) => board.id === state.boards.activeBoardId)!;
