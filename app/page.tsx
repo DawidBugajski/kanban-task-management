@@ -13,6 +13,7 @@ export default function Home() {
     (state) => state.auth.value.username
   );
   const isModerator = useAppSelector((state) => state.auth.value.isModerator);
+
   const handleShowBoards = () => dispatch(setShowBoards());
 
   return (
@@ -39,7 +40,7 @@ export default function Home() {
         className='p-2 my-2 bg-blue-300 rounded-md'
         onClick={handleShowBoards}
       >
-        CURRENT BOARDS
+        Check id of active board
       </button>
     </main>
   );

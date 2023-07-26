@@ -1,5 +1,6 @@
 export interface Data {
   boards: Board[];
+  activeBoardId: string;
 }
 
 export interface Board {
