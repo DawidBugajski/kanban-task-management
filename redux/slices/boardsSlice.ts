@@ -15,7 +15,10 @@ export const boardsSlice = createSlice({
     setShowBoards: () => {
       console.log(initialState);
     },
-    setActiveBoard: () => {},
+    setActiveBoard: (state, action: PayloadAction<string>) => {
+      state.activeBoardId = action.payload;
+      console.log(state.activeBoardId);
+    },
   },
 });
 

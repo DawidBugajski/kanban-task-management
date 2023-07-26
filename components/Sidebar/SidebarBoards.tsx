@@ -1,18 +1,25 @@
 import React from 'react';
 import { Board } from '@/types';
-import { useAppSelector } from '@/redux/hooks';
-import { getBoards, getActiveBoard } from '@/redux/slices/boardsSlice';
+import { useAppSelector, useAppDispatch } from '@/redux/hooks';
+import {
+  getBoards,
+  getActiveBoard,
+  setActiveBoard,
+} from '@/redux/slices/boardsSlice';
 
 export default function SidebarBoards() {
+  const dispatch = useAppDispatch();
   const boards = useAppSelector(getBoards);
   const activeBoard = useAppSelector(getActiveBoard);
 
   const renderBoards = (boards: Board[]) => {
     return boards.map(({ id, name }: Board) => {
       const isActiveBoard = activeBoard.id === id;
+      const handleSetActiveBoard = () => dispatch(setActiveBoard(id));
 
       return (
         <li
+          onClick={handleSetActiveBoard}
           key={id}
           className={`group transition-colors duration-100 cursor-pointer overflow-hidden flex items-center h-12 rounded-tr-[100px] rounded-br-[100px] 
           ${isActiveBoard ? 'bg-purple text-white' : ''}
