@@ -9,7 +9,13 @@ export default function Logo() {
 
   return (
     <>
-      <Image alt='kanban logo' src={logoSrc} width={150} height={25} />
+      <Image
+        alt='kanban logo'
+        src={logoSrc}
+        width={150}
+        height={25}
+        className='absolute left-[34px]'
+      />
     </>
   );
 }

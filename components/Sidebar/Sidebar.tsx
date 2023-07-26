@@ -5,12 +5,7 @@ import Image from 'next/image';
 import SidebarBoards from './SidebarBoards';
 import SidebarToggle from './SidebarToggle';
 import SidebarThemeToggle from './SidebarThemeToggle';
-import {
-  LOGO_DARK_SVG,
-  ICON_SHOW_SIDEBAR_SVG,
-  LOGO_LIGHT_SVG,
-} from '@/constans';
-import { useTheme } from 'next-themes';
+import { ICON_SHOW_SIDEBAR_SVG } from '@/constans';
 
 interface SidebarToggleProps {
   toggleSidebar: () => void;
@@ -34,7 +29,7 @@ function Sidebar() {
 function VisibleSidebar({ toggleSidebar }: SidebarToggleProps) {
   return (
     <motion.aside
-      className='shrink-0 dark:bg-dark-grey w-[300px] flex flex-col  z-10 h-screen overflow-hidden bg-white border-r-[1px] border-r-light-lines dark:border-r-dark-lines'
+      className='shrink-0 dark:bg-dark-grey w-[300px] flex flex-col z-10 h-calc[100%-96px] overflow-hidden bg-white border-r-[1px] border-r-light-lines dark:border-r-dark-lines'
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.2 }}
@@ -45,22 +40,13 @@ function VisibleSidebar({ toggleSidebar }: SidebarToggleProps) {
 }
 
 function SidebarContent({ toggleSidebar }: SidebarToggleProps) {
-  const { resolvedTheme } = useTheme();
-  const logoSrc = resolvedTheme === 'light' ? LOGO_DARK_SVG : LOGO_LIGHT_SVG;
   return (
     <motion.div
-      className='w-[300px] flex flex-col  z-10 h-screen overflow-hidden border-r-[1px] border-r-light-lines dark:border-r-dark-lines'
+      className='w-[300px] flex flex-col z-10 h-full overflow-hidden border-r-[1px] border-r-light-lines dark:border-r-dark-lines'
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.2 }}
     >
-      <Image
-        alt='kanban logo'
-        src={logoSrc}
-        width={150}
-        height={25}
-        className='ml-[34px] mt-[32px] mb-[54px]'
-      />
       <SidebarBoards />
       <div className='mt-auto mb-12'>
         <SidebarThemeToggle />
@@ -75,7 +61,7 @@ function ClosedSidebarButton({ toggleSidebar }: SidebarToggleProps) {
     <motion.button
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.3 }}
+      transition={{ duration: 0.3}}
       onClick={toggleSidebar}
       className='z-10 absolute left-0 bottom-12 w-14 h-12 bg-purple rounded-tr-[100px] rounded-br-[100px] flex items-center justify-center hover:bg-purple-hover transition-colors duration-100 cursor-pointer'
     >
