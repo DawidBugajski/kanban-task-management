@@ -1,4 +1,5 @@
 'use client';
+import Header from '@/components/Header';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import TestLogin from '@/components/TestLogin';
 import { useAppSelector, useAppDispatch } from '@/redux/hooks';
@@ -18,6 +19,7 @@ export default function Home() {
 
   return (
     <main className='flex flex-col items-center justify-center min-h-screen dark:bg-darkbg-very-dark-grey dark:text-white'>
+      <Header />
       <Sidebar />
       <h1 className='text-4xl text-center '>Current branch: feature/redux</h1>
       {/* TEST LOGIN FROM REDUX */}
