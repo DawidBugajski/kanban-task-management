@@ -6,7 +6,7 @@ import { getBoards } from '@/redux/slices/boardsSlice';
 
 export default function SidebarBoards() {
   const boards = useAppSelector(getBoards);
-  console.log(boards);
+
   const activeBoard = boards[0];
 
   return (
