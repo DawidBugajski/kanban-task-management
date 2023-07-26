@@ -14,7 +14,6 @@ export const boardsSlice = createSlice({
   reducers: {
     setActiveBoard: (state, action: PayloadAction<string>) => {
       state.activeBoardId = action.payload;
-      console.log(state.activeBoardId);
     },
   },
 });

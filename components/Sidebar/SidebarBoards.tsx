@@ -13,6 +13,8 @@ export default function SidebarBoards() {
   const activeBoard = useAppSelector(getActiveBoard);
 
   const renderBoards = (boards: Board[]) => {
+    if (!boards) return;
+
     return boards.map(({ id, name }: Board) => {
       const isActiveBoard = activeBoard.id === id;
       const handleSetActiveBoard = () => dispatch(setActiveBoard(id));
