@@ -34,7 +34,7 @@ function Sidebar() {
 function VisibleSidebar({ toggleSidebar }: SidebarToggleProps) {
   return (
     <motion.aside
-      className='dark:bg-dark-grey w-[300px] flex flex-col fixed top-0 left-0 z-10 h-screen overflow-hidden bg-white border-r-[1px] border-r-light-lines dark:border-r-dark-lines'
+      className='shrink-0 dark:bg-dark-grey w-[300px] flex flex-col  z-10 h-screen overflow-hidden bg-white border-r-[1px] border-r-light-lines dark:border-r-dark-lines'
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.2 }}
@@ -49,7 +49,7 @@ function SidebarContent({ toggleSidebar }: SidebarToggleProps) {
   const logoSrc = resolvedTheme === 'light' ? LOGO_DARK_SVG : LOGO_LIGHT_SVG;
   return (
     <motion.div
-      className='w-[300px] flex flex-col fixed top-0 left-0 z-10 h-screen overflow-hidden border-r-[1px] border-r-light-lines dark:border-r-dark-lines'
+      className='w-[300px] flex flex-col  z-10 h-screen overflow-hidden border-r-[1px] border-r-light-lines dark:border-r-dark-lines'
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.2 }}
@@ -77,7 +77,7 @@ function ClosedSidebarButton({ toggleSidebar }: SidebarToggleProps) {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
       onClick={toggleSidebar}
-      className='absolute left-0 bottom-12 w-14 h-12 bg-purple rounded-tr-[100px] rounded-br-[100px] flex items-center justify-center hover:bg-purple-hover transition-colors duration-100 cursor-pointer'
+      className='z-10 absolute left-0 bottom-12 w-14 h-12 bg-purple rounded-tr-[100px] rounded-br-[100px] flex items-center justify-center hover:bg-purple-hover transition-colors duration-100 cursor-pointer'
     >
       <Image
         src={ICON_SHOW_SIDEBAR_SVG}

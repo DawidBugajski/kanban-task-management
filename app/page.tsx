@@ -5,10 +5,12 @@ import Sidebar from '@/components/Sidebar/Sidebar';
 
 export default function Home() {
   return (
-    <main className='flex flex-col items-center min-h-screen dark:bg-darkbg-very-dark-grey dark:text-white'>
-      <Header />
-      <Dashboard />
+    <main className='flex min-h-screen dark:bg-darkbg-very-dark-grey dark:text-white'>
       <Sidebar />
+      <div className='relative flex flex-col flex-grow w-full'>
+        <Header />
+        <Dashboard />
+      </div>
     </main>
   );
 }

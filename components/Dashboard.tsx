@@ -16,7 +16,7 @@ export default function Dashboard() {
   const handleShowBoards = () => dispatch(setShowBoards());
 
   return (
-    <div className='flex flex-col items-center justify-center flex-1 w-full bg-lightbg-light-grey dark:bg-darkbg-very-dark-grey'>
+    <div className='flex flex-col items-center justify-center flex-grow bg-lightbg-light-grey dark:bg-darkbg-very-dark-grey'>
       <h1 className='text-4xl text-center '>Current branch: feature/redux</h1>
       {/* TEST LOGIN FROM REDUX */}
       <div>
