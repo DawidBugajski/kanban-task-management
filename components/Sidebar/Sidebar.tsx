@@ -48,7 +48,7 @@ function SidebarContent({ toggleSidebar }: SidebarToggleProps) {
   const { resolvedTheme } = useTheme();
   const logoSrc = resolvedTheme === 'light' ? LOGO_DARK_SVG : LOGO_LIGHT_SVG;
   return (
-    <motion.aside
+    <motion.div
       className='w-[300px] flex flex-col fixed top-0 left-0 z-10 h-screen overflow-hidden border-r-[1px] border-r-light-lines dark:border-r-dark-lines'
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -66,7 +66,7 @@ function SidebarContent({ toggleSidebar }: SidebarToggleProps) {
         <SidebarThemeToggle />
         <SidebarToggle toggleSidebar={toggleSidebar} />
       </div>
-    </motion.aside>
+    </motion.div>
   );
 }
 
