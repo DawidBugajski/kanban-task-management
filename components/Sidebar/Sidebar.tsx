@@ -46,7 +46,7 @@ function VisibleSidebar({ toggleSidebar }: SidebarToggleProps) {
 function SidebarContent({ toggleSidebar }: SidebarToggleProps) {
   return (
     <motion.div
-      className='flex flex-col z-10 h-full overflow-hidden border-r-[1px] border-r-light-lines dark:border-r-dark-lines'
+      className='z-10 flex flex-col h-full overflow-hidden'
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
