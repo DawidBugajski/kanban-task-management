@@ -9,6 +9,7 @@ import { ICON_SHOW_SIDEBAR_SVG } from '@/constans';
 
 interface SidebarToggleProps {
   toggleSidebar: () => void;
+  isOpen?: boolean;
 }
 
 function Sidebar() {
@@ -16,23 +17,26 @@ function Sidebar() {
   const toggleSidebar = () => setIsOpen(!isOpen);
 
   return (
-    <AnimatePresence initial={false}>
-      {isOpen ? (
-        <VisibleSidebar toggleSidebar={toggleSidebar} />
-      ) : (
-        <ClosedSidebarButton toggleSidebar={toggleSidebar} />
+    <div>
+      <AnimatePresence initial={false}>
+        {isOpen && <VisibleSidebar toggleSidebar={toggleSidebar} />}
+      </AnimatePresence>
+      {!isOpen && (
+        <ClosedSidebarButton isOpen={isOpen} toggleSidebar={toggleSidebar} />
       )}
-    </AnimatePresence>
+    </div>
   );
+  // can't use ternary operator, animations aren't working properly
 }
 
 function VisibleSidebar({ toggleSidebar }: SidebarToggleProps) {
   return (
     <motion.aside
-      className='shrink-0 dark:bg-dark-grey w-[300px] flex flex-col z-10 h-calc[100%-96px] overflow-hidden bg-white border-r-[1px] border-r-light-lines dark:border-r-dark-lines'
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.2 }}
+      className='shrink-0 dark:bg-dark-grey flex flex-col z-10 h-full overflow-hidden bg-white border-r-[1px] border-r-light-lines dark:border-r-dark-lines'
+      initial={{ width: '0px' }}
+      animate={{ width: '300px' }}
+      exit={{ width: '0px' }}
+      transition={{ duration: 0.1 }}
     >
       <SidebarContent toggleSidebar={toggleSidebar} />
     </motion.aside>
@@ -42,10 +46,10 @@ function VisibleSidebar({ toggleSidebar }: SidebarToggleProps) {
 function SidebarContent({ toggleSidebar }: SidebarToggleProps) {
   return (
     <motion.div
-      className='w-[300px] flex flex-col z-10 h-full overflow-hidden border-r-[1px] border-r-light-lines dark:border-r-dark-lines'
+      className='flex flex-col z-10 h-full overflow-hidden border-r-[1px] border-r-light-lines dark:border-r-dark-lines'
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.2 }}
+      transition={{ duration: 0.5 }}
     >
       <SidebarBoards />
       <div className='mt-auto mb-12'>
@@ -56,14 +60,16 @@ function SidebarContent({ toggleSidebar }: SidebarToggleProps) {
   );
 }
 
-function ClosedSidebarButton({ toggleSidebar }: SidebarToggleProps) {
+function ClosedSidebarButton({ toggleSidebar, isOpen }: SidebarToggleProps) {
   return (
     <motion.button
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.3}}
+      transition={{ delay: 0.2 }}
       onClick={toggleSidebar}
-      className='z-10 absolute left-0 bottom-12 w-14 h-12 bg-purple rounded-tr-[100px] rounded-br-[100px] flex items-center justify-center hover:bg-purple-hover transition-colors duration-100 cursor-pointer'
+      className={`${
+        isOpen ? 'invisible' : 'visible'
+      } z-10 absolute left-0 bottom-12 w-14 h-12 bg-purple rounded-tr-[100px] rounded-br-[100px] flex items-center justify-center hover:bg-purple-hover transition-colors duration-100 cursor-pointer`}
     >
       <Image
         src={ICON_SHOW_SIDEBAR_SVG}
