@@ -16,7 +16,7 @@ export default function Home() {
   if (!isClient) return <LoadingDots />;
 
   return (
-    <main className='grid grid-rows-[auto,1fr] md:min-h-screen dark:bg-darkbg-very-dark-grey dark:text-white'>
+    <main className='grid grid-rows-[auto,1fr] dark:bg-darkbg-very-dark-grey dark:text-white min-h-screen'>
       <Header />
       <div className='relative grid grid-cols-[auto,1fr] w-full overflow-auto'>
         <Sidebar />
