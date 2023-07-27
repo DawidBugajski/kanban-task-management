@@ -13,7 +13,7 @@ export default function Dashboard() {
     const dotsColors = ['bg-sky-400', 'bg-violet-500', 'bg-emerald-300'];
 
     return activeBoard.columns.map(({ id, name, tasks }, index) => (
-      <div className='w-[280px]' key={id}>
+      <div className='w-[280px] ' key={id}>
         <div className='flex gap-3'>
           <span
             className={`block w-[15px] h-[15px] rounded-full ${
@@ -34,7 +34,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className='text-black dark:text-white border-t-[1px] border-t-light-lines dark:border-t-dark-lines flex flex-col flex-grow bg-lightbg-light-grey dark:bg-darkbg-very-dark-grey p-6'>
+    <div className='text-black dark:text-white border-t-[1px] border-t-light-lines dark:border-t-dark-lines flex flex-col flex-grow bg-lightbg-light-grey dark:bg-darkbg-very-dark-grey p-6 min-w-max'>
       <div className='flex gap-6'>
         {renderTasks(activeBoard)}
         {activeBoard && activeBoard.columns.length > 0 && <AddColumn />}

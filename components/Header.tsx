@@ -17,13 +17,13 @@ export default function Header() {
 
   const activeBoard = useAppSelector(getActiveBoard);
   return (
-    <div className='flex items-center justify-start w-full h-16 text-center md:h-24 dark:bg-dark-grey'>
-      <div className='flex items-center h-full md:w-[300px] md:border-r-[1px] border-r-light-lines dark:border-dark-lines'>
+    <div className='sticky flex items-center justify-start w-full h-16 text-center md:static md:h-24 dark:bg-dark-grey'>
+      <div className='flex items-center h-full md:w-[200px] xl:w-[300px] md:border-r-[1px] border-r-light-lines dark:border-dark-lines'>
         {isMobileOrDesktop ? <LogoDesktop /> : <LogoMobile />}
       </div>
-      <div className='relative flex items-center justify-between flex-grow gap-5 px-4 md:px-8'>
+      <div className='relative flex items-center justify-between flex-grow gap-5 px-4 lg:px-8'>
         <div className='flex items-center gap-2'>
-          <h1 className='text-black text-heading-l md:text-heading-xl dark:text-white font-heading'>
+          <h1 className='text-black text-heading-l md:text-xl xl:text-heading-xl dark:text-white font-heading'>
             {activeBoard.name}
           </h1>
           {!isMobileOrDesktop && (
@@ -36,12 +36,11 @@ export default function Header() {
             />
           )}
         </div>
-
         <div className='flex items-center gap-3 md:gap-6'>
           <Button
             title={isMobileOrDesktop ? '+ Add new task' : undefined}
             onClick={() => console.log('hej')}
-            className='flex items-center justify-center w-12 h-8 leading-none text-white transition-colors duration-100 rounded-full md:text-heading-m font-heading bg-purple hover:bg-purple-hover md:rounded-3xl'
+            className='flex items-center justify-center md:w-[164px] md:h-12 w-12 h-8 leading-none text-white transition-colors duration-100 rounded-full md:text-heading-m font-heading bg-purple hover:bg-purple-hover md:rounded-3xl'
           >
             {!isMobileOrDesktop && (
               <Image

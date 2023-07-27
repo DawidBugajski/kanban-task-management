@@ -13,7 +13,7 @@ export default function LogoDesktop() {
         src={logoSrc}
         width={150}
         height={25}
-        className='absolute left-[34px]'
+        className='absolute md:left-6 xl:left-[34px]'
       />
     </>
   );
