@@ -69,7 +69,7 @@ function ClosedSidebarButton({ toggleSidebar, isOpen }: SidebarToggleProps) {
       onClick={toggleSidebar}
       className={`${
         isOpen ? 'invisible' : 'visible'
-      } z-10 absolute left-0 bottom-12 w-14 h-12 bg-purple rounded-tr-[100px] rounded-br-[100px] flex items-center justify-center hover:bg-purple-hover transition-colors duration-100 cursor-pointer`}
+      } z-10 fixed left-0 bottom-12 w-14 h-12 bg-purple rounded-tr-[100px] rounded-br-[100px] flex items-center justify-center hover:bg-purple-hover transition-colors duration-100 cursor-pointer`}
     >
       <Image
         src={ICON_SHOW_SIDEBAR_SVG}

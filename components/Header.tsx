@@ -2,6 +2,9 @@ import React from 'react';
 import { useAppSelector } from '@/redux/hooks';
 import { getActiveBoard } from '@/redux/slices/boardsSlice';
 import Logo from './Logo';
+import Button from './shared/Button';
+import Image from 'next/image';
+import { ICON_VERTICAL_ELLIPSIS_SVG } from '@/constans';
 
 export default function Header() {
   const activeBoard = useAppSelector(getActiveBoard);
@@ -14,11 +17,19 @@ export default function Header() {
         <h1 className='text-black text-heading-xl dark:text-white font-heading'>
           {activeBoard.name}
         </h1>
-        <div className='flex'>
-          <button className='p-2 mr-6 text-center text-white rounded-md bg-purple'>
-            +Add new task
-          </button>
-          <span className='text-2xl'>.</span>
+        <div className='flex items-center gap-6'>
+          <Button
+            title='+ Add new task'
+            onClick={() => console.log('hej')}
+            className='px-6 py-4 text-white transition-colors duration-100 text-heading-m font-heading bg-purple hover:bg-purple-hover rounded-3xl'
+          />
+          <Image
+            src={ICON_VERTICAL_ELLIPSIS_SVG}
+            height={20}
+            width={5}
+            alt='dots'
+            className='cursor-pointer'
+          />
         </div>
       </div>
     </div>
