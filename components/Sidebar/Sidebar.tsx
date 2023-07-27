@@ -51,7 +51,7 @@ function SidebarContent({ toggleSidebar }: SidebarToggleProps) {
       transition={{ duration: 0.5 }}
     >
       <SidebarBoards />
-      <div className='mt-auto mb-12'>
+      <div className='md:mt-auto md:mb-12'>
         <SidebarThemeToggle />
         <SidebarToggle toggleSidebar={toggleSidebar} />
       </div>
