@@ -34,7 +34,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className=' text-black dark:text-white border-t-[1px] border-t-light-lines dark:border-t-dark-lines flex flex-col flex-grow bg-lightbg-light-grey dark:bg-darkbg-very-dark-grey p-6'>
+    <div className='text-black dark:text-white border-t-[1px] border-t-light-lines dark:border-t-dark-lines flex flex-col flex-grow bg-lightbg-light-grey dark:bg-darkbg-very-dark-grey p-6'>
       <div className='flex gap-6'>
         {renderTasks(activeBoard)}
         {activeBoard && activeBoard.columns.length > 0 && <AddColumn />}

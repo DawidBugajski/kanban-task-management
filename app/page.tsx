@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <main className='flex flex-col min-h-screen dark:bg-darkbg-very-dark-grey dark:text-white'>
       <Header />
-      <div className='relative flex flex-grow w-full'>
+      <div className='relative flex flex-grow w-full '>
         <Sidebar />
         <Dashboard />
       </div>
