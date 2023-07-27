@@ -6,6 +6,9 @@ export const ICON_HIDE_SIDEBAR_SVG = '/icon-hide-sidebar.svg';
 export const ICON_DARK_THEME_SVG = '/icon-dark-theme.svg';
 export const ICON_LIGHT_THEME_SVG = '/icon-light-theme.svg';
 export const ICON_VERTICAL_ELLIPSIS_SVG = '/icon-vertical-ellipsis.svg';
+export const LOGO_MOBILE_SVG = '/logo-mobile.svg';
+export const ICON_ADD_TASK_MOBILE_SVG = '/icon-add-task-mobile.svg';
+export const ICON_CHEVRON_DOWN_SVG = 'icon-chevron-down.svg';
 
 export const STARTING_DATA = {
   boards: [

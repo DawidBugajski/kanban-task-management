@@ -1,16 +1,23 @@
 import React from 'react';
 
 type ButtonProps = {
-  title: string;
+  title?: string;
   className: string;
   disabled?: boolean;
   onClick: () => void;
+  children?: React.ReactNode;
 };
 
-export default function Button({ title, className, onClick }: ButtonProps) {
+export default function Button({
+  title,
+  className,
+  onClick,
+  children,
+}: ButtonProps) {
   return (
     <button onClick={onClick} className={className}>
-      {title}
+      {title && <span>{title}</span>}
+      {children}
     </button>
   );
 }
