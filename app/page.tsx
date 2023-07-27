@@ -16,13 +16,11 @@ export default function Home() {
   if (!isClient) return <LoadingDots />;
 
   return (
-    <main className='flex flex-col md:min-h-screen dark:bg-darkbg-very-dark-grey dark:text-white'>
+    <main className='grid grid-rows-[auto,1fr] md:min-h-screen dark:bg-darkbg-very-dark-grey dark:text-white'>
       <Header />
-      <div className='relative flex flex-grow w-full'>
+      <div className='relative grid grid-cols-[auto,1fr] w-full overflow-auto'>
         <Sidebar />
-        <div className='flex-grow overflow-auto'>
-          <Dashboard />
-        </div>
+        <Dashboard />
       </div>
     </main>
   );

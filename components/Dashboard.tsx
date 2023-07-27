@@ -35,7 +35,7 @@ export default function Dashboard() {
 
   return (
     <div className='text-black dark:text-white border-t-[1px] border-t-light-lines dark:border-t-dark-lines flex flex-col flex-grow bg-lightbg-light-grey dark:bg-darkbg-very-dark-grey p-6 min-w-max overflow-auto'>
-      <div className='flex flex-grow gap-6 xl:flex-grow-0'>
+      <div className='flex flex-grow gap-6'>
         {renderTasks(activeBoard)}
         {activeBoard && activeBoard.columns.length > 0 && <AddColumn />}
       </div>
