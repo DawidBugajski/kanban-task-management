@@ -16,14 +16,14 @@ function Sidebar() {
   const toggleSidebar = () => setIsOpen(!isOpen);
 
   return (
-    <div>
+    <>
       <AnimatePresence initial={false}>
         {isOpen && <VisibleSidebar toggleSidebar={toggleSidebar} />}
       </AnimatePresence>
       {!isOpen && (
         <ClosedSidebarButton isOpen={isOpen} toggleSidebar={toggleSidebar} />
       )}
-    </div>
+    </>
   );
   // can't use ternary operator, animations aren't working properly
 }
@@ -31,7 +31,7 @@ function Sidebar() {
 function VisibleSidebar({ toggleSidebar }: SidebarToggleProps) {
   return (
     <motion.aside
-      className='shrink-0 dark:bg-dark-grey flex flex-col z-10 h-full overflow-hidden bg-white border-r-[1px] border-r-light-lines dark:border-r-dark-lines'
+      className='dark:bg-dark-grey z-10 bg-white border-r-[1px] border-r-light-lines dark:border-r-dark-lines'
       initial={{ width: '0px' }}
       animate={{ width: '300px' }}
       exit={{ width: '0px' }}
@@ -45,7 +45,7 @@ function VisibleSidebar({ toggleSidebar }: SidebarToggleProps) {
 function SidebarContent({ toggleSidebar }: SidebarToggleProps) {
   return (
     <motion.div
-      className='z-10 flex flex-col h-full overflow-hidden'
+      className='z-10 flex flex-col h-full'
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
