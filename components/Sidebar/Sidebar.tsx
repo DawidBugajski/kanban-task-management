@@ -1,20 +1,17 @@
-import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Image from 'next/image';
 import SidebarBoards from './SidebarBoards';
 import SidebarToggle from './SidebarToggle';
 import SidebarThemeToggle from './SidebarThemeToggle';
 import { ICON_SHOW_SIDEBAR_SVG } from '@/constans';
+import LogoDesktop from '../LogoDesktop';
 
 interface SidebarToggleProps {
   toggleSidebar: () => void;
   isOpen?: boolean;
 }
 
-function Sidebar() {
-  const [isOpen, setIsOpen] = useState(true);
-  const toggleSidebar = () => setIsOpen(!isOpen);
-
+function Sidebar({ isOpen, toggleSidebar }: SidebarToggleProps) {
   return (
     <>
       <AnimatePresence initial={false}>
@@ -31,7 +28,7 @@ function Sidebar() {
 function VisibleSidebar({ toggleSidebar }: SidebarToggleProps) {
   return (
     <motion.aside
-      className='dark:bg-dark-grey z-10 bg-white border-r-[1px] border-r-light-lines dark:border-r-dark-lines'
+      className='dark:bg-dark-grey z-10 bg-white border-r-[1px] border-r-light-lines dark:border-r-dark-lines fixed h-screen overflow-hidden'
       initial={{ width: '0px' }}
       animate={{ width: '300px' }}
       exit={{ width: '0px' }}
@@ -50,6 +47,7 @@ function SidebarContent({ toggleSidebar }: SidebarToggleProps) {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
+      <LogoDesktop />
       <SidebarBoards />
       <div className='md:mt-auto md:mb-12'>
         <SidebarThemeToggle />
