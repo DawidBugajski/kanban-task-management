@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAppSelector } from '@/redux/hooks';
 import { getActiveBoard } from '@/redux/slices/boardsSlice';
 import LogoMobile from './LogoMobile';
@@ -8,12 +8,17 @@ import {
   ICON_VERTICAL_ELLIPSIS_SVG,
   ICON_ADD_TASK_MOBILE_SVG,
   ICON_CHEVRON_DOWN_SVG,
+  ICON_CHEVRON_UP_SVG,
 } from '@/constans';
 import { useResponsive } from '@/hooks/useResponsive';
 
 export default function Header() {
+  const [isOpen, setIsOpen] = useState(false);
+  const toggleSidebar = () => setIsOpen(!isOpen);
+
   const { isMobileOrDesktop } = useResponsive();
   const activeBoard = useAppSelector(getActiveBoard);
+
   return (
     <div className='flex-none w-full border-b-[1px] border-b-light-lines dark:border-b-dark-lines flex items-center justify-start h-16 text-center md:h-24 dark:bg-dark-grey'>
       {!isMobileOrDesktop && (
@@ -28,11 +33,12 @@ export default function Header() {
           </h1>
           {!isMobileOrDesktop && (
             <Image
-              src={ICON_CHEVRON_DOWN_SVG}
+              src={isOpen ? ICON_CHEVRON_UP_SVG : ICON_CHEVRON_DOWN_SVG}
               height={7}
               width={10}
               alt='icon down'
               className='cursor-pointer'
+              onClick={toggleSidebar}
             />
           )}
         </div>

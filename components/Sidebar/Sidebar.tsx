@@ -19,7 +19,9 @@ function Sidebar({ isOpen, toggleSidebar }: SidebarToggleProps) {
         {isOpen && <VisibleSidebar toggleSidebar={toggleSidebar} />}
       </AnimatePresence>
       {!isOpen && (
-        <ClosedSidebarButton isOpen={isOpen} toggleSidebar={toggleSidebar} />
+        <div className='hidden md:block'>
+          <ClosedSidebarButton isOpen={isOpen} toggleSidebar={toggleSidebar} />
+        </div>
       )}
     </>
   );
@@ -32,7 +34,7 @@ function VisibleSidebar({ toggleSidebar }: SidebarToggleProps) {
 
   return (
     <motion.aside
-      className='dark:bg-dark-grey z-10 bg-white border-r-[1px] border-r-light-lines dark:border-r-dark-lines fixed h-screen overflow-hidden'
+      className='dark:bg-dark-grey z-10 bg-white border-r-[1px] border-r-light-lines dark:border-r-dark-lines fixed h-screen overflow-hidden hidden md:block'
       initial={{ width: '0px' }}
       animate={{ width: sidebarWidth }}
       exit={{ width: '0px' }}

@@ -12,7 +12,7 @@ export default function MainContent({ isOpen }: MainContentProps) {
 
   const wrapperMargin = () => {
     if (!isOpen) return '';
-    return isTabletOrDesktop ? 'ml-[300px]' : 'ml-[260px]';
+    return isTabletOrDesktop ? 'md:ml-[300px]' : 'md:ml-[260px]';
   };
 
   return (

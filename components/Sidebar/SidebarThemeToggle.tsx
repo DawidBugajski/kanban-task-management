@@ -12,17 +12,17 @@ export default function SidebarThemeToggle() {
   };
 
   return (
-    <div className='h-12 mx-6 rounded-md bg-lightbg-light-grey dark:bg-darkbg-very-dark-grey'>
-      <div className='relative w-full h-full'>
+    <div className='h-12 mx-3 rounded-md xl:mx-6 bg-lightbg-light-grey dark:bg-darkbg-very-dark-grey'>
+      <div className='relative flex items-center justify-around w-full h-full'>
         <Image
-          className='left-[64px] top-[15px] absolute'
           alt='logo'
           height={19}
           width={19}
           src={ICON_LIGHT_THEME_SVG}
+          className='ml-auto'
         />
         <button
-          className='w-10 h-5 left-[106px] top-[14px] absolute cursor-pointer group'
+          className='relative w-10 h-5 mx-6 cursor-pointer group'
           onClick={toggleTheme}
         >
           <div className='absolute top-0 left-0 w-10 h-5 transition-colors duration-100 bg-purple rounded-xl group-hover:bg-purple-hover' />
@@ -34,7 +34,7 @@ export default function SidebarThemeToggle() {
           />
         </button>
         <Image
-          className='left-[169.67px] top-[15px] absolute'
+          className='mr-auto'
           alt='logo'
           height={19}
           width={19}

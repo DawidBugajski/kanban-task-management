@@ -9,7 +9,7 @@ interface SidebarToggleProps {
 
 export default function SidebarToggle({ toggleSidebar }: SidebarToggleProps) {
   return (
-    <div className='w-[276px] mt-2'>
+    <div className='w-[89%] mt-2'>
       <div
         onClick={toggleSidebar}
         className='hover:bg-lightbg-hover-boards group cursor-pointer rounded-tr-[100px] rounded-br-[100px] transition-colors duration-100 dark:hover:bg-white'
