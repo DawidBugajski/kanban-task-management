@@ -21,7 +21,7 @@ export default function TaskCard({ task, index }: TaskCardProps) {
           <div
             className={`bg-white dark:bg-dark-grey group cursor-pointer px-4 py-[23px] gap-2 flex flex-col justify-center rounded-lg  ${
               snapshot.isDragging
-                ? 'skew-y-2 scale-95 shadow-md shadow-purple'
+                ? 'shadow-[0px_4px_6px_0px_rgba(54,_78,_126,_0.10)] transform-none md:skew-y-2 md:scale-95 md:shadow-md md:shadow-purple'
                 : 'shadow-[0px_4px_6px_0px_rgba(54,_78,_126,_0.10)]'
             }`}
           >
