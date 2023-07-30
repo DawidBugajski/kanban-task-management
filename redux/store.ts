@@ -7,5 +7,10 @@ export const store = configureStore({
   },
 });
 
+// When the state changes, save it to localStorage.
+store.subscribe(() => {
+  localStorage.setItem('state', JSON.stringify(store.getState().boards));
+});
+
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

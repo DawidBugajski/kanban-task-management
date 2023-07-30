@@ -3,10 +3,14 @@ import { RootState } from '../store';
 import { Board, Data } from '@/types';
 import { STARTING_DATA } from '@/constans';
 
-const initialState: Data = {
-  ...STARTING_DATA,
-  activeBoardId: STARTING_DATA.boards[0].id,
-};
+const savedState = localStorage.getItem('state');
+
+const initialState: Data = savedState
+  ? JSON.parse(savedState)
+  : {
+      ...STARTING_DATA,
+      activeBoardId: STARTING_DATA.boards[0].id,
+    };
 
 export const boardsSlice = createSlice({
   name: 'boards',
@@ -26,18 +30,28 @@ export const boardsSlice = createSlice({
     ) => {
       const { sourceId, destinationId, sourceIndex, destinationIndex } =
         action.payload;
+
+      // Searching for an active board in a state
       const activeBoard = state.boards.find(
         (board) => board.id === state.activeBoardId
       );
+
       if (!activeBoard) return;
+
+      // Searching for a source and target column in the active table
       const sourceColumn = activeBoard.columns.find(
         (column) => column.id === sourceId
       );
       const destinationColumn = activeBoard.columns.find(
         (column) => column.id === destinationId
       );
+
       if (!sourceColumn || !destinationColumn) return;
+
+      // Remove the task from the source column and save it to the variable "removed"
       const [removed] = sourceColumn.tasks.splice(sourceIndex, 1);
+
+      // Insert the deleted task in the appropriate place in the target column
       destinationColumn.tasks.splice(destinationIndex, 0, removed);
     },
   },
