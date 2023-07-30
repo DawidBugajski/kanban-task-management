@@ -23,6 +23,7 @@ module.exports = {
         red: '#EA5555',
         'red-hover': '#FF9898',
         'lightbg-hover-boards': '#f0effa',
+        'bg-modal': 'rgba(0,0,0,0.5)',
       },
       fontSize: {
         'heading-xl': ['24px', '30px'],
