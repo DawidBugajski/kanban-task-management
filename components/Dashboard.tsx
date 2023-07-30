@@ -28,21 +28,19 @@ export default function Dashboard() {
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
       <div className='flex flex-grow gap-6'>
-        {activeBoard.columns.map(({ id, name, tasks }, index) => (
+        {activeBoard.columns.map(({ id, name, tasks }) => (
           <Droppable droppableId={id} key={id}>
             {(provided) => (
-              <div
-                className='w-[280px]'
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-              >
-                <h2 className='mb-6 uppercase text-heading-s font-heading tracking-heading-s text-medium-grey'>
-                  {name} ({tasks.length})
-                </h2>
-                {tasks.map((task, index) => (
-                  <TaskCard key={task.id} task={task} index={index} />
-                ))}
-                {provided.placeholder}
+              <div {...provided.droppableProps} ref={provided.innerRef}>
+                <div className='w-[280px]'>
+                  <h2 className='mb-6 uppercase text-heading-s font-heading tracking-heading-s text-medium-grey'>
+                    {name} ({tasks.length})
+                  </h2>
+                  {tasks.map((task, index) => (
+                    <TaskCard key={task.id} task={task} index={index} />
+                  ))}
+                  {provided.placeholder}
+                </div>
               </div>
             )}
           </Droppable>
