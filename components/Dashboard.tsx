@@ -1,44 +1,54 @@
-import { useAppSelector } from '@/redux/hooks';
-import { getActiveBoard } from '@/redux/slices/boardsSlice';
+import { useAppSelector, useAppDispatch } from '@/redux/hooks';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { DropResult } from 'react-beautiful-dnd';
+import { getActiveBoard, moveTask } from '@/redux/slices/boardsSlice';
 import { Board, Task } from '@/types';
-import TaskCard from './TaskCard';
 import AddColumn from './AddColumn';
+import TaskCard from './TaskCard';
 
 export default function Dashboard() {
+  const dispatch = useAppDispatch();
   const activeBoard = useAppSelector(getActiveBoard);
 
-  const renderTasks = (activeBoard: Board) => {
-    if (!activeBoard) return;
+  const handleOnDragEnd = (result: DropResult) => {
+    const { source, destination } = result;
 
-    const dotsColors = ['bg-sky-400', 'bg-violet-500', 'bg-emerald-300'];
+    if (!destination) return;
 
-    return activeBoard.columns.map(({ id, name, tasks }, index) => (
-      <div className='w-[280px] ' key={id}>
-        <div className='flex gap-3'>
-          <span
-            className={`block w-[15px] h-[15px] rounded-full ${
-              dotsColors[index % dotsColors.length]
-            }`}
-          />
-          <h2 className='mb-6 uppercase text-heading-s font-heading tracking-heading-s text-medium-grey'>
-            {name} ({tasks.length})
-          </h2>
-        </div>
-        <div className='flex flex-col gap-5'>
-          {tasks.map((task: Task) => (
-            <TaskCard key={task.id} {...task} />
-          ))}
-        </div>
-      </div>
-    ));
+    dispatch(
+      moveTask({
+        sourceId: source.droppableId,
+        destinationId: destination.droppableId,
+        sourceIndex: source.index,
+        destinationIndex: destination.index,
+      })
+    );
   };
 
   return (
-    <div className='flex flex-col flex-grow p-6 text-black dark:text-white bg-lightbg-light-grey dark:bg-darkbg-very-dark-grey min-w-max'>
+    <DragDropContext onDragEnd={handleOnDragEnd}>
       <div className='flex flex-grow gap-6'>
-        {renderTasks(activeBoard)}
+        {activeBoard.columns.map(({ id, name, tasks }, index) => (
+          <Droppable droppableId={id} key={id}>
+            {(provided) => (
+              <div
+                className='w-[280px]'
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
+                <h2 className='mb-6 uppercase text-heading-s font-heading tracking-heading-s text-medium-grey'>
+                  {name} ({tasks.length})
+                </h2>
+                {tasks.map((task, index) => (
+                  <TaskCard key={task.id} task={task} index={index} />
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        ))}
         {activeBoard && activeBoard.columns.length > 0 && <AddColumn />}
       </div>
-    </div>
+    </DragDropContext>
   );
 }
