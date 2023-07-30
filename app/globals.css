@@ -25,3 +25,22 @@
 .bouncing-loader > div:nth-child(3) {
   animation-delay: 0.4s;
 }
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  background-color: #0f0f13;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: #000112;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #635fc7;
+  background: linear-gradient(0deg, #a8a4ff, #635fc7);
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
