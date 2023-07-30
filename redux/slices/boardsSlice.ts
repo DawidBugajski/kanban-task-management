@@ -3,7 +3,11 @@ import { RootState } from '../store';
 import { Board, Data } from '@/types';
 import { STARTING_DATA } from '@/constans';
 
-const savedState = localStorage.getItem('state');
+let savedState;
+
+if (typeof window !== 'undefined') {
+  savedState = localStorage.getItem('state');
+}
 
 const initialState: Data = savedState
   ? JSON.parse(savedState)
