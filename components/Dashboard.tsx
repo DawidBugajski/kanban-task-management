@@ -2,13 +2,14 @@ import { useAppSelector, useAppDispatch } from '@/redux/hooks';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { DropResult } from 'react-beautiful-dnd';
 import { getActiveBoard, moveTask } from '@/redux/slices/boardsSlice';
-import { Board, Task } from '@/types';
+
 import AddColumn from './AddColumn';
 import TaskCard from './TaskCard';
 
 export default function Dashboard() {
   const dispatch = useAppDispatch();
   const activeBoard = useAppSelector(getActiveBoard);
+  const dotsColors = ['bg-sky-400', 'bg-violet-500', 'bg-emerald-300'];
 
   const handleOnDragEnd = (result: DropResult) => {
     const { source, destination } = result;
@@ -27,25 +28,38 @@ export default function Dashboard() {
 
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
-      <div className='flex flex-grow gap-6'>
-        {activeBoard.columns.map(({ id, name, tasks }) => (
-          <Droppable droppableId={id} key={id}>
-            {(provided) => (
-              <div {...provided.droppableProps} ref={provided.innerRef}>
-                <div className='w-[280px]'>
-                  <h2 className='mb-6 uppercase text-heading-s font-heading tracking-heading-s text-medium-grey'>
-                    {name} ({tasks.length})
-                  </h2>
-                  {tasks.map((task, index) => (
-                    <TaskCard key={task.id} task={task} index={index} />
-                  ))}
-                  {provided.placeholder}
+      <div className='flex flex-col flex-grow p-6 text-black dark:text-white bg-lightbg-light-grey dark:bg-darkbg-very-dark-grey min-w-max'>
+        <div className='flex flex-grow gap-6'>
+          {activeBoard.columns.map(({ id, name, tasks }, index) => (
+            <Droppable droppableId={id} key={id}>
+              {(provided) => (
+                <div
+                  className='w-[280px]'
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                >
+                  <div className='flex gap-3'>
+                    <span
+                      className={`block w-[15px] h-[15px] rounded-full ${
+                        dotsColors[index % dotsColors.length]
+                      }`}
+                    />
+                    <h2 className='mb-6 uppercase text-heading-s font-heading tracking-heading-s text-medium-grey'>
+                      {name} ({tasks.length})
+                    </h2>
+                  </div>
+                  <div className='flex flex-col gap-5'>
+                    {tasks.map((task, index) => (
+                      <TaskCard key={task.id} task={task} index={index} />
+                    ))}
+                    {provided.placeholder}
+                  </div>
                 </div>
-              </div>
-            )}
-          </Droppable>
-        ))}
-        {activeBoard && activeBoard.columns.length > 0 && <AddColumn />}
+              )}
+            </Droppable>
+          ))}
+          {activeBoard && activeBoard.columns.length > 0 && <AddColumn />}
+        </div>
       </div>
     </DragDropContext>
   );
