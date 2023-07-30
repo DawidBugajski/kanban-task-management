@@ -1,4 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
+import { useResponsive } from '@/hooks/useResponsive';
 import Image from 'next/image';
 import SidebarBoards from './SidebarBoards';
 import SidebarToggle from './SidebarToggle';
@@ -26,11 +27,14 @@ function Sidebar({ isOpen, toggleSidebar }: SidebarToggleProps) {
 }
 
 function VisibleSidebar({ toggleSidebar }: SidebarToggleProps) {
+  const { isTabletOrDesktop } = useResponsive();
+  const sidebarWidth = isTabletOrDesktop ? '300px' : '260px';
+
   return (
     <motion.aside
       className='dark:bg-dark-grey z-10 bg-white border-r-[1px] border-r-light-lines dark:border-r-dark-lines fixed h-screen overflow-hidden'
       initial={{ width: '0px' }}
-      animate={{ width: '300px' }}
+      animate={{ width: sidebarWidth }}
       exit={{ width: '0px' }}
       transition={{ duration: 0.1 }}
     >
@@ -38,7 +42,6 @@ function VisibleSidebar({ toggleSidebar }: SidebarToggleProps) {
     </motion.aside>
   );
 }
-
 function SidebarContent({ toggleSidebar }: SidebarToggleProps) {
   return (
     <motion.div

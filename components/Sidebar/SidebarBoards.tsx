@@ -50,7 +50,7 @@ export default function SidebarBoards() {
   };
 
   return (
-    <div className='w-[276px]'>
+    <div className='w-[89%]'>
       <span className='ml-[34px] mt-[15px] block mb-5 uppercase font-heading text-heading-s tracking-heading-s text-medium-grey'>
         all boards ({boards.length})
       </span>

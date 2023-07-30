@@ -1,7 +1,6 @@
 import React from 'react';
 import { useAppSelector } from '@/redux/hooks';
 import { getActiveBoard } from '@/redux/slices/boardsSlice';
-import LogoDesktop from './LogoDesktop';
 import LogoMobile from './LogoMobile';
 import Button from './shared/Button';
 import Image from 'next/image';
@@ -17,9 +16,11 @@ export default function Header() {
   const activeBoard = useAppSelector(getActiveBoard);
   return (
     <div className='flex-none w-full border-b-[1px] border-b-light-lines dark:border-b-dark-lines flex items-center justify-start h-16 text-center md:h-24 dark:bg-dark-grey'>
-      {/* <div className='flex items-center h-full md:w-[200px] xl:w-[300px] md:border-r-[1px] border-r-light-lines dark:border-dark-lines'>
-        {isMobileOrDesktop ? <LogoDesktop /> : <LogoMobile />}
-      </div> */}
+      {!isMobileOrDesktop && (
+        <div className='flex items-center h-full md:w-[200px] xl:w-[300px] md:border-r-[1px] border-r-light-lines dark:border-dark-lines'>
+          <LogoMobile />
+        </div>
+      )}
       <div className='relative flex items-center justify-between flex-grow gap-5 px-4 lg:px-8'>
         <div className='flex items-center gap-2'>
           <h1 className='text-black text-heading-l md:text-xl xl:text-heading-xl dark:text-white font-heading'>
