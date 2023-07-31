@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './Header';
 import Dashboard from './Dashboard';
 import { useResponsive } from '@/hooks/useResponsive';
+import Modal from './shared/Modal';
 
 interface MainContentProps {
   isOpen: boolean;
@@ -22,6 +23,9 @@ export default function MainContent({ isOpen }: MainContentProps) {
       <Header />
       <div className='flex flex-col flex-grow overflow-auto'>
         <Dashboard />
+        <Modal title='test modal' description='dzialasz?'>
+          <button>Click me!</button>
+        </Modal>
       </div>
     </div>
   );
