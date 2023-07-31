@@ -9,8 +9,10 @@ export const store = configureStore({
 
 // When the state changes, save it to localStorage.
 store.subscribe(() => {
-  localStorage.setItem('state', JSON.stringify(store.getState().boards));
+  const { activeTask, ...stateWithoutActiveTask } = store.getState().boards; // remove activeTask - no need in localStorage
+  localStorage.setItem('state', JSON.stringify(stateWithoutActiveTask));
 });
+
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
