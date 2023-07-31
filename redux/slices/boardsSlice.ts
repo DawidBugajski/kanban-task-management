@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import { Board, Data } from '@/types';
+import { Board, Data, Task } from '@/types';
 import { STARTING_DATA } from '@/constans';
 
 let savedState;
@@ -14,6 +14,7 @@ const initialState: Data = savedState
   : {
       ...STARTING_DATA,
       activeBoardId: STARTING_DATA.boards[0].id,
+      activeTask: null,
     };
 
 export const boardsSlice = createSlice({
@@ -58,12 +59,19 @@ export const boardsSlice = createSlice({
       // Insert the deleted task in the appropriate place in the target column
       destinationColumn.tasks.splice(destinationIndex, 0, removed);
     },
+    setActiveTask: (state, action: PayloadAction<Task>) => {
+      state.activeTask = action.payload;
+      console.log(state.activeTask);
+    },
   },
 });
 
-export const { setActiveBoard, moveTask } = boardsSlice.actions;
+export const { setActiveBoard, moveTask, setActiveTask } = boardsSlice.actions;
 export const getBoards = (state: RootState): Board[] => state.boards.boards;
 export const getActiveBoard = (state: RootState): Board =>
   state.boards.boards.find((board) => board.id === state.boards.activeBoardId)!;
 // "!" - the expression before it will never be null or undefined - here always some board must be active
+export const getActiveTask = (state: RootState): Task | null =>
+  state.boards.activeTask;
+
 export default boardsSlice.reducer;

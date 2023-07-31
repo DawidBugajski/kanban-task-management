@@ -1,6 +1,7 @@
 export interface Data {
   boards: Board[];
   activeBoardId: string;
+  activeTask: Task | null;
 }
 
 export interface Board {
