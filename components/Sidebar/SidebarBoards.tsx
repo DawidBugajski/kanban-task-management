@@ -40,11 +40,12 @@ const BoardItem = ({ board }: { board: Board }) => {
   const activeBoard = useAppSelector(getActiveBoard);
   const isActiveBoard = activeBoard.id === board.id;
   const handleSetActiveBoard = () => dispatch(setActiveBoard(board.id));
+  const { id, name } = board;
 
   return (
     <li
       onClick={handleSetActiveBoard}
-      key={board.id}
+      key={id}
       className={`group transition-colors duration-100 cursor-pointer overflow-hidden flex items-center h-12 rounded-tr-[100px] rounded-br-[100px] 
       ${isActiveBoard ? 'bg-purple text-white' : ''}
       ${!isActiveBoard && 'hover:bg-lightbg-hover-boards dark:hover:bg-white'}
@@ -61,7 +62,7 @@ const BoardItem = ({ board }: { board: Board }) => {
             className='fill-current'
           />
         </svg>
-        {board.name}
+        {name}
       </span>
     </li>
   );

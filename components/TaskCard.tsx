@@ -1,5 +1,7 @@
 import { Draggable } from 'react-beautiful-dnd';
 import { Task } from '@/types';
+import { useAppDispatch } from '@/redux/hooks';
+import { selectTask } from '@/redux/slices/boardsSlice';
 
 interface TaskCardProps {
   task: Task;
@@ -7,6 +9,9 @@ interface TaskCardProps {
 }
 
 export default function TaskCard({ task, index }: TaskCardProps) {
+  const dispatch = useAppDispatch();
+  const handleSetActiveCard = () => dispatch(selectTask(task));
+
   const { subtasks } = task;
   const completedSubtasks = subtasks.filter((subtask) => subtask.isCompleted);
 
@@ -14,6 +19,7 @@ export default function TaskCard({ task, index }: TaskCardProps) {
     <Draggable draggableId={task.id} index={index}>
       {(provided, snapshot) => (
         <div
+          onClick={handleSetActiveCard}
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
