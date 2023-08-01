@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { Task } from '@/types';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
@@ -16,32 +16,38 @@ export default function TaskCard({ task, index }: TaskCardProps) {
   const dispatch = useAppDispatch();
   const activeTask = useAppSelector(getActiveTask);
 
-  const handleSetActiveCard = () => {
-    dispatch(setActiveTask(task));
-    setIsOpenModal(true);
+  const emptyTask = {
+    title: '',
+    description: '',
+    status: '',
+    id: '',
+    subtasks: [],
+  };
+
+  // Allowing to click twice on the same task w/o problems
+  useEffect(() => {
+    if (activeTask?.id === task.id) {
+      setIsOpenModal(true);
+    } else {
+      setIsOpenModal(false);
+    }
+  }, [activeTask, task.id]);
+
+  const handleSetActiveCard = () => dispatch(setActiveTask(task));
+
+  const handleCloseModal = () => {
+    setIsOpenModal(false);
+    dispatch(setActiveTask(emptyTask)); // allow to reopen the same task when you click on it again. w/o if you tried to open the same task again, useEffect would not get called again (activeTask.id and task.id would still be the same)
   };
 
   return (
     <>
       {isOpenModal && (
-        <Modal>
-          <div className='flex flex-col justify-center h-full'>
-            <p>{activeTask?.title}</p>
-            <p>{activeTask?.description}</p>
-            <p>{activeTask?.status}</p>
-            {activeTask?.subtasks.map((task) => (
-              <div key={task.id}>
-                <p
-                  className={`${
-                    task.isCompleted ? 'text-green-400' : 'text-red'
-                  }`}
-                >
-                  {task.title}
-                </p>
-              </div>
-            ))}
-          </div>
-        </Modal>
+        <TaskDetails
+          isOpenModal={isOpenModal}
+          activeTask={activeTask}
+          handleCloseModal={handleCloseModal}
+        />
       )}
       <DraggableTaskCard
         task={task}
@@ -49,6 +55,36 @@ export default function TaskCard({ task, index }: TaskCardProps) {
         handleSetActiveCard={handleSetActiveCard}
       />
     </>
+  );
+}
+
+interface TaskDetailsProps {
+  isOpenModal: boolean;
+  activeTask: Task | null;
+  handleCloseModal: () => void;
+}
+function TaskDetails({
+  isOpenModal,
+  activeTask,
+  handleCloseModal,
+}: TaskDetailsProps) {
+  return (
+    <Modal isOpen={isOpenModal} onClose={handleCloseModal}>
+      <div className='flex flex-col justify-center h-full'>
+        <p>{activeTask?.title}</p>
+        <p>{activeTask?.description}</p>
+        <p>{activeTask?.status}</p>
+        {activeTask?.subtasks.map((task) => (
+          <div key={task.id}>
+            <p
+              className={`${task.isCompleted ? 'text-green-400' : 'text-red'}`}
+            >
+              {task.title}
+            </p>
+          </div>
+        ))}
+      </div>
+    </Modal>
   );
 }
 
