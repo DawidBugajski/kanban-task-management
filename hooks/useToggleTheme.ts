@@ -10,8 +10,18 @@ export function useToggleTheme() {
   }, [resolvedTheme]);
 
   const toggleTheme = () => {
-    setIsToggled(!isToggled);
-    setTheme(theme === 'dark' ? 'light' : 'dark');
+    if (
+      theme === 'dark' ||
+      (theme === 'system' &&
+        window.matchMedia &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches)
+    ) {
+      setTheme('light');
+      setIsToggled(false);
+    } else {
+      setTheme('dark');
+      setIsToggled(true);
+    }
   };
 
   return { isToggled, toggleTheme };

@@ -23,7 +23,8 @@ export const STARTING_DATA = {
           tasks: [
             {
               title: 'TEST TASK',
-              description: '',
+              description:
+                "We know what we're planning to build for version one. Now we need to finalise the first pricing model we'll use. Keep iterating the subtasks until we have a coherent proposition",
               status: 'Todo',
               id: uuidv4(),
               subtasks: [
