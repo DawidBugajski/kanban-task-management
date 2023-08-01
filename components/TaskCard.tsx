@@ -1,17 +1,62 @@
+import { useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { Task } from '@/types';
-import { useAppDispatch } from '@/redux/hooks';
-import { setActiveTask } from '@/redux/slices/boardsSlice';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { setActiveTask, getActiveTask } from '@/redux/slices/boardsSlice';
+import Modal from './shared/Modal';
 
 interface TaskCardProps {
   task: Task;
   index: number;
+  handleSetActiveCard?: () => void;
 }
 
 export default function TaskCard({ task, index }: TaskCardProps) {
+  const [isOpenModal, setIsOpenModal] = useState(false);
   const dispatch = useAppDispatch();
-  const handleSetActiveCard = () => dispatch(setActiveTask(task));
+  const activeTask = useAppSelector(getActiveTask);
 
+  const handleSetActiveCard = () => {
+    dispatch(setActiveTask(task));
+    setIsOpenModal(true);
+  };
+
+  return (
+    <>
+      {isOpenModal && (
+        <Modal>
+          <div className='flex flex-col justify-center h-full'>
+            <p>{activeTask?.title}</p>
+            <p>{activeTask?.description}</p>
+            <p>{activeTask?.status}</p>
+            {activeTask?.subtasks.map((task) => (
+              <div key={task.id}>
+                <p
+                  className={`${
+                    task.isCompleted ? 'text-green-400' : 'text-red'
+                  }`}
+                >
+                  {task.title}
+                </p>
+              </div>
+            ))}
+          </div>
+        </Modal>
+      )}
+      <DraggableTaskCard
+        task={task}
+        index={index}
+        handleSetActiveCard={handleSetActiveCard}
+      />
+    </>
+  );
+}
+
+function DraggableTaskCard({
+  task,
+  index,
+  handleSetActiveCard,
+}: TaskCardProps) {
   const { subtasks } = task;
   const completedSubtasks = subtasks.filter((subtask) => subtask.isCompleted);
 

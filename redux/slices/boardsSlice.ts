@@ -61,7 +61,6 @@ export const boardsSlice = createSlice({
     },
     setActiveTask: (state, action: PayloadAction<Task>) => {
       state.activeTask = action.payload;
-      console.log(state.activeTask);
     },
   },
 });
