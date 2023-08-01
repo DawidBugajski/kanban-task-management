@@ -1,8 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { Task } from '@/types';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { setActiveTask, getActiveTask } from '@/redux/slices/boardsSlice';
+import {
+  setActiveTask,
+  getActiveTask,
+  resetActiveTask,
+} from '@/redux/slices/boardsSlice';
 import Modal from './shared/Modal';
 
 interface TaskCardProps {
@@ -22,28 +26,14 @@ export default function TaskCard({ task, index }: TaskCardProps) {
   const dispatch = useAppDispatch();
   const activeTask = useAppSelector(getActiveTask);
 
-  const emptyTask = {
-    title: '',
-    description: '',
-    status: '',
-    id: '',
-    subtasks: [],
+  const handleSetActiveCard = () => {
+    dispatch(setActiveTask(task));
+    setIsOpenModal(true);
   };
-
-  // Allowing to click twice on the same task w/o problems
-  useEffect(() => {
-    if (activeTask?.id === task.id) {
-      setIsOpenModal(true);
-    } else {
-      setIsOpenModal(false);
-    }
-  }, [activeTask, task.id]);
-
-  const handleSetActiveCard = () => dispatch(setActiveTask(task));
 
   const handleCloseModal = () => {
     setIsOpenModal(false);
-    dispatch(setActiveTask(emptyTask)); // allow to reopen the same task when you click on it again. w/o if you tried to open the same task again, useEffect would not get called again (activeTask.id and task.id would still be the same)
+    dispatch(resetActiveTask());
   };
 
   return (

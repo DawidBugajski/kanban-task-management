@@ -62,10 +62,14 @@ export const boardsSlice = createSlice({
     setActiveTask: (state, action: PayloadAction<Task>) => {
       state.activeTask = action.payload;
     },
+    resetActiveTask: (state) => {
+      state.activeTask = null;
+    },
   },
 });
 
-export const { setActiveBoard, moveTask, setActiveTask } = boardsSlice.actions;
+export const { setActiveBoard, moveTask, setActiveTask, resetActiveTask } =
+  boardsSlice.actions;
 export const getBoards = (state: RootState): Board[] => state.boards.boards;
 export const getActiveBoard = (state: RootState): Board =>
   state.boards.boards.find((board) => board.id === state.boards.activeBoardId)!;
