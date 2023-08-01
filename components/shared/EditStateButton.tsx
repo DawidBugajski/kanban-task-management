@@ -9,7 +9,7 @@ interface EditStateButtonProps {
 
 export function EditStateButton({ onClick, className }: EditStateButtonProps) {
   return (
-    <button className={className} onClick={onClick}>
+    <button className={className} onClick={onClick} type='button'>
       <Image
         src={ICON_VERTICAL_ELLIPSIS_SVG}
         height={20}

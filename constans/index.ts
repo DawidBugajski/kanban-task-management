@@ -22,16 +22,17 @@ export const STARTING_DATA = {
           id: uuidv4(),
           tasks: [
             {
-              title: 'TEST TASK',
+              title: 'Build a kanban task management application',
               description:
                 "We know what we're planning to build for version one. Now we need to finalise the first pricing model we'll use. Keep iterating the subtasks until we have a coherent proposition",
               status: 'Todo',
               id: uuidv4(),
               subtasks: [
                 {
-                  title: 'Sign up page',
+                  title:
+                    'Prepare the entire component related to editing the clicked task',
                   id: uuidv4(),
-                  isCompleted: true,
+                  isCompleted: false,
                 },
                 {
                   title: 'Sign in page',

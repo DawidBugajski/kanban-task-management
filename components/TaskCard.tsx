@@ -66,12 +66,14 @@ function TaskDetails({
 
   return (
     <Modal isOpen={isOpenModal} onClose={handleCloseModal}>
-      <div className='relative flex flex-col h-full p-6'>
+      <div className='relative flex flex-col h-auto max-h-[75vh] p-6 overflow-y-auto'>
         <EditStateButton
-          className='absolute top-0 left-0'
+          className='absolute top-2 left-2'
           onClick={() => console.log('edit task')}
         />
-        {title && <p className='mb-6 text-heading-l font-heading'>{title}</p>}
+        {title && (
+          <p className='w-11/12 mb-6 text-heading-l font-heading'>{title}</p>
+        )}
         {description && (
           <p className='mb-6 text-body-l text-medium-grey font-body-l'>
             {description}
@@ -80,10 +82,10 @@ function TaskDetails({
         <p className='mb-4 text-body-m font-body-m text-medium-grey'>
           Subtasks: ({completedSubtasks} of {totalSubtasks})
         </p>
-        <div className='flex flex-col gap-2 overflow-y-auto max-h-[50vh]'>
+        <div className='flex flex-col gap-2'>
           {subtasks.map((task) => (
             <div
-              className='flex items-center gap-4 p-2 rounded bg-lightbg-light-grey dark:bg-dark-grey text-body-m font-body-m'
+              className='flex items-center min-h-[40px] gap-4 p-2 rounded bg-lightbg-light-grey text-body-m font-body-m dark:bg-darkbg-very-dark-grey'
               key={task.id}
             >
               <input
@@ -92,14 +94,14 @@ function TaskDetails({
                 className={`${
                   task.isCompleted
                     ? 'line-through text-medium-grey'
-                    : 'text-black'
-                } h-10 `}
+                    : 'text-black dark:text-white'
+                }`}
               />
               <p
                 className={`${
                   task.isCompleted
                     ? 'line-through text-medium-grey'
-                    : 'text-black'
+                    : 'text-black dark:text-white'
                 }`}
               >
                 {task.title}
