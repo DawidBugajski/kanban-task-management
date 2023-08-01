@@ -5,7 +5,6 @@ import LogoMobile from './LogoMobile';
 import Button from './shared/Button';
 import Image from 'next/image';
 import {
-  ICON_VERTICAL_ELLIPSIS_SVG,
   ICON_ADD_TASK_MOBILE_SVG,
   ICON_CHEVRON_DOWN_SVG,
   ICON_CHEVRON_UP_SVG,
@@ -13,6 +12,7 @@ import {
 import { useResponsive } from '@/hooks/useResponsive';
 import SidebarBoards from './Sidebar/SidebarBoards';
 import SidebarThemeToggle from './Sidebar/SidebarThemeToggle';
+import { EditStateButton } from './shared/EditStateButton';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,7 +43,7 @@ export default function Header() {
               toggleSidebar={toggleSidebar}
               isMobileOrDesktop={isMobileOrDesktop}
             />
-            <EditBoards />
+            <EditStateButton onClick={() => console.log('clicked')} />
           </div>
         </div>
       </div>
@@ -103,18 +103,6 @@ function AddNewTask({ toggleSidebar, isMobileOrDesktop }: AddNewTaskProps) {
         />
       )}
     </Button>
-  );
-}
-
-function EditBoards() {
-  return (
-    <Image
-      src={ICON_VERTICAL_ELLIPSIS_SVG}
-      height={20}
-      width={5}
-      alt='dots'
-      className='cursor-pointer'
-    />
   );
 }
 

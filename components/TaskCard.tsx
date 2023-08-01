@@ -8,6 +8,7 @@ import {
   resetActiveTask,
 } from '@/redux/slices/boardsSlice';
 import Modal from './shared/Modal';
+import { EditStateButton } from './shared/EditStateButton';
 
 interface TaskCardProps {
   task: Task;
@@ -61,8 +62,12 @@ function TaskDetails({
 }: TaskDetailsProps) {
   return (
     <Modal isOpen={isOpenModal} onClose={handleCloseModal}>
-      <div className='flex flex-col justify-center h-full'>
-        <p>{activeTask?.title}</p>
+      <div className='relative flex flex-col justify-center h-full'>
+        <EditStateButton
+          className='absolute right-0 top-10'
+          onClick={() => console.log('edit task')}
+        />
+        <p className='text-heading-l'>{activeTask?.title}</p>
         <p>{activeTask?.description}</p>
         <p>{activeTask?.status}</p>
         {activeTask?.subtasks.map((task) => (
