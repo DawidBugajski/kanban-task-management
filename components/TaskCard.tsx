@@ -8,7 +8,13 @@ import Modal from './shared/Modal';
 interface TaskCardProps {
   task: Task;
   index: number;
-  handleSetActiveCard?: () => void;
+  handleSetActiveCard: () => void;
+}
+
+interface TaskDetailsProps {
+  isOpenModal: boolean;
+  activeTask: Task | null;
+  handleCloseModal: () => void;
 }
 
 export default function TaskCard({ task, index }: TaskCardProps) {
@@ -58,11 +64,6 @@ export default function TaskCard({ task, index }: TaskCardProps) {
   );
 }
 
-interface TaskDetailsProps {
-  isOpenModal: boolean;
-  activeTask: Task | null;
-  handleCloseModal: () => void;
-}
 function TaskDetails({
   isOpenModal,
   activeTask,
