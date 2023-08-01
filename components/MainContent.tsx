@@ -20,7 +20,7 @@ export default function MainContent({ isOpen }: MainContentProps) {
       className={`${wrapperMargin()} flex flex-col h-screen overflow-hidden`}
     >
       <Header />
-      <div className='flex flex-col flex-grow overflow-auto'>
+      <div className='flex flex-col flex-grow overflow-auto dashboard-section'>
         <Dashboard />
       </div>
     </div>

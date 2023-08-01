@@ -22,6 +22,74 @@ export const STARTING_DATA = {
           id: uuidv4(),
           tasks: [
             {
+              title: 'TEST TASK',
+              description: '',
+              status: 'Todo',
+              id: uuidv4(),
+              subtasks: [
+                {
+                  title: 'Sign up page',
+                  id: uuidv4(),
+                  isCompleted: true,
+                },
+                {
+                  title: 'Sign in page',
+                  id: uuidv4(),
+                  isCompleted: false,
+                },
+                {
+                  title: 'Welcome page',
+                  id: uuidv4(),
+                  isCompleted: false,
+                },
+                {
+                  title: 'Find hunter',
+                  id: uuidv4(),
+                  isCompleted: false,
+                },
+                {
+                  title: 'Gather assets',
+                  id: uuidv4(),
+                  isCompleted: false,
+                },
+                {
+                  title: 'Draft product page',
+                  id: uuidv4(),
+                  isCompleted: false,
+                },
+                {
+                  title: 'Notify customers',
+                  id: uuidv4(),
+                  isCompleted: false,
+                },
+                {
+                  title: 'Notify network',
+                  id: uuidv4(),
+                  isCompleted: false,
+                },
+                {
+                  title: 'Launch!',
+                  id: uuidv4(),
+                  isCompleted: false,
+                },
+                {
+                  title: 'Learn next-js',
+                  id: uuidv4(),
+                  isCompleted: false,
+                },
+                {
+                  title: 'Learn react',
+                  id: uuidv4(),
+                  isCompleted: false,
+                },
+                {
+                  title: 'Learn typescript',
+                  id: uuidv4(),
+                  isCompleted: false,
+                },
+              ],
+            },
+            {
               title: 'Build UI for onboarding flow',
               description: '',
               status: 'Todo',

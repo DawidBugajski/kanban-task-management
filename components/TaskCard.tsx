@@ -60,25 +60,59 @@ function TaskDetails({
   activeTask,
   handleCloseModal,
 }: TaskDetailsProps) {
+  const { title, description, subtasks = [] } = activeTask || {};
+  const totalSubtasks = subtasks.length;
+  const completedSubtasks = subtasks.filter((task) => task.isCompleted).length;
+
   return (
     <Modal isOpen={isOpenModal} onClose={handleCloseModal}>
-      <div className='relative flex flex-col justify-center h-full'>
+      <div className='relative flex flex-col h-full p-6'>
         <EditStateButton
-          className='absolute right-0 top-10'
+          className='absolute top-0 left-0'
           onClick={() => console.log('edit task')}
         />
-        <p className='text-heading-l'>{activeTask?.title}</p>
-        <p>{activeTask?.description}</p>
-        <p>{activeTask?.status}</p>
-        {activeTask?.subtasks.map((task) => (
-          <div key={task.id}>
-            <p
-              className={`${task.isCompleted ? 'text-green-400' : 'text-red'}`}
+        {title && <p className='mb-6 text-heading-l font-heading'>{title}</p>}
+        {description && (
+          <p className='mb-6 text-body-l text-medium-grey font-body-l'>
+            {description}
+          </p>
+        )}
+        <p className='mb-4 text-body-m font-body-m text-medium-grey'>
+          Subtasks: ({completedSubtasks} of {totalSubtasks})
+        </p>
+        <div className='flex flex-col gap-2 overflow-y-auto max-h-[50vh]'>
+          {subtasks.map((task) => (
+            <div
+              className='flex items-center gap-4 p-2 rounded bg-lightbg-light-grey dark:bg-dark-grey text-body-m font-body-m'
+              key={task.id}
             >
-              {task.title}
-            </p>
-          </div>
-        ))}
+              <input
+                type='checkbox'
+                checked={task.isCompleted}
+                className={`${
+                  task.isCompleted
+                    ? 'line-through text-medium-grey'
+                    : 'text-black'
+                } h-10 `}
+              />
+              <p
+                className={`${
+                  task.isCompleted
+                    ? 'line-through text-medium-grey'
+                    : 'text-black'
+                }`}
+              >
+                {task.title}
+              </p>
+            </div>
+          ))}
+        </div>
+        <div className='mt-4'>
+          <p className='text-body-m font-body-m text-medium-grey'>
+            current status
+          </p>
+          <p className='p-1 border-[1px] rounded border-medium-grey'>MENU</p>
+        </div>
       </div>
     </Modal>
   );
