@@ -27,22 +27,22 @@
 }
 
 @media (min-width: 768px) {
-  .dashboard-section::-webkit-scrollbar {
+  ::-webkit-scrollbar {
     width: 10px;
     height: 10px;
     background-color: #0f0f13;
   }
 
-  .dashboard-section::-webkit-scrollbar-corner {
+  ::-webkit-scrollbar-corner {
     background-color: #000112;
   }
 
-  .dashboard-section::-webkit-scrollbar-thumb {
+  ::-webkit-scrollbar-thumb {
     background-color: #635fc7;
     background: linear-gradient(0deg, #a8a4ff, #635fc7);
   }
 
-  .dashboard-section::-webkit-scrollbar-track {
+  ::-webkit-scrollbar-track {
     background: transparent;
   }
 }

@@ -6,6 +6,7 @@ import {
   setActiveTask,
   getActiveTask,
   resetActiveTask,
+  getActiveBoard,
 } from '@/redux/slices/boardsSlice';
 import Modal from './shared/Modal';
 import { EditStateButton } from './shared/EditStateButton';
@@ -64,6 +65,8 @@ function TaskDetails({
   const { title, description, subtasks = [] } = activeTask || {};
   const totalSubtasks = subtasks.length;
   const completedSubtasks = subtasks.filter((task) => task.isCompleted).length;
+  const activeBoard = useAppSelector(getActiveBoard);
+  const { columns: currentColumns } = activeBoard;
 
   return (
     <Modal isOpen={isOpenModal} onClose={handleCloseModal}>
@@ -86,7 +89,7 @@ function TaskDetails({
         <div className='flex flex-col gap-2'>
           {subtasks.map((task) => (
             <div
-              className='flex items-center min-h-[40px] gap-4 p-2 rounded bg-lightbg-light-grey text-body-m font-body-m dark:bg-darkbg-very-dark-grey'
+              className='flex items-center min-h-[40px] gap-4 p-4 rounded bg-lightbg-light-grey text-body-m font-body-m dark:bg-darkbg-very-dark-grey'
               key={task.id}
             >
               <div
@@ -123,7 +126,7 @@ function TaskDetails({
           <p className='mb-2 text-body-m font-body-m text-medium-grey dark:text-white'>
             Current status
           </p>
-          <Dropdown />
+          <Dropdown options={currentColumns} />
         </div>
       </div>
     </Modal>
