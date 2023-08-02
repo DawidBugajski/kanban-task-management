@@ -65,11 +65,41 @@ export const boardsSlice = createSlice({
     resetActiveTask: (state) => {
       state.activeTask = null;
     },
+    // ? test
+    toggleSubtask: (
+      state,
+      action: PayloadAction<{ taskId: string; subtaskId: string }>
+    ) => {
+      const { taskId, subtaskId } = action.payload;
+
+      const activeBoard = state.boards.find(
+        (board) => board.id === state.activeBoardId
+      );
+
+      if (!activeBoard) return;
+
+      const task = activeBoard.columns
+        .flatMap((column) => column.tasks)
+        .find((task) => task.id === taskId);
+
+      if (!task) return;
+
+      const subtask = task.subtasks.find((subtask) => subtask.id === subtaskId);
+
+      if (!subtask) return;
+
+      subtask.isCompleted = !subtask.isCompleted;
+    },
   },
 });
 
-export const { setActiveBoard, moveTask, setActiveTask, resetActiveTask } =
-  boardsSlice.actions;
+export const {
+  setActiveBoard,
+  moveTask,
+  setActiveTask,
+  resetActiveTask,
+  toggleSubtask,
+} = boardsSlice.actions;
 export const getBoards = (state: RootState): Board[] => state.boards.boards;
 export const getActiveBoard = (state: RootState): Board =>
   state.boards.boards.find((board) => board.id === state.boards.activeBoardId)!;
