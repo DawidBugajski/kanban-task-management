@@ -9,11 +9,12 @@ import {
 } from '@/redux/slices/boardsSlice';
 import Modal from './shared/Modal';
 import { EditStateButton } from './shared/EditStateButton';
+import Dropdown from './shared/Dropdown';
 
 interface TaskCardProps {
   task: Task;
   index: number;
-  handleSetActiveCard: () => void;
+  handleSetActiveCard?: () => void;
 }
 
 interface TaskDetailsProps {
@@ -68,7 +69,7 @@ function TaskDetails({
     <Modal isOpen={isOpenModal} onClose={handleCloseModal}>
       <div className='relative flex flex-col h-auto max-h-[75vh] p-6 overflow-y-auto'>
         <EditStateButton
-          className='absolute top-2 left-2'
+          className='absolute top-[0.75rem] left-2 focus-visible:outline-none'
           onClick={() => console.log('edit task')}
         />
         {title && (
@@ -88,15 +89,24 @@ function TaskDetails({
               className='flex items-center min-h-[40px] gap-4 p-2 rounded bg-lightbg-light-grey text-body-m font-body-m dark:bg-darkbg-very-dark-grey'
               key={task.id}
             >
-              <input
-                type='checkbox'
-                checked={task.isCompleted}
-                className={`${
+              <div
+                className={`relative h-4 w-4 border shrink-0 ${
                   task.isCompleted
-                    ? 'line-through text-medium-grey'
-                    : 'text-black dark:text-white'
-                }`}
-              />
+                    ? 'bg-purple border-purple'
+                    : 'bg-white border-bg-lightbg-light-grey'
+                } rounded-sm`}
+              >
+                <input
+                  type='checkbox'
+                  checked={task.isCompleted}
+                  className='absolute top-0 left-0 w-full h-full rounded-sm appearance-none cursor-pointer'
+                />
+                {task.isCompleted && (
+                  <span className='absolute flex items-center justify-center w-full h-full text-white rounded-sm shrink-0'>
+                    ✓
+                  </span>
+                )}
+              </div>
               <p
                 className={`${
                   task.isCompleted
@@ -110,10 +120,10 @@ function TaskDetails({
           ))}
         </div>
         <div className='mt-4'>
-          <p className='text-body-m font-body-m text-medium-grey'>
-            current status
+          <p className='mb-2 text-body-m font-body-m text-medium-grey dark:text-white'>
+            Current status
           </p>
-          <p className='p-1 border-[1px] rounded border-medium-grey'>MENU</p>
+          <Dropdown />
         </div>
       </div>
     </Modal>
@@ -147,7 +157,7 @@ function DraggableTaskCard({
             <h3 className='transition-colors duration-100 text-heading-m font-heading group-hover:text-purple'>
               {task.title}
             </h3>
-            <p className='text-body-m font-heading text-medium-grey '>
+            <p className='text-body-m font-heading text-medium-grey'>
               {completedSubtasks.length} of {subtasks.length} subtasks
             </p>
           </div>
