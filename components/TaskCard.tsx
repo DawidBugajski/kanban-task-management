@@ -107,7 +107,7 @@ function TaskDetails({ isOpenModal, handleCloseModal }: TaskDetailsProps) {
                     className='absolute top-0 left-0 w-full h-full rounded-sm appearance-none cursor-pointer'
                   />
                   {task.isCompleted && (
-                    <span className='absolute flex items-center justify-center w-full h-full text-white rounded-sm cursor-pointer shrink-0'>
+                    <span className='absolute flex items-center justify-center w-full h-full text-white rounded-sm cursor-pointer pointer-events-none shrink-0'>
                       ✓
                     </span>
                   )}
