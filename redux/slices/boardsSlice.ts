@@ -90,7 +90,7 @@ export const boardsSlice = createSlice({
 
       subtask.isCompleted = !subtask.isCompleted;
 
-      // toggleSubtask
+      // update the active task in initialstate to re-render correctly && user can click checkbox and see results w/o exiting and entering the same task
       if (state.activeTask && state.activeTask.id === taskId) {
         state.activeTask = { ...task };
       }
