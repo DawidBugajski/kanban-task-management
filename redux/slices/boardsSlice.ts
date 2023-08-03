@@ -65,7 +65,6 @@ export const boardsSlice = createSlice({
     resetActiveTask: (state) => {
       state.activeTask = null;
     },
-    // ? test
     toggleSubtask: (
       state,
       action: PayloadAction<{ taskId: string; subtaskId: string }>
@@ -90,11 +89,10 @@ export const boardsSlice = createSlice({
 
       subtask.isCompleted = !subtask.isCompleted;
 
-      // update the active task in initialstate to re-render correctly && user can click checkbox and see results w/o exiting and entering the same task
-
       if (state.activeTask && state.activeTask.id === taskId) {
         state.activeTask = { ...task };
       }
+      // update the active task in initialstate to re-render correctly && user can click checkbox and see results w/o exiting and entering the same task
     },
   },
 });
@@ -120,6 +118,7 @@ export const getActiveTask = (state: RootState): Task | null => {
         .flatMap((column) => column.tasks)
         .find((task) => task.id === state.boards.activeTask?.id) || null
     : null;
+  // Prevent tasks to flip to other boards when refreshing the page
 };
 
 export default boardsSlice.reducer;
