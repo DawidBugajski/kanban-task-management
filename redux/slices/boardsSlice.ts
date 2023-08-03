@@ -91,6 +91,7 @@ export const boardsSlice = createSlice({
       subtask.isCompleted = !subtask.isCompleted;
 
       // update the active task in initialstate to re-render correctly && user can click checkbox and see results w/o exiting and entering the same task
+
       if (state.activeTask && state.activeTask.id === taskId) {
         state.activeTask = { ...task };
       }
@@ -109,7 +110,16 @@ export const getBoards = (state: RootState): Board[] => state.boards.boards;
 export const getActiveBoard = (state: RootState): Board =>
   state.boards.boards.find((board) => board.id === state.boards.activeBoardId)!;
 // "!" - the expression before it will never be null or undefined - here always some board must be active
-export const getActiveTask = (state: RootState): Task | null =>
-  state.boards.activeTask;
+export const getActiveTask = (state: RootState): Task | null => {
+  const activeBoard = state.boards.boards.find(
+    (board) => board.id === state.boards.activeBoardId
+  );
+
+  return activeBoard
+    ? activeBoard.columns
+        .flatMap((column) => column.tasks)
+        .find((task) => task.id === state.boards.activeTask?.id) || null
+    : null;
+};
 
 export default boardsSlice.reducer;
