@@ -65,8 +65,6 @@ function TaskDetails({ isOpenModal, handleCloseModal }: TaskDetailsProps) {
   const completedSubtasks = subtasks.filter((task) => task.isCompleted).length;
 
   const handleToggleSubtask = (taskId: string, subtaskId: string) => {
-    console.log('taskId:', taskId);
-    console.log('subtaskId:', subtaskId);
     dispatch(toggleSubtask({ taskId, subtaskId }));
   };
 

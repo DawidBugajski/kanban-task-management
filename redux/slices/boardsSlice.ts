@@ -89,6 +89,11 @@ export const boardsSlice = createSlice({
       if (!subtask) return;
 
       subtask.isCompleted = !subtask.isCompleted;
+
+      // toggleSubtask
+      if (state.activeTask && state.activeTask.id === taskId) {
+        state.activeTask = { ...task };
+      }
     },
   },
 });
