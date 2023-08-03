@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { Task } from '@/types';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
@@ -7,6 +7,7 @@ import {
   getActiveTask,
   resetActiveTask,
   getActiveBoard,
+  toggleSubtask,
 } from '@/redux/slices/boardsSlice';
 import Modal from './shared/Modal';
 import { EditStateButton } from './shared/EditStateButton';
@@ -20,14 +21,12 @@ interface TaskCardProps {
 
 interface TaskDetailsProps {
   isOpenModal: boolean;
-  activeTask: Task | null;
   handleCloseModal: () => void;
 }
 
 export default function TaskCard({ task, index }: TaskCardProps) {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const dispatch = useAppDispatch();
-  const activeTask = useAppSelector(getActiveTask);
 
   const handleSetActiveCard = () => {
     dispatch(setActiveTask(task));
@@ -44,7 +43,6 @@ export default function TaskCard({ task, index }: TaskCardProps) {
       {isOpenModal && (
         <TaskDetails
           isOpenModal={isOpenModal}
-          activeTask={activeTask}
           handleCloseModal={handleCloseModal}
         />
       )}
@@ -57,16 +55,20 @@ export default function TaskCard({ task, index }: TaskCardProps) {
   );
 }
 
-function TaskDetails({
-  isOpenModal,
-  activeTask,
-  handleCloseModal,
-}: TaskDetailsProps) {
+function TaskDetails({ isOpenModal, handleCloseModal }: TaskDetailsProps) {
+  const dispatch = useAppDispatch();
+  const activeBoard = useAppSelector(getActiveBoard);
+  const activeTask = useAppSelector(getActiveTask);
+  const { columns: activeBoardColumns } = activeBoard;
   const { title, description, subtasks = [] } = activeTask || {};
   const totalSubtasks = subtasks.length;
   const completedSubtasks = subtasks.filter((task) => task.isCompleted).length;
-  const activeBoard = useAppSelector(getActiveBoard);
-  const { columns: currentColumns } = activeBoard;
+
+  const handleToggleSubtask = (taskId: string, subtaskId: string) => {
+    console.log('taskId:', taskId);
+    console.log('subtaskId:', subtaskId);
+    dispatch(toggleSubtask({ taskId, subtaskId }));
+  };
 
   return (
     <Modal isOpen={isOpenModal} onClose={handleCloseModal}>
@@ -87,46 +89,48 @@ function TaskDetails({
           Subtasks: ({completedSubtasks} of {totalSubtasks})
         </p>
         <div className='flex flex-col gap-2'>
-          {subtasks.map((task) => (
-            <div
-              className='flex items-center min-h-[40px] gap-4 p-4 rounded bg-lightbg-light-grey text-body-m font-body-m dark:bg-darkbg-very-dark-grey'
-              key={task.id}
-            >
+          {activeTask &&
+            subtasks.map((task) => (
               <div
-                className={`relative h-4 w-4 border shrink-0 ${
-                  task.isCompleted
-                    ? 'bg-purple border-purple'
-                    : 'bg-white border-bg-lightbg-light-grey'
-                } rounded-sm`}
+                className='flex items-center min-h-[40px] gap-4 p-4 rounded bg-lightbg-light-grey text-body-m font-body-m dark:bg-darkbg-very-dark-grey'
+                key={task.id}
               >
-                <input
-                  type='checkbox'
-                  checked={task.isCompleted}
-                  className='absolute top-0 left-0 w-full h-full rounded-sm appearance-none cursor-pointer'
-                />
-                {task.isCompleted && (
-                  <span className='absolute flex items-center justify-center w-full h-full text-white rounded-sm shrink-0'>
-                    ✓
-                  </span>
-                )}
+                <div
+                  className={`relative h-4 w-4 border shrink-0 ${
+                    task.isCompleted
+                      ? 'bg-purple border-purple'
+                      : 'bg-white border-bg-lightbg-light-grey'
+                  } rounded-sm`}
+                >
+                  <input
+                    type='checkbox'
+                    onChange={() => handleToggleSubtask(activeTask.id, task.id)}
+                    checked={task.isCompleted}
+                    className='absolute top-0 left-0 w-full h-full rounded-sm appearance-none cursor-pointer'
+                  />
+                  {task.isCompleted && (
+                    <span className='absolute flex items-center justify-center w-full h-full text-white rounded-sm cursor-pointer shrink-0'>
+                      ✓
+                    </span>
+                  )}
+                </div>
+                <p
+                  className={`${
+                    task.isCompleted
+                      ? 'line-through text-medium-grey'
+                      : 'text-black dark:text-white'
+                  }`}
+                >
+                  {task.title}
+                </p>
               </div>
-              <p
-                className={`${
-                  task.isCompleted
-                    ? 'line-through text-medium-grey'
-                    : 'text-black dark:text-white'
-                }`}
-              >
-                {task.title}
-              </p>
-            </div>
-          ))}
+            ))}
         </div>
         <div className='mt-4'>
           <p className='mb-2 text-body-m font-body-m text-medium-grey dark:text-white'>
             Current status
           </p>
-          <Dropdown options={currentColumns} />
+          <Dropdown options={activeBoardColumns} />
         </div>
       </div>
     </Modal>
