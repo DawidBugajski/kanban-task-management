@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { Task } from '@/types';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
