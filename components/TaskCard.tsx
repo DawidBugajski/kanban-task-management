@@ -8,6 +8,7 @@ import {
   resetActiveTask,
   getActiveBoard,
   toggleSubtask,
+  moveTaskToColumn,
 } from '@/redux/slices/boardsSlice';
 import Modal from './shared/Modal';
 import { EditStateButton } from './shared/EditStateButton';

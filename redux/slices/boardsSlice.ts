@@ -24,6 +24,12 @@ export const boardsSlice = createSlice({
     setActiveBoard: (state, action: PayloadAction<string>) => {
       state.activeBoardId = action.payload;
     },
+    setActiveTask: (state, action: PayloadAction<Task>) => {
+      state.activeTask = action.payload;
+    },
+    resetActiveTask: (state) => {
+      state.activeTask = null;
+    },
     moveTask: (
       state,
       action: PayloadAction<{
@@ -59,12 +65,6 @@ export const boardsSlice = createSlice({
       // Insert the deleted task in the appropriate place in the target column
       destinationColumn.tasks.splice(destinationIndex, 0, removed);
     },
-    setActiveTask: (state, action: PayloadAction<Task>) => {
-      state.activeTask = action.payload;
-    },
-    resetActiveTask: (state) => {
-      state.activeTask = null;
-    },
     toggleSubtask: (
       state,
       action: PayloadAction<{ taskId: string; subtaskId: string }>
@@ -94,6 +94,46 @@ export const boardsSlice = createSlice({
       }
       // update the active task in initialstate to re-render correctly && user can click checkbox and see results w/o exiting and entering the same task
     },
+    moveTaskToColumn: (
+      state,
+      action: PayloadAction<{
+        taskId: string;
+        newColumnId: string;
+      }>
+    ) => {
+      const { taskId, newColumnId } = action.payload;
+
+      const activeBoard = state.boards.find(
+        (board) => board.id === state.activeBoardId
+      );
+
+      if (!activeBoard) return;
+
+      let taskToMove: Task | null = null;
+      activeBoard.columns.forEach((column) => {
+        const taskIndex = column.tasks.findIndex((task) => task.id === taskId);
+
+        if (taskIndex !== -1) {
+          // Remove the task from the source column and save it to the variable "taskToMove"
+          [taskToMove] = column.tasks.splice(taskIndex, 1);
+        }
+      });
+
+      if (!taskToMove) return;
+      // Find the destination column and insert the task
+
+      const newColumn = activeBoard.columns.find(
+        (column) => column.id === newColumnId
+      );
+
+      if (!newColumn) return;
+
+      newColumn.tasks.push(taskToMove);
+      // ?  delete
+      // if (state.activeTask && state.activeTask.id === taskId && taskToMove) {
+      //   state.activeTask = taskToMove;
+      // }
+    },
   },
 });
 
@@ -103,6 +143,7 @@ export const {
   setActiveTask,
   resetActiveTask,
   toggleSubtask,
+  moveTaskToColumn,
 } = boardsSlice.actions;
 export const getBoards = (state: RootState): Board[] => state.boards.boards;
 export const getActiveBoard = (state: RootState): Board =>
