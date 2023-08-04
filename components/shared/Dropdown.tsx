@@ -24,7 +24,6 @@ export default function Dropdown({ options }: DropdownProps) {
   const currentColumnForTask = activeBoard.columns.find((column) =>
     column.tasks.some((task) => task.id === activeTask?.id)
   );
-  console.log(currentColumnForTask);
 
   const handleMoveTaskToColumn = (newColumnId: string) => {
     if (!activeTask) return;

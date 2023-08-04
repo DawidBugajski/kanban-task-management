@@ -36,6 +36,42 @@ export const STARTING_DATA = {
                 {
                   title: 'Implement switching subtasks with dropdown',
                   id: uuidv4(),
+                  isCompleted: true,
+                },
+                {
+                  title: 'Style dotsButton',
+                  id: uuidv4(),
+                  isCompleted: false,
+                },
+                {
+                  title: 'add hover bg on subtask',
+                  id: uuidv4(),
+                  isCompleted: false,
+                },
+                {
+                  title: 'Refactore component',
+                  id: uuidv4(),
+                  isCompleted: false,
+                },
+                {
+                  title:
+                    'Think about moving toggleModal to redux if it will be hard to pass props through new components',
+                  id: uuidv4(),
+                  isCompleted: false,
+                },
+                {
+                  title: 'Implement working dotsButton',
+                  id: uuidv4(),
+                  isCompleted: false,
+                },
+                {
+                  title: 'Implement edit Task',
+                  id: uuidv4(),
+                  isCompleted: false,
+                },
+                {
+                  title: 'Implement delete Task',
+                  id: uuidv4(),
                   isCompleted: false,
                 },
               ],

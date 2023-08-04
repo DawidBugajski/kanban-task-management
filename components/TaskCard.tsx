@@ -91,7 +91,7 @@ function TaskDetails({ isOpenModal, handleCloseModal }: TaskDetailsProps) {
           {activeTask &&
             subtasks.map((task) => (
               <div
-                className='flex items-center min-h-[40px] gap-4 p-4 rounded bg-lightbg-light-grey text-body-m font-body-m dark:bg-darkbg-very-dark-grey'
+                className='transition-colors duration-150 group dark:hover:bg-purple-inputs hover:bg-purple-inputs flex items-center min-h-[40px] gap-4 p-4 rounded bg-lightbg-light-grey text-body-m font-body-m dark:bg-darkbg-very-dark-grey'
                 key={task.id}
               >
                 <div
@@ -114,10 +114,10 @@ function TaskDetails({ isOpenModal, handleCloseModal }: TaskDetailsProps) {
                   )}
                 </div>
                 <p
-                  className={`${
+                  className={`text-body-m font-body-m ${
                     task.isCompleted
-                      ? 'line-through text-medium-grey'
-                      : 'text-black dark:text-white'
+                      ? 'line-through text-medium-grey group-hover:text-black'
+                      : 'text-black dark:text-white group-hover:text-black'
                   }`}
                 >
                   {task.title}
