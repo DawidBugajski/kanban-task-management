@@ -21,8 +21,8 @@ export default function PopoverItem() {
         </>
       </PopoverTrigger>
       <PopoverContent className='mt-4'>
-        <p className='text-medium-grey'>Edit Task</p>
-        <p className='text-red'>Delete Task</p>
+        <p className='cursor-pointer text-medium-grey'>Edit Task</p>
+        <p className='cursor-pointer text-red'>Delete Task</p>
       </PopoverContent>
     </Popover>
   );

@@ -38,7 +38,7 @@ export default function TaskDetails({
 
   return (
     <Modal isOpen={isOpenModal} onClose={handleCloseModal}>
-      <div className='relative flex flex-col h-auto max-h-[75vh] p-6 overflow-y-auto'>
+      <div className='relative flex flex-col h-auto p-6 '>
         {title && (
           <div className='flex items-center mb-6 md:justify-between'>
             <p className='w-11/12 md:w-10/12 text-heading-l font-heading'>
@@ -76,7 +76,7 @@ function SubtaskList({
   activeTaskId,
 }: SubtaskListProps) {
   return (
-    <div className='flex flex-col gap-2'>
+    <div className='flex flex-col gap-2 max-h-[35vh] overflow-y-auto shrink-0'>
       {subtasks.map((task) => (
         <div
           className='transition-colors duration-150 group dark:hover:bg-purple-inputs hover:bg-purple-inputs flex items-center min-h-[40px] gap-4 p-4 rounded bg-lightbg-light-grey text-body-m font-body-m dark:bg-darkbg-very-dark-grey'
