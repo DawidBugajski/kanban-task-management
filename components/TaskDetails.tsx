@@ -4,10 +4,10 @@ import {
   getActiveTask,
   toggleSubtask,
 } from '@/redux/slices/boardsSlice';
-import Modal from './shared/Modal';
-import { EditStateButton } from './shared/EditStateButton';
-import Dropdown from './shared/Dropdown';
 import { Subtask } from '@/types';
+import Modal from './shared/Modal';
+import PopoverItem from './shared/Popover';
+import Dropdown from './shared/Dropdown';
 
 interface TaskDetailsProps {
   isOpenModal: boolean;
@@ -39,12 +39,13 @@ export default function TaskDetails({
   return (
     <Modal isOpen={isOpenModal} onClose={handleCloseModal}>
       <div className='relative flex flex-col h-auto max-h-[75vh] p-6 overflow-y-auto'>
-        <EditStateButton
-          className='absolute top-[0.75rem] left-2 focus-visible:outline-none'
-          onClick={() => console.log('edit task')}
-        />
         {title && (
-          <p className='w-11/12 mb-6 text-heading-l font-heading'>{title}</p>
+          <div className='flex items-center mb-6 md:justify-between'>
+            <p className='w-11/12 md:w-10/12 text-heading-l font-heading'>
+              {title}
+            </p>
+            <PopoverItem />
+          </div>
         )}
         {description && (
           <p className='mb-6 text-body-l text-medium-grey font-body-l'>

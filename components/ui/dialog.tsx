@@ -48,10 +48,10 @@ const DialogContent = React.forwardRef<
       {...props}
     >
       {children}
-      <DialogPrimitive.Close className='absolute rounded-sm right-4 top-4'>
+      {/* <DialogPrimitive.Close className='absolute rounded-sm right-4 top-4'>
         <X className='w-4 h-4 text-medium-grey' />
         <span className='sr-only'>Close</span>
-      </DialogPrimitive.Close>
+      </DialogPrimitive.Close> */}
     </DialogPrimitive.Content>
   </DialogPortal>
 ));
