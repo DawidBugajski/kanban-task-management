@@ -46,6 +46,24 @@ export const STARTING_DATA = {
                   isCompleted: false,
                 },
                 {
+                  title:
+                    'Edit Task - here it should not close module after change, because we have btn to save',
+                  id: uuidv4(),
+                  isCompleted: false,
+                },
+                {
+                  title:
+                    'Edit Task - control state of inputs to edit/save task => new reducer in redux for editing tasks',
+                  id: uuidv4(),
+                  isCompleted: false,
+                },
+                {
+                  title:
+                    'Edit Task/Delete task => should be refactored to new components?',
+                  id: uuidv4(),
+                  isCompleted: false,
+                },
+                {
                   title: 'Add Task',
                   id: uuidv4(),
                   isCompleted: false,

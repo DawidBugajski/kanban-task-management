@@ -61,7 +61,7 @@ function TaskDetailsView({
   const completedSubtasks = subtasks.filter((task) => task.isCompleted).length;
 
   return (
-    <div className='relative flex flex-col h-auto p-6 '>
+    <div className='relative flex flex-col h-auto p-6 md:p-8'>
       {title && (
         <div className='flex items-center mb-6 md:justify-between'>
           <p className='w-11/12 text-heading-l font-heading'>{title}</p>
@@ -146,17 +146,35 @@ function EditTask() {
   const { subtasks = [] } = activeTask || {};
 
   return (
-    <div className='relative flex flex-col h-auto p-6 '>
+    <div className='relative flex flex-col h-auto gap-6 p-6 md:p-8'>
       <h2 className='text-heading-l font-heading'>Edit Task</h2>
-      <p className='text-body-m text-medium-grey font-body-m'>Title</p>
-      <input value={activeTask?.title || 'enter title'} type='text' />
-      <p>Description</p>
-      <textarea value={activeTask?.description || 'Your description here...'} />
-      <div>
+      <div className='flex flex-col gap-2'>
+        <p className='text-body-m text-medium-grey font-body-m'>Title</p>
+        <input
+          className='dark:bg-transparent text-[13px] font-medium leading-6 w-full py-2 px-4 border border-opacity-25 rounded border-slate-400'
+          value={activeTask?.title || 'enter title'}
+          type='text'
+        />
+      </div>
+      <div className='flex flex-col gap-2'>
+        <p className='text-body-m text-medium-grey font-body-m'>Description</p>
+        <textarea
+          className='dark:bg-transparent pr-6 min-h-[120px] text-[#bfbfc3] text-[13px] font-medium leading-6 w-full py-2 pl-4 border border-opacity-25 rounded border-slate-400'
+          value={activeTask?.description || 'Your description here...'}
+        />
+      </div>
+      <div className='flex flex-col justify-between w-full gap-3 max-h-[25vh] overflow-y-auto'>
         {subtasks.map((task) => (
-          <div className='flex' key={task.id}>
-            <input value={task.title} type='text' />
-            <Button onClick={() => console.log('k')} className='w-auto h-auto'>
+          <div className='flex ' key={task.id}>
+            <input
+              className='dark:bg-transparent text-[13px] font-medium leading-6 py-2 px-4 border border-opacity-25 rounded border-slate-400 w-11/12'
+              value={task.title}
+              type='text'
+            />
+            <Button
+              onClick={() => console.log('k')}
+              className='mx-auto shrink-0'
+            >
               <Image
                 src={ICON_CROSS_SVG}
                 alt='icon cross'
@@ -194,7 +212,7 @@ function DeleteTask({ setView }: DeleteTaskProps) {
   };
 
   return (
-    <div className='relative flex flex-col h-auto gap-6 p-8'>
+    <div className='relative flex flex-col h-auto gap-6 p-6 md:p-8'>
       <h2 className='text-red heading-l font-heading'>Delete this task?</h2>
       <p className='font-body-l text-body-l text-medium-grey'>
         Are you sure you want to delete the ‘{activeTask?.title}’ task and its
