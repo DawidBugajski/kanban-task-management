@@ -17,6 +17,8 @@ import {
   SubtaskListProps,
   TaskDetailsViewProps,
 } from '@/types/taskTypes';
+import { ICON_CROSS_SVG } from '@/constans';
+import Image from 'next/image';
 
 export default function TaskDetails({
   isOpenModal,
@@ -138,7 +140,48 @@ function SubtaskList({
 }
 
 function EditTask() {
-  return <div className='relative flex flex-col h-auto p-6 '>EDIT TASK</div>;
+  const activeBoard = useAppSelector(getActiveBoard);
+  const activeTask = useAppSelector(getActiveTask);
+  const { columns: activeBoardColumns } = activeBoard;
+  const { subtasks = [] } = activeTask || {};
+
+  return (
+    <div className='relative flex flex-col h-auto p-6 '>
+      <h2 className='text-heading-l font-heading'>Edit Task</h2>
+      <p className='text-body-m text-medium-grey font-body-m'>Title</p>
+      <input value={activeTask?.title || 'enter title'} type='text' />
+      <p>Description</p>
+      <textarea value={activeTask?.description || 'Your description here...'} />
+      <div>
+        {subtasks.map((task) => (
+          <div className='flex' key={task.id}>
+            <input value={task.title} type='text' />
+            <Button onClick={() => console.log('k')} className='w-auto h-auto'>
+              <Image
+                src={ICON_CROSS_SVG}
+                alt='icon cross'
+                width={15}
+                height={15}
+              />
+            </Button>
+          </div>
+        ))}
+      </div>
+      <Button
+        onClick={() => console.log('first')}
+        className='transition-colors duration-100 hover:bg-[#d8d7f1] text-body-l font-bold bg-[#f0effa] py-2 text-center text-purple rounded-[20px] grow'
+      >
+        +Add New Subtask
+      </Button>
+      <Dropdown options={activeBoardColumns} />
+      <Button
+        onClick={() => console.log('first')}
+        className='transition-colors duration-100 hover:bg-purple-hover text-body-l font-bold bg-purple py-2 text-center text-white rounded-[20px] grow'
+      >
+        Save Changes
+      </Button>
+    </div>
+  );
 }
 
 function DeleteTask({ setView }: DeleteTaskProps) {
