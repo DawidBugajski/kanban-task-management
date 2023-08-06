@@ -1,4 +1,3 @@
-import React from 'react';
 import Image from 'next/image';
 import { ICON_VERTICAL_ELLIPSIS_SVG } from '@/constans';
 import {
@@ -6,11 +5,16 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import { TaskView } from '@/types';
 
-export default function PopoverItem() {
+interface PopoverItemProps {
+  setView: React.Dispatch<React.SetStateAction<TaskView>>;
+}
+
+export default function PopoverItem({ setView }: PopoverItemProps) {
   return (
     <Popover>
-      <PopoverTrigger className=''>
+      <PopoverTrigger className='focus-visible:outline-none'>
         <>
           <Image
             src={ICON_VERTICAL_ELLIPSIS_SVG}
@@ -21,8 +25,18 @@ export default function PopoverItem() {
         </>
       </PopoverTrigger>
       <PopoverContent className='mt-4 font-medium'>
-        <p className='cursor-pointer text-medium-grey'>Edit Task</p>
-        <p className='cursor-pointer text-red'>Delete Task</p>
+        <p
+          onClick={() => setView(TaskView.Edit)}
+          className='cursor-pointer text-medium-grey hover:underline'
+        >
+          Edit Task
+        </p>
+        <p
+          onClick={() => setView(TaskView.Delete)}
+          className='cursor-pointer text-red hover:underline'
+        >
+          Delete Task
+        </p>
       </PopoverContent>
     </Popover>
   );

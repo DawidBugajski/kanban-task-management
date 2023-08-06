@@ -4,14 +4,23 @@ import {
   getActiveTask,
   toggleSubtask,
 } from '@/redux/slices/boardsSlice';
-import { Subtask } from '@/types';
+import { Column, Subtask, Task } from '@/types';
 import Modal from './shared/Modal';
 import PopoverItem from './shared/Popover';
 import Dropdown from './shared/Dropdown';
+import { TaskView } from '@/types';
+import { useState } from 'react';
 
 interface TaskDetailsProps {
   isOpenModal: boolean;
   handleCloseModal: () => void;
+}
+
+interface TaskDetailsViewProps {
+  activeBoardColumns: Column[];
+  activeTask: Task | null;
+  handleToggleSubtask: (taskId: string, subtaskId: string) => void;
+  setView: React.Dispatch<React.SetStateAction<TaskView>>;
 }
 
 interface SubtaskListProps {
@@ -28,9 +37,8 @@ export default function TaskDetails({
   const activeBoard = useAppSelector(getActiveBoard);
   const activeTask = useAppSelector(getActiveTask);
   const { columns: activeBoardColumns } = activeBoard;
-  const { title, description, subtasks = [] } = activeTask || {};
-  const totalSubtasks = subtasks.length;
-  const completedSubtasks = subtasks.filter((task) => task.isCompleted).length;
+
+  const [view, setView] = useState(TaskView.Details);
 
   const handleToggleSubtask = (taskId: string, subtaskId: string) => {
     dispatch(toggleSubtask({ taskId, subtaskId }));
@@ -38,36 +46,61 @@ export default function TaskDetails({
 
   return (
     <Modal isOpen={isOpenModal} onClose={handleCloseModal}>
-      <div className='relative flex flex-col h-auto p-6 '>
-        {title && (
-          <div className='flex items-center mb-6 md:justify-between'>
-            <p className='w-11/12 text-heading-l font-heading'>{title}</p>
-            <PopoverItem />
-          </div>
-        )}
-        {description && (
-          <p className='mb-6 text-body-l text-medium-grey font-body-l'>
-            {description}
-          </p>
-        )}
-        <p className='mb-4 text-body-m font-body-m text-medium-grey'>
-          Subtasks: ({completedSubtasks} of {totalSubtasks})
-        </p>
-        <SubtaskList
-          subtasks={subtasks}
+      {view === TaskView.Details && (
+        <TaskDetailsView
+          activeBoardColumns={activeBoardColumns}
+          activeTask={activeTask}
           handleToggleSubtask={handleToggleSubtask}
-          activeTaskId={activeTask?.id || ''}
+          setView={setView}
         />
-        <div className='mt-4'>
-          <p className='mb-2 text-body-m font-body-m text-medium-grey dark:text-white'>
-            Current status
-          </p>
-          <Dropdown options={activeBoardColumns} />
-        </div>
-      </div>
+      )}
+      {view === TaskView.Edit && <EditTask />}
+      {view === TaskView.Delete && <DeleteTask />}
     </Modal>
   );
 }
+
+function TaskDetailsView({
+  activeBoardColumns,
+  activeTask,
+  handleToggleSubtask,
+  setView,
+}: TaskDetailsViewProps) {
+  const { title, description, subtasks = [] } = activeTask || {};
+  const totalSubtasks = subtasks.length;
+  const completedSubtasks = subtasks.filter((task) => task.isCompleted).length;
+
+  return (
+    <div className='relative flex flex-col h-auto p-6 '>
+      {title && (
+        <div className='flex items-center mb-6 md:justify-between'>
+          <p className='w-11/12 text-heading-l font-heading'>{title}</p>
+          <PopoverItem setView={setView} />
+        </div>
+      )}
+      {description && (
+        <p className='mb-6 text-body-l text-medium-grey font-body-l'>
+          {description}
+        </p>
+      )}
+      <p className='mb-4 text-body-m font-body-m text-medium-grey'>
+        Subtasks: ({completedSubtasks} of {totalSubtasks})
+      </p>
+      <SubtaskList
+        subtasks={subtasks}
+        handleToggleSubtask={handleToggleSubtask}
+        activeTaskId={activeTask?.id || ''}
+      />
+      <div className='mt-4'>
+        <p className='mb-2 text-body-m font-body-m text-medium-grey dark:text-white'>
+          Current status
+        </p>
+        <Dropdown options={activeBoardColumns} />
+      </div>
+    </div>
+  );
+}
+
 function SubtaskList({
   subtasks,
   handleToggleSubtask,
@@ -114,4 +147,12 @@ function SubtaskList({
       ))}
     </div>
   );
+}
+
+function EditTask() {
+  return <div className='relative flex flex-col h-auto p-6 '>EDIT TASK</div>;
+}
+
+function DeleteTask() {
+  return <div className='relative flex flex-col h-auto p-6 '>DELETE TASK</div>;
 }

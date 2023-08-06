@@ -29,48 +29,48 @@ export const STARTING_DATA = {
               id: uuidv4(),
               subtasks: [
                 {
-                  title: 'Implement toggling subtasks',
-                  id: uuidv4(),
-                  isCompleted: true,
-                },
-                {
-                  title: 'Implement switching subtasks with dropdown',
-                  id: uuidv4(),
-                  isCompleted: true,
-                },
-                {
-                  title: 'Style dotsButton',
+                  title: 'Delete Task',
                   id: uuidv4(),
                   isCompleted: false,
                 },
                 {
-                  title: 'add hover bg on subtask',
-                  id: uuidv4(),
-                  isCompleted: false,
-                },
-                {
-                  title: 'Refactore component',
+                  title: 'Edit Task',
                   id: uuidv4(),
                   isCompleted: false,
                 },
                 {
                   title:
-                    'Think about moving toggleModal to redux if it will be hard to pass props through new components',
+                    'Popover button shouldbe refactored to be reusable in header',
                   id: uuidv4(),
                   isCompleted: false,
                 },
                 {
-                  title: 'Implement working dotsButton',
+                  title: 'Edit Task',
                   id: uuidv4(),
                   isCompleted: false,
                 },
                 {
-                  title: 'Implement edit Task',
+                  title: 'Add Task',
                   id: uuidv4(),
                   isCompleted: false,
                 },
                 {
-                  title: 'Implement delete Task',
+                  title: 'Edit Board',
+                  id: uuidv4(),
+                  isCompleted: false,
+                },
+                {
+                  title: 'Delete Board',
+                  id: uuidv4(),
+                  isCompleted: false,
+                },
+                {
+                  title: 'Add Board',
+                  id: uuidv4(),
+                  isCompleted: false,
+                },
+                {
+                  title: 'Check RWD/small bugs',
                   id: uuidv4(),
                   isCompleted: false,
                 },
