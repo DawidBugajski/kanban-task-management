@@ -129,10 +129,28 @@ export const boardsSlice = createSlice({
       if (!newColumn) return;
 
       newColumn.tasks.push(taskToMove);
-      // ?  delete
-      // if (state.activeTask && state.activeTask.id === taskId && taskToMove) {
-      //   state.activeTask = taskToMove;
-      // }
+    },
+    deleteTask: (state, action: PayloadAction<{ taskId: string }>) => {
+      const { taskId } = action.payload;
+
+      const activeBoard = state.boards.find(
+        (board) => board.id === state.activeBoardId
+      );
+
+      if (!activeBoard) return;
+
+      activeBoard.columns.forEach((column) => {
+        const taskIndex = column.tasks.findIndex((task) => task.id === taskId);
+
+        if (taskIndex !== -1) {
+          // Remove the task from the column
+          column.tasks.splice(taskIndex, 1);
+        }
+      });
+
+      if (state.activeTask && state.activeTask.id === taskId) {
+        state.activeTask = null;
+      }
     },
   },
 });
@@ -144,6 +162,7 @@ export const {
   resetActiveTask,
   toggleSubtask,
   moveTaskToColumn,
+  deleteTask,
 } = boardsSlice.actions;
 export const getBoards = (state: RootState): Board[] => state.boards.boards;
 export const getActiveBoard = (state: RootState): Board =>

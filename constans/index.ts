@@ -31,12 +31,7 @@ export const STARTING_DATA = {
                 {
                   title: 'Delete Task',
                   id: uuidv4(),
-                  isCompleted: false,
-                },
-                {
-                  title: 'Edit Task',
-                  id: uuidv4(),
-                  isCompleted: false,
+                  isCompleted: true,
                 },
                 {
                   title:
