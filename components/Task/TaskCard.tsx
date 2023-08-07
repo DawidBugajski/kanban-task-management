@@ -3,7 +3,7 @@ import { Task } from '@/types';
 import { useAppDispatch } from '@/redux/hooks';
 import { setActiveTask, resetActiveTask } from '@/redux/slices/boardsSlice';
 import { DraggableTaskCard } from './DraggableTaskCard';
-import TaskDetails from './TaskDetails';
+import TaskDetailsWrapper from './TaskDetailsWrapper';
 
 interface TaskCardProps {
   task: Task;
@@ -29,7 +29,7 @@ export default function TaskCard({ task, index }: TaskCardProps) {
   return (
     <>
       {isOpenModal && (
-        <TaskDetails
+        <TaskDetailsWrapper
           isOpenModal={isOpenModal}
           handleCloseModal={handleCloseModal}
         />

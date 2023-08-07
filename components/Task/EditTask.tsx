@@ -7,10 +7,10 @@ import {
   moveTaskToColumn,
 } from '@/redux/slices/boardsSlice';
 import { EditTaskProps } from '@/types/taskTypes';
-import Button from './shared/Button';
+import Button from '../shared/Button';
 import Image from 'next/image';
 import { ICON_CROSS_SVG } from '@/constans';
-import Dropdown from './shared/Dropdown';
+import Dropdown from '../shared/Dropdown';
 
 export function EditTask({ handleCloseModal }: EditTaskProps) {
   const dispatch = useAppDispatch();

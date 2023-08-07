@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { deleteTask, getActiveTask } from '@/redux/slices/boardsSlice';
 import { DeleteTaskProps } from '@/types/taskTypes';
-import Button from './shared/Button';
+import Button from '../shared/Button';
 import { TaskView } from '@/types';
 
 export function DeleteTask({ setView }: DeleteTaskProps) {

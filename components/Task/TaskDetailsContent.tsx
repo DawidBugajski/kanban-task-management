@@ -1,6 +1,6 @@
 import { SubtaskListProps, TaskDetailsViewProps } from '@/types/taskTypes';
-import PopoverItem from './shared/Popover';
-import Dropdown from './shared/Dropdown';
+import PopoverItem from '../shared/Popover';
+import Dropdown from '../shared/Dropdown';
 
 export function TaskDetailsContent({
   activeBoardColumns,

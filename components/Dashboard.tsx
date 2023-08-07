@@ -4,7 +4,7 @@ import { DropResult } from 'react-beautiful-dnd';
 import { getActiveBoard, moveTask } from '@/redux/slices/boardsSlice';
 
 import AddColumn from './AddColumn';
-import TaskCard from './TaskCard';
+import TaskCard from './Task/TaskCard';
 
 export default function Dashboard() {
   const dispatch = useAppDispatch();

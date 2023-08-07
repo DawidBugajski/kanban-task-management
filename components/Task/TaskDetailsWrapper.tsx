@@ -4,7 +4,7 @@ import {
   getActiveTask,
   toggleSubtask,
 } from '@/redux/slices/boardsSlice';
-import Modal from './shared/Modal';
+import Modal from '../shared/Modal';
 import { TaskView } from '@/types';
 import { useState } from 'react';
 import { TaskDetailsProps } from '@/types/taskTypes';
@@ -12,7 +12,7 @@ import { EditTask } from './EditTask';
 import { DeleteTask } from './DeleteTask';
 import { TaskDetailsContent } from './TaskDetailsContent';
 
-export default function TaskDetails({
+export default function TaskDetailsWrapper({
   isOpenModal,
   handleCloseModal,
 }: TaskDetailsProps) {
