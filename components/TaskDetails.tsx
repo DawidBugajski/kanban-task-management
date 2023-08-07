@@ -3,6 +3,7 @@ import {
   deleteTask,
   getActiveBoard,
   getActiveTask,
+  moveTaskToColumn,
   toggleSubtask,
 } from '@/redux/slices/boardsSlice';
 import Modal from './shared/Modal';
@@ -140,10 +141,27 @@ function SubtaskList({
 }
 
 function EditTask() {
+  const dispatch = useAppDispatch();
   const activeBoard = useAppSelector(getActiveBoard);
   const activeTask = useAppSelector(getActiveTask);
   const { columns: activeBoardColumns } = activeBoard;
   const { subtasks = [] } = activeTask || {};
+  const [selectedColumn, setSelectedColumn] = useState<string | null>(null);
+
+  const handleColumnChange = (newColumnId: string) => {
+    setSelectedColumn(newColumnId);
+  };
+
+  const handleSaveChanges = () => {
+    if (activeTask && selectedColumn) {
+      dispatch(
+        moveTaskToColumn({
+          taskId: activeTask.id,
+          newColumnId: selectedColumn,
+        })
+      );
+    }
+  };
 
   return (
     <div className='relative flex flex-col h-auto gap-6 p-6 md:p-8'>
@@ -172,7 +190,7 @@ function EditTask() {
               type='text'
             />
             <Button
-              onClick={() => console.log('k')}
+              onClick={() => console.log('first')}
               className='mx-auto shrink-0'
             >
               <Image
@@ -191,9 +209,13 @@ function EditTask() {
       >
         +Add New Subtask
       </Button>
-      <Dropdown options={activeBoardColumns} />
+      <Dropdown
+        options={activeBoardColumns}
+        changeOnSave={true}
+        onValueChange={handleColumnChange}
+      />
       <Button
-        onClick={() => console.log('first')}
+        onClick={handleSaveChanges}
         className='transition-colors duration-100 hover:bg-purple-hover text-body-l font-bold bg-purple py-2 text-center text-white rounded-[20px] grow'
       >
         Save Changes

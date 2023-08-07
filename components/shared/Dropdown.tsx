@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Select,
   SelectContent,
@@ -15,9 +15,15 @@ import {
 } from '@/redux/slices/boardsSlice';
 interface DropdownProps {
   options: Column[];
+  changeOnSave?: boolean;
+  onValueChange?: (newColumnId: string) => void;
 }
 
-export default function Dropdown({ options }: DropdownProps) {
+export default function Dropdown({
+  options,
+  changeOnSave,
+  onValueChange,
+}: DropdownProps) {
   const dispatch = useAppDispatch();
   const activeTask = useAppSelector(getActiveTask);
   const activeBoard = useAppSelector(getActiveBoard);
@@ -25,20 +31,31 @@ export default function Dropdown({ options }: DropdownProps) {
     column.tasks.some((task) => task.id === activeTask?.id)
   );
 
+  // Lokalny stan dla tymczasowej wartości kolumny
+  const [tempColumn, setTempColumn] = useState<string | undefined>(
+    currentColumnForTask?.id
+  );
+
   const handleMoveTaskToColumn = (newColumnId: string) => {
     if (!activeTask) return;
 
-    dispatch(
-      moveTaskToColumn({
-        taskId: activeTask.id,
-        newColumnId,
-      })
-    );
+    if (changeOnSave) {
+      setTempColumn(newColumnId); // Aktualizuje lokalny stan
+      if (onValueChange) onValueChange(newColumnId); // Aktualizuje stan w komponencie nadrzędnym
+    } else {
+      // Wprowadza zmianę od razu
+      dispatch(
+        moveTaskToColumn({
+          taskId: activeTask.id,
+          newColumnId,
+        })
+      );
+    }
   };
 
   return (
     <Select
-      value={currentColumnForTask?.id}
+      value={tempColumn} // Używa lokalnego stanu jako wartości
       onValueChange={handleMoveTaskToColumn}
     >
       <SelectTrigger className='w-full text-body-l font-body-l'>
