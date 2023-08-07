@@ -15,7 +15,7 @@ import {
 } from '@/redux/slices/boardsSlice';
 interface DropdownProps {
   options: Column[];
-  changeOnSave?: boolean;
+  changeOnSave?: boolean; // if the parent component uses this component with prop === false, then when you change the item in the dropdown, the action in the reducer in redux is called and the component is rendered from scratch making the modal disabled
   onValueChange?: (newColumnId: string) => void;
 }
 
@@ -31,7 +31,7 @@ export default function Dropdown({
     column.tasks.some((task) => task.id === activeTask?.id)
   );
 
-  // Lokalny stan dla tymczasowej wartości kolumny
+  // update values in a component which do nothing, before clicking saveButton in parent Component
   const [tempColumn, setTempColumn] = useState<string | undefined>(
     currentColumnForTask?.id
   );
@@ -40,10 +40,10 @@ export default function Dropdown({
     if (!activeTask) return;
 
     if (changeOnSave) {
-      setTempColumn(newColumnId); // Aktualizuje lokalny stan
-      if (onValueChange) onValueChange(newColumnId); // Aktualizuje stan w komponencie nadrzędnym
+      setTempColumn(newColumnId);
+      if (onValueChange) onValueChange(newColumnId);
     } else {
-      // Wprowadza zmianę od razu
+      // changeOnSave === false
       dispatch(
         moveTaskToColumn({
           taskId: activeTask.id,

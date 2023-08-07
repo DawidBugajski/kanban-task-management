@@ -146,7 +146,14 @@ function EditTask() {
   const activeTask = useAppSelector(getActiveTask);
   const { columns: activeBoardColumns } = activeBoard;
   const { subtasks = [] } = activeTask || {};
-  const [selectedColumn, setSelectedColumn] = useState<string | null>(null);
+
+  // This allows you to make changes, but without immediately storing them in redux
+  const currentColumnForTask = activeBoard.columns.find((column) =>
+    column.tasks.some((task) => task.id === activeTask?.id)
+  );
+  const [selectedColumn, setSelectedColumn] = useState<string | null>(
+    currentColumnForTask?.id || null
+  );
 
   const handleColumnChange = (newColumnId: string) => {
     setSelectedColumn(newColumnId);
