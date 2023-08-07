@@ -159,6 +159,16 @@ function EditTask({ handleCloseModal }: EditTaskProps) {
     currentColumnForTask?.id || null
   );
 
+  // Local state to manage subtasks locally before saving
+  const [localSubtasks, setLocalSubtasks] = useState(subtasks);
+
+  const handleDeleteSubtask = (subtaskId: string) => {
+    const updatedSubtasks = localSubtasks.filter(
+      (task) => task.id !== subtaskId
+    );
+    setLocalSubtasks(updatedSubtasks);
+  };
+
   const handleColumnChange = (newColumnId: string) => {
     setSelectedColumn(newColumnId);
   };
@@ -171,12 +181,13 @@ function EditTask({ handleCloseModal }: EditTaskProps) {
           newColumnId: selectedColumn,
         })
       );
+      subtasks.forEach((subtask) => {
+        if (!localSubtasks.some((task) => task.id === subtask.id)) {
+          dispatch(deleteSubtask({ subtaskId: subtask.id }));
+        }
+      });
     }
     handleCloseModal();
-  };
-
-  const handleDeleteSubtask = (subtaskId: string) => {
-    dispatch(deleteSubtask({ subtaskId }));
   };
 
   return (
@@ -198,7 +209,7 @@ function EditTask({ handleCloseModal }: EditTaskProps) {
         />
       </div>
       <div className='flex flex-col justify-between w-full gap-3 max-h-[25vh] overflow-y-auto'>
-        {subtasks.map((task) => (
+        {localSubtasks.map((task) => (
           <div className='flex ' key={task.id}>
             <input
               className='dark:bg-transparent text-[13px] font-medium leading-6 py-2 px-4 border border-opacity-25 rounded border-slate-400 w-11/12'
