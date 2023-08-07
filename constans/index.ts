@@ -41,13 +41,8 @@ export const STARTING_DATA = {
                   isCompleted: false,
                 },
                 {
-                  title: 'Edit Task',
-                  id: uuidv4(),
-                  isCompleted: false,
-                },
-                {
                   title:
-                    'Edit Task - here it should not close module after change, because we have btn to save',
+                    'Edit Task - if you save changes, but you didnt change column, keep in this same place your task? now it is going to be last task in column',
                   id: uuidv4(),
                   isCompleted: false,
                 },
