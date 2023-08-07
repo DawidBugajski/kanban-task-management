@@ -17,6 +17,7 @@ import {
   DeleteTaskProps,
   SubtaskListProps,
   TaskDetailsViewProps,
+  EditTaskProps,
 } from '@/types/taskTypes';
 import { ICON_CROSS_SVG } from '@/constans';
 import Image from 'next/image';
@@ -45,7 +46,9 @@ export default function TaskDetails({
           setView={setView}
         />
       )}
-      {view === TaskView.Edit && <EditTask />}
+      {view === TaskView.Edit && (
+        <EditTask handleCloseModal={handleCloseModal} />
+      )}
       {view === TaskView.Delete && <DeleteTask setView={setView} />}
     </Modal>
   );
@@ -140,7 +143,7 @@ function SubtaskList({
   );
 }
 
-function EditTask() {
+function EditTask({ handleCloseModal }: EditTaskProps) {
   const dispatch = useAppDispatch();
   const activeBoard = useAppSelector(getActiveBoard);
   const activeTask = useAppSelector(getActiveTask);
@@ -168,6 +171,7 @@ function EditTask() {
         })
       );
     }
+    handleCloseModal();
   };
 
   return (

@@ -21,3 +21,7 @@ export interface SubtaskListProps {
 export interface DeleteTaskProps {
   setView: React.Dispatch<React.SetStateAction<TaskView>>;
 }
+
+export interface EditTaskProps {
+  handleCloseModal: () => void;
+}
