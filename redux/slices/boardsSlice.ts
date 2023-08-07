@@ -142,15 +142,31 @@ export const boardsSlice = createSlice({
       activeBoard.columns.forEach((column) => {
         const taskIndex = column.tasks.findIndex((task) => task.id === taskId);
 
-        if (taskIndex !== -1) {
-          // Remove the task from the column
-          column.tasks.splice(taskIndex, 1);
-        }
+        if (taskIndex !== -1) column.tasks.splice(taskIndex, 1);
       });
 
       if (state.activeTask && state.activeTask.id === taskId) {
         state.activeTask = null;
       }
+    },
+    deleteSubtask: (state, action: PayloadAction<{ subtaskId: string }>) => {
+      const { subtaskId } = action.payload;
+
+      const activeBoard = state.boards.find(
+        (board) => board.id === state.activeBoardId
+      );
+
+      if (!activeBoard) return;
+
+      activeBoard.columns.forEach((column) => {
+        column.tasks.forEach((task) => {
+          const subtaskIndex = task.subtasks.findIndex(
+            (subtask) => subtask.id === subtaskId
+          );
+
+          if (subtaskIndex !== -1) task.subtasks.splice(subtaskIndex, 1);
+        });
+      });
     },
   },
 });
@@ -163,6 +179,7 @@ export const {
   toggleSubtask,
   moveTaskToColumn,
   deleteTask,
+  deleteSubtask,
 } = boardsSlice.actions;
 export const getBoards = (state: RootState): Board[] => state.boards.boards;
 export const getActiveBoard = (state: RootState): Board =>

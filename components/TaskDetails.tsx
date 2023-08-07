@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import {
+  deleteSubtask,
   deleteTask,
   getActiveBoard,
   getActiveTask,
@@ -174,6 +175,10 @@ function EditTask({ handleCloseModal }: EditTaskProps) {
     handleCloseModal();
   };
 
+  const handleDeleteSubtask = (subtaskId: string) => {
+    dispatch(deleteSubtask({ subtaskId }));
+  };
+
   return (
     <div className='relative flex flex-col h-auto gap-6 p-6 md:p-8'>
       <h2 className='text-heading-l font-heading'>Edit Task</h2>
@@ -201,7 +206,7 @@ function EditTask({ handleCloseModal }: EditTaskProps) {
               type='text'
             />
             <Button
-              onClick={() => console.log('first')}
+              onClick={() => handleDeleteSubtask(task.id)}
               className='mx-auto shrink-0'
             >
               <Image
