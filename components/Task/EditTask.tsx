@@ -6,6 +6,8 @@ import {
   getActiveTask,
   moveTaskToColumn,
   updateSubtaskTitles,
+  updateTaskDescription,
+  updateTaskTitle,
 } from '@/redux/slices/boardsSlice';
 import { EditTaskProps } from '@/types/taskTypes';
 import Button from '../shared/Button';
@@ -43,15 +45,15 @@ export function EditTask({ handleCloseModal }: EditTaskProps) {
     setState({ ...state, description: newDescription });
   };
 
+  const handleColumnChange = (newColumnId: string) => {
+    setState({ ...state, selectedColumn: newColumnId });
+  };
+
   const handleDeleteSubtask = (subtaskId: string) => {
     const updatedSubtasks = state.localSubtasks.filter(
       (task) => task.id !== subtaskId
     );
     setState({ ...state, localSubtasks: updatedSubtasks });
-  };
-
-  const handleColumnChange = (newColumnId: string) => {
-    setState({ ...state, selectedColumn: newColumnId });
   };
 
   const handleSubtaskTitleChange = (index: number, newTitle: string) => {
@@ -69,12 +71,23 @@ export function EditTask({ handleCloseModal }: EditTaskProps) {
           newColumnId: state.selectedColumn,
         })
       );
+
+      // Update title and description in Redux
+      dispatch(updateTaskTitle({ taskId: activeTask.id, title: state.title }));
+      dispatch(
+        updateTaskDescription({
+          taskId: activeTask.id,
+          description: state.description,
+        })
+      );
+
       // delete subtask
       subtasks.forEach((subtask) => {
         if (!state.localSubtasks.some((task) => task.id === subtask.id)) {
           dispatch(deleteSubtask({ subtaskId: subtask.id }));
         }
       });
+
       // re-name subtask
       dispatch(
         updateSubtaskTitles({

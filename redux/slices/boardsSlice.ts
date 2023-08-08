@@ -192,6 +192,46 @@ export const boardsSlice = createSlice({
         state.activeTask = { ...task };
       }
     },
+    updateTaskTitle: (
+      state,
+      action: PayloadAction<{ taskId: string; title: string }>
+    ) => {
+      const { taskId, title } = action.payload;
+
+      const activeBoard = state.boards.find(
+        (board) => board.id === state.activeBoardId
+      );
+
+      if (!activeBoard) return;
+
+      const task = activeBoard.columns
+        .flatMap((column) => column.tasks)
+        .find((task) => task.id === taskId);
+
+      if (!task) return;
+
+      task.title = title;
+    },
+    updateTaskDescription: (
+      state,
+      action: PayloadAction<{ taskId: string; description: string }>
+    ) => {
+      const { taskId, description } = action.payload;
+
+      const activeBoard = state.boards.find(
+        (board) => board.id === state.activeBoardId
+      );
+
+      if (!activeBoard) return;
+
+      const task = activeBoard.columns
+        .flatMap((column) => column.tasks)
+        .find((task) => task.id === taskId);
+
+      if (!task) return;
+
+      task.description = description;
+    },
   },
 });
 
@@ -205,6 +245,8 @@ export const {
   deleteTask,
   deleteSubtask,
   updateSubtaskTitles,
+  updateTaskTitle,
+  updateTaskDescription,
 } = boardsSlice.actions;
 export const getBoards = (state: RootState): Board[] => state.boards.boards;
 export const getActiveBoard = (state: RootState): Board =>
