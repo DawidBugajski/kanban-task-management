@@ -37,6 +37,12 @@ export function EditTask({ handleCloseModal }: EditTaskProps) {
     subtaskTitles: subtasks.map((subtask) => subtask.title),
   };
 
+  // state for validate errors
+  const [validationErrors, setValidationErrors] = useState({
+    title: false,
+    subtasks: Array(subtasks.length).fill(false),
+  });
+
   // LocalState to keep changes that will pass to redux after save only
   const [state, setState] = useState(initialState);
 
@@ -72,12 +78,13 @@ export function EditTask({ handleCloseModal }: EditTaskProps) {
     setState({ ...state, subtaskTitles: updatedSubtaskTitles });
   };
 
+  // jump to added task
   const lastInputRef = useRef<HTMLInputElement>(null);
 
   const handleAddSubtask = () => {
     const newSubtask: Subtask = {
       id: uuidv4(),
-      title: 'New subtask',
+      title: '',
       isCompleted: false,
     };
     // Update local sub-tasks and sub-task titles
@@ -97,6 +104,16 @@ export function EditTask({ handleCloseModal }: EditTaskProps) {
   };
 
   const handleSaveChanges = () => {
+    const errors = {
+      title: state.title.trim() === '', // title is empty => set errror.title = true
+      subtasks: state.subtaskTitles.map((title) => title.trim() === ''),
+    };
+
+    if (errors.title || errors.subtasks.some((error) => error)) {
+      setValidationErrors(errors);
+      return;
+    }
+
     if (activeTask && state.selectedColumn) {
       // change column for task
       dispatch(
@@ -151,10 +168,17 @@ export function EditTask({ handleCloseModal }: EditTaskProps) {
       <div className='flex flex-col gap-2'>
         <p className='text-body-m text-medium-grey font-body-m'>Title</p>
         <input
-          className='dark:bg-transparent text-[13px] font-medium leading-6 w-full py-2 px-4 border border-opacity-25 rounded border-slate-400 focus-visible:outline focus-visible:outline-purple'
+          className={`${
+            validationErrors.title
+              ? 'border-red focus-visible:border-transparent placeholder:text-red placeholder:text-right'
+              : ''
+          } dark:bg-transparent text-[13px] font-medium leading-6 w-full py-2 px-4 border border-opacity-25 rounded border-slate-400 focus-visible:outline focus-visible:outline-purple`}
           value={state.title}
           type='text'
           onChange={(e) => handleTitleChange(e.target.value)}
+          placeholder={
+            validationErrors.title ? "Can't be empty!" : 'Enter title'
+          }
         />
       </div>
       <div className='flex flex-col gap-2'>
@@ -169,17 +193,26 @@ export function EditTask({ handleCloseModal }: EditTaskProps) {
           placeholder='Your description here...'
         />
       </div>
-      <div className='flex flex-col justify-between w-full gap-3 max-h-[25vh] overflow-y-auto'>
+      <div className='flex flex-col justify-between w-full gap-3 max-h-[25vh] overflow-y-auto py-0.5'>
         {state.localSubtasks.map((task, index) => (
-          <div className='flex ' key={task.id}>
+          <div className='flex' key={task.id}>
             <input
               ref={
                 index === state.localSubtasks.length - 1 ? lastInputRef : null
               }
-              className='focus-visible:border-purple focus-visible:outline focus-visible:outline-purple dark:bg-transparent text-[13px] font-medium leading-6 py-2 px-4 border border-opacity-25 rounded border-slate-400 w-11/12'
+              className={`${
+                validationErrors.subtasks[index]
+                  ? 'border-red  placeholder:text-red placeholder:text-right'
+                  : ''
+              } focus-visible:border-purple outline-none focus-visible:outline-none dark:bg-transparent text-[13px] font-medium leading-6 py-2 px-4 border border-opacity-25 rounded border-slate-400 w-11/12`}
               value={state.subtaskTitles[index]}
               type='text'
               onChange={(e) => handleSubtaskTitleChange(index, e.target.value)}
+              placeholder={
+                validationErrors.subtasks[index]
+                  ? "Can't be empty!"
+                  : 'New subtask'
+              }
             />
             <Button
               onClick={() => handleDeleteSubtask(task.id)}
