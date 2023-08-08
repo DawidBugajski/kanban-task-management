@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { createRef, useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import {
   addSubtask,
@@ -33,7 +33,7 @@ export function EditTask({ handleCloseModal }: EditTaskProps) {
     selectedColumn: currentColumnForTask?.id || null,
     localSubtasks: subtasks,
     title: activeTask?.title || 'enter title',
-    description: activeTask?.description || 'Your description here...',
+    description: activeTask?.description || '',
     subtaskTitles: subtasks.map((subtask) => subtask.title),
   };
 
@@ -72,6 +72,8 @@ export function EditTask({ handleCloseModal }: EditTaskProps) {
     setState({ ...state, subtaskTitles: updatedSubtaskTitles });
   };
 
+  const lastInputRef = useRef<HTMLInputElement>(null);
+
   const handleAddSubtask = () => {
     const newSubtask: Subtask = {
       id: uuidv4(),
@@ -87,6 +89,11 @@ export function EditTask({ handleCloseModal }: EditTaskProps) {
       localSubtasks: updatedLocalSubtasks,
       subtaskTitles: updatedSubtaskTitles,
     });
+    // user after adding a subtask, can immediately type content
+    setTimeout(() => {
+      lastInputRef.current?.focus();
+      lastInputRef.current?.select();
+    }, 0);
   };
 
   const handleSaveChanges = () => {
@@ -144,7 +151,7 @@ export function EditTask({ handleCloseModal }: EditTaskProps) {
       <div className='flex flex-col gap-2'>
         <p className='text-body-m text-medium-grey font-body-m'>Title</p>
         <input
-          className='dark:bg-transparent text-[13px] font-medium leading-6 w-full py-2 px-4 border border-opacity-25 rounded border-slate-400'
+          className='dark:bg-transparent text-[13px] font-medium leading-6 w-full py-2 px-4 border border-opacity-25 rounded border-slate-400 focus-visible:outline focus-visible:outline-purple'
           value={state.title}
           type='text'
           onChange={(e) => handleTitleChange(e.target.value)}
@@ -156,16 +163,20 @@ export function EditTask({ handleCloseModal }: EditTaskProps) {
           onClick={(e: React.MouseEvent<HTMLTextAreaElement, MouseEvent>) =>
             e.currentTarget.select()
           }
-          className='dark:bg-transparent pr-6 min-h-[120px] text-[#bfbfc3] text-[13px] font-medium leading-6 w-full py-2 pl-4 border border-opacity-25 rounded border-slate-400'
+          className='h-auto max-h-[30vh] focus-visible:outline focus-visible:outline-purple dark:bg-transparent pr-6 min-h-[120px] text-[#bfbfc3] text-[13px] font-medium leading-6 w-full py-2 pl-4 border border-opacity-25 rounded border-slate-400'
           value={state.description}
           onChange={(e) => handleDescriptionChange(e.target.value)}
+          placeholder='Your description here...'
         />
       </div>
       <div className='flex flex-col justify-between w-full gap-3 max-h-[25vh] overflow-y-auto'>
         {state.localSubtasks.map((task, index) => (
           <div className='flex ' key={task.id}>
             <input
-              className='dark:bg-transparent text-[13px] font-medium leading-6 py-2 px-4 border border-opacity-25 rounded border-slate-400 w-11/12'
+              ref={
+                index === state.localSubtasks.length - 1 ? lastInputRef : null
+              }
+              className='focus-visible:border-purple focus-visible:outline focus-visible:outline-purple dark:bg-transparent text-[13px] font-medium leading-6 py-2 px-4 border border-opacity-25 rounded border-slate-400 w-11/12'
               value={state.subtaskTitles[index]}
               type='text'
               onChange={(e) => handleSubtaskTitleChange(index, e.target.value)}
