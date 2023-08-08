@@ -5,6 +5,7 @@ import {
   getActiveBoard,
   getActiveTask,
   moveTaskToColumn,
+  updateSubtaskTitles,
 } from '@/redux/slices/boardsSlice';
 import { EditTaskProps } from '@/types/taskTypes';
 import Button from '../shared/Button';
@@ -23,15 +24,15 @@ export function EditTask({ handleCloseModal }: EditTaskProps) {
     column.tasks.some((task) => task.id === activeTask?.id)
   );
 
-  // Define the initial state
   const initialState = {
     selectedColumn: currentColumnForTask?.id || null,
     localSubtasks: subtasks,
     title: activeTask?.title || 'enter title',
     description: activeTask?.description || 'Your description here...',
+    subtaskTitles: subtasks.map((subtask) => subtask.title),
   };
 
-  // Use one useState call for the combined state
+  // LocalState to keep changes that will pass to redux after save only
   const [state, setState] = useState(initialState);
 
   const handleTitleChange = (newTitle: string) => {
@@ -53,19 +54,37 @@ export function EditTask({ handleCloseModal }: EditTaskProps) {
     setState({ ...state, selectedColumn: newColumnId });
   };
 
+  const handleSubtaskTitleChange = (index: number, newTitle: string) => {
+    const updatedSubtaskTitles = [...state.subtaskTitles];
+    updatedSubtaskTitles[index] = newTitle;
+    setState({ ...state, subtaskTitles: updatedSubtaskTitles });
+  };
+
   const handleSaveChanges = () => {
     if (activeTask && state.selectedColumn) {
+      // change column for task
       dispatch(
         moveTaskToColumn({
           taskId: activeTask.id,
           newColumnId: state.selectedColumn,
         })
       );
+      // delete subtask
       subtasks.forEach((subtask) => {
         if (!state.localSubtasks.some((task) => task.id === subtask.id)) {
           dispatch(deleteSubtask({ subtaskId: subtask.id }));
         }
       });
+      // re-name subtask
+      dispatch(
+        updateSubtaskTitles({
+          taskId: activeTask.id,
+          subtasks: state.localSubtasks.map((subtask, index) => ({
+            ...subtask,
+            title: state.subtaskTitles[index],
+          })),
+        })
+      );
     }
     handleCloseModal();
   };
@@ -91,12 +110,13 @@ export function EditTask({ handleCloseModal }: EditTaskProps) {
         />
       </div>
       <div className='flex flex-col justify-between w-full gap-3 max-h-[25vh] overflow-y-auto'>
-        {state.localSubtasks.map((task) => (
+        {state.localSubtasks.map((task, index) => (
           <div className='flex ' key={task.id}>
             <input
               className='dark:bg-transparent text-[13px] font-medium leading-6 py-2 px-4 border border-opacity-25 rounded border-slate-400 w-11/12'
-              value={task.title}
+              value={state.subtaskTitles[index]}
               type='text'
+              onChange={(e) => handleSubtaskTitleChange(index, e.target.value)}
             />
             <Button
               onClick={() => handleDeleteSubtask(task.id)}

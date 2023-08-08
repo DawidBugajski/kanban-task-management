@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import { Board, Data, Task } from '@/types';
+import { Board, Data, Subtask, Task } from '@/types';
 import { STARTING_DATA } from '@/constans';
 
 let savedState;
@@ -168,6 +168,30 @@ export const boardsSlice = createSlice({
         });
       });
     },
+    updateSubtaskTitles: (
+      state,
+      action: PayloadAction<{ taskId: string; subtasks: Subtask[] }>
+    ) => {
+      const { taskId, subtasks } = action.payload;
+
+      const activeBoard = state.boards.find(
+        (board) => board.id === state.activeBoardId
+      );
+
+      if (!activeBoard) return;
+
+      const task = activeBoard.columns
+        .flatMap((column) => column.tasks)
+        .find((task) => task.id === taskId);
+
+      if (!task) return;
+
+      task.subtasks = subtasks; // Update subtask titles
+
+      if (state.activeTask && state.activeTask.id === taskId) {
+        state.activeTask = { ...task };
+      }
+    },
   },
 });
 
@@ -180,6 +204,7 @@ export const {
   moveTaskToColumn,
   deleteTask,
   deleteSubtask,
+  updateSubtaskTitles,
 } = boardsSlice.actions;
 export const getBoards = (state: RootState): Board[] => state.boards.boards;
 export const getActiveBoard = (state: RootState): Board =>
