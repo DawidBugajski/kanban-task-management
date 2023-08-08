@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import {
+  addSubtask,
   deleteSubtask,
   getActiveBoard,
   getActiveTask,
@@ -10,10 +11,12 @@ import {
   updateTaskTitle,
 } from '@/redux/slices/boardsSlice';
 import { EditTaskProps } from '@/types/taskTypes';
+import { v4 as uuidv4 } from 'uuid';
 import Button from '../shared/Button';
 import Image from 'next/image';
 import { ICON_CROSS_SVG } from '@/constans';
 import Dropdown from '../shared/Dropdown';
+import { Subtask } from '@/types';
 
 export function EditTask({ handleCloseModal }: EditTaskProps) {
   const dispatch = useAppDispatch();
@@ -53,13 +56,37 @@ export function EditTask({ handleCloseModal }: EditTaskProps) {
     const updatedSubtasks = state.localSubtasks.filter(
       (task) => task.id !== subtaskId
     );
-    setState({ ...state, localSubtasks: updatedSubtasks });
+    const updatedSubtaskTitles = updatedSubtasks.map(
+      (subtask) => subtask.title
+    );
+    setState({
+      ...state,
+      localSubtasks: updatedSubtasks,
+      subtaskTitles: updatedSubtaskTitles,
+    });
   };
 
   const handleSubtaskTitleChange = (index: number, newTitle: string) => {
     const updatedSubtaskTitles = [...state.subtaskTitles];
     updatedSubtaskTitles[index] = newTitle;
     setState({ ...state, subtaskTitles: updatedSubtaskTitles });
+  };
+
+  const handleAddSubtask = () => {
+    const newSubtask: Subtask = {
+      id: uuidv4(),
+      title: 'New subtask',
+      isCompleted: false,
+    };
+    // Update local sub-tasks and sub-task titles
+    const updatedLocalSubtasks = [...state.localSubtasks, newSubtask];
+    const updatedSubtaskTitles = [...state.subtaskTitles, newSubtask.title];
+
+    setState({
+      ...state,
+      localSubtasks: updatedLocalSubtasks,
+      subtaskTitles: updatedSubtaskTitles,
+    });
   };
 
   const handleSaveChanges = () => {
@@ -85,6 +112,15 @@ export function EditTask({ handleCloseModal }: EditTaskProps) {
       subtasks.forEach((subtask) => {
         if (!state.localSubtasks.some((task) => task.id === subtask.id)) {
           dispatch(deleteSubtask({ subtaskId: subtask.id }));
+        }
+      });
+
+      // add subtask
+      state.localSubtasks.forEach((localSubtask) => {
+        if (!subtasks.some((subtask) => subtask.id === localSubtask.id)) {
+          dispatch(
+            addSubtask({ taskId: activeTask.id, subtask: localSubtask })
+          );
         }
       });
 
@@ -117,6 +153,9 @@ export function EditTask({ handleCloseModal }: EditTaskProps) {
       <div className='flex flex-col gap-2'>
         <p className='text-body-m text-medium-grey font-body-m'>Description</p>
         <textarea
+          onClick={(e: React.MouseEvent<HTMLTextAreaElement, MouseEvent>) =>
+            e.currentTarget.select()
+          }
           className='dark:bg-transparent pr-6 min-h-[120px] text-[#bfbfc3] text-[13px] font-medium leading-6 w-full py-2 pl-4 border border-opacity-25 rounded border-slate-400'
           value={state.description}
           onChange={(e) => handleDescriptionChange(e.target.value)}
@@ -146,7 +185,7 @@ export function EditTask({ handleCloseModal }: EditTaskProps) {
         ))}
       </div>
       <Button
-        onClick={() => console.log('first')}
+        onClick={handleAddSubtask}
         className='transition-colors duration-100 hover:bg-[#d8d7f1] text-body-l font-bold bg-[#f0effa] py-2 text-center text-purple rounded-[20px] grow'
       >
         +Add New Subtask
