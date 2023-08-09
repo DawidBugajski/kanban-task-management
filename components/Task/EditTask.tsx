@@ -62,20 +62,20 @@ export function EditTask({ handleCloseModal }: EditTaskProps) {
     const updatedSubtasks = state.localSubtasks.filter(
       (task) => task.id !== subtaskId
     );
-    const updatedSubtaskTitles = updatedSubtasks.map(
-      (subtask) => subtask.title
-    );
+
     setState({
       ...state,
       localSubtasks: updatedSubtasks,
-      subtaskTitles: updatedSubtaskTitles,
     });
   };
 
   const handleSubtaskTitleChange = (index: number, newTitle: string) => {
-    const updatedSubtaskTitles = [...state.subtaskTitles];
-    updatedSubtaskTitles[index] = newTitle;
-    setState({ ...state, subtaskTitles: updatedSubtaskTitles });
+    const updatedLocalSubtasks = [...state.localSubtasks];
+    updatedLocalSubtasks[index] = {
+      ...updatedLocalSubtasks[index],
+      title: newTitle,
+    };
+    setState({ ...state, localSubtasks: updatedLocalSubtasks });
   };
 
   // jump to added task
@@ -87,16 +87,12 @@ export function EditTask({ handleCloseModal }: EditTaskProps) {
       title: '',
       isCompleted: false,
     };
-    // Update local sub-tasks and sub-task titles
-    const updatedLocalSubtasks = [...state.localSubtasks, newSubtask];
-    const updatedSubtaskTitles = [...state.subtaskTitles, newSubtask.title];
 
     setState({
       ...state,
-      localSubtasks: updatedLocalSubtasks,
-      subtaskTitles: updatedSubtaskTitles,
+      localSubtasks: [...state.localSubtasks, newSubtask],
     });
-    // user after adding a subtask, can immediately type content
+
     setTimeout(() => {
       lastInputRef.current?.focus();
       lastInputRef.current?.select();
@@ -104,16 +100,19 @@ export function EditTask({ handleCloseModal }: EditTaskProps) {
   };
 
   const handleSaveChanges = () => {
+    console.log(validationErrors.title);
     const errors = {
-      title: state.title.trim() === '', // title is empty => set errror.title = true
-      subtasks: state.subtaskTitles.map((title) => title.trim() === ''),
+      title: state.title.trim() === '', // title is empty => set error.title = true
+      subtasks: state.localSubtasks.map(
+        (subtask) => subtask.title.trim() === ''
+      ),
     };
 
     if (errors.title || errors.subtasks.some((error) => error)) {
       setValidationErrors(errors);
+      console.log(validationErrors);
       return;
     }
-
     if (activeTask && state.selectedColumn) {
       // change column for task
       dispatch(
@@ -152,10 +151,7 @@ export function EditTask({ handleCloseModal }: EditTaskProps) {
       dispatch(
         updateSubtaskTitles({
           taskId: activeTask.id,
-          subtasks: state.localSubtasks.map((subtask, index) => ({
-            ...subtask,
-            title: state.subtaskTitles[index],
-          })),
+          subtasks: state.localSubtasks,
         })
       );
     }
@@ -170,7 +166,7 @@ export function EditTask({ handleCloseModal }: EditTaskProps) {
         <input
           className={`${
             validationErrors.title
-              ? 'border-red focus-visible:border-transparent placeholder:text-red placeholder:text-right'
+              ? 'dark:border-red border-red border-opacity-100 border focus-visible:border-transparent placeholder:text-red placeholder:text-right'
               : ''
           } dark:bg-transparent text-[13px] font-medium leading-6 w-full py-2 px-4 border border-opacity-25 rounded border-slate-400 focus-visible:outline focus-visible:outline-purple`}
           value={state.title}
@@ -202,10 +198,10 @@ export function EditTask({ handleCloseModal }: EditTaskProps) {
               }
               className={`${
                 validationErrors.subtasks[index]
-                  ? 'border-red  placeholder:text-red placeholder:text-right'
+                  ? 'border-red border-opacity-100 placeholder:text-red placeholder:text-right'
                   : ''
               } focus-visible:border-purple outline-none focus-visible:outline-none dark:bg-transparent text-[13px] font-medium leading-6 py-2 px-4 border border-opacity-25 rounded border-slate-400 w-11/12`}
-              value={state.subtaskTitles[index]}
+              value={task.title}
               type='text'
               onChange={(e) => handleSubtaskTitleChange(index, e.target.value)}
               placeholder={
