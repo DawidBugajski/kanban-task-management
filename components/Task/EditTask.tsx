@@ -39,6 +39,7 @@ export function EditTask({ handleCloseModal }: EditTaskProps) {
     handleAddSubtask,
     handleDeleteSubtask,
     handleSubtaskTitleChange,
+    lastInputRef,
   } = useSubtasks(subtasks);
 
   const [selectedColumn, setSelectedColumn] = useState(
@@ -51,8 +52,6 @@ export function EditTask({ handleCloseModal }: EditTaskProps) {
 
   const handleColumnChange = (newColumnId: string) =>
     setSelectedColumn(newColumnId);
-
-  const lastInputRef = useRef<HTMLInputElement>(null);
 
   const handleSaveChanges = () => {
     const errors = {
@@ -132,7 +131,7 @@ export function EditTask({ handleCloseModal }: EditTaskProps) {
               ref={index === localSubtasks.length - 1 ? lastInputRef : null}
               className={`${
                 validationErrors.subtasks[index]
-                  ? 'border-red border-opacity-100'
+                  ? 'border-red border-opacity-100 placeholder:text-red placeholder:text-right'
                   : 'border-slate-400 focus-visible:outline-none border-opacity-25'
               }  dark:bg-transparent text-[13px] font-medium leading-6 py-2 px-4 border outline-none rounded w-11/12 focus-visible:border-purple `}
               value={task.title}

@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Subtask } from '@/types';
 import { v4 as uuidv4 } from 'uuid';
 
 export function useSubtasks(initialSubtasks: Subtask[]) {
   const [localSubtasks, setLocalSubtasks] = useState(initialSubtasks);
+  const lastInputRef = useRef<HTMLInputElement>(null);
 
   const handleAddSubtask = () => {
     const newSubtask: Subtask = {
@@ -12,6 +13,12 @@ export function useSubtasks(initialSubtasks: Subtask[]) {
       isCompleted: false,
     };
     setLocalSubtasks([...localSubtasks, newSubtask]);
+
+    // user after adding a subtask, can immediately type content
+    setTimeout(() => {
+      lastInputRef.current?.focus();
+      lastInputRef.current?.select();
+    }, 0);
   };
 
   const handleDeleteSubtask = (subtaskId: string) => {
@@ -35,5 +42,6 @@ export function useSubtasks(initialSubtasks: Subtask[]) {
     handleAddSubtask,
     handleDeleteSubtask,
     handleSubtaskTitleChange,
+    lastInputRef,
   };
 }
