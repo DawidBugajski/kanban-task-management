@@ -11,134 +11,77 @@ import {
   updateTaskTitle,
 } from '@/redux/slices/boardsSlice';
 import { EditTaskProps } from '@/types/taskTypes';
-import { v4 as uuidv4 } from 'uuid';
 import Button from '../shared/Button';
 import Image from 'next/image';
 import { ICON_CROSS_SVG } from '@/constans';
 import Dropdown from '../shared/Dropdown';
-import { Subtask } from '@/types';
+import { useTitleAndDescription } from '@/hooks/useTaskTitleAndDescription';
+import { useSubtasks } from '@/hooks/useSubtasks';
 
 export function EditTask({ handleCloseModal }: EditTaskProps) {
   const dispatch = useAppDispatch();
   const activeBoard = useAppSelector(getActiveBoard);
   const activeTask = useAppSelector(getActiveTask);
-  const { columns: activeBoardColumns } = activeBoard;
   const { subtasks = [] } = activeTask || {};
-
   const currentColumnForTask = activeBoard.columns.find((column) =>
     column.tasks.some((task) => task.id === activeTask?.id)
   );
 
-  const initialState = {
-    selectedColumn: currentColumnForTask?.id || null,
-    localSubtasks: subtasks,
-    title: activeTask?.title || 'enter title',
-    description: activeTask?.description || '',
-    subtaskTitles: subtasks.map((subtask) => subtask.title),
-  };
+  const { title, description, handleTitleChange, handleDescriptionChange } =
+    useTitleAndDescription(
+      activeTask?.title || 'enter title',
+      activeTask?.description || ''
+    );
 
-  // state for validate errors
+  const {
+    localSubtasks,
+    handleAddSubtask,
+    handleDeleteSubtask,
+    handleSubtaskTitleChange,
+  } = useSubtasks(subtasks);
+
+  const [selectedColumn, setSelectedColumn] = useState(
+    currentColumnForTask?.id || null
+  );
   const [validationErrors, setValidationErrors] = useState({
     title: false,
     subtasks: Array(subtasks.length).fill(false),
   });
 
-  // LocalState to keep changes that will pass to redux after save only
-  const [state, setState] = useState(initialState);
+  const handleColumnChange = (newColumnId: string) =>
+    setSelectedColumn(newColumnId);
 
-  const handleTitleChange = (newTitle: string) => {
-    setState({ ...state, title: newTitle });
-  };
-
-  const handleDescriptionChange = (newDescription: string) => {
-    setState({ ...state, description: newDescription });
-  };
-
-  const handleColumnChange = (newColumnId: string) => {
-    setState({ ...state, selectedColumn: newColumnId });
-  };
-
-  const handleDeleteSubtask = (subtaskId: string) => {
-    const updatedSubtasks = state.localSubtasks.filter(
-      (task) => task.id !== subtaskId
-    );
-
-    setState({
-      ...state,
-      localSubtasks: updatedSubtasks,
-    });
-  };
-
-  const handleSubtaskTitleChange = (index: number, newTitle: string) => {
-    const updatedLocalSubtasks = [...state.localSubtasks];
-    updatedLocalSubtasks[index] = {
-      ...updatedLocalSubtasks[index],
-      title: newTitle,
-    };
-    setState({ ...state, localSubtasks: updatedLocalSubtasks });
-  };
-
-  // jump to added task
   const lastInputRef = useRef<HTMLInputElement>(null);
-
-  const handleAddSubtask = () => {
-    const newSubtask: Subtask = {
-      id: uuidv4(),
-      title: '',
-      isCompleted: false,
-    };
-
-    setState({
-      ...state,
-      localSubtasks: [...state.localSubtasks, newSubtask],
-    });
-
-    setTimeout(() => {
-      lastInputRef.current?.focus();
-      lastInputRef.current?.select();
-    }, 0);
-  };
 
   const handleSaveChanges = () => {
     const errors = {
-      title: state.title.trim() === '', // title is empty => set error.title = true
-      subtasks: state.localSubtasks.map(
-        (subtask) => subtask.title.trim() === ''
-      ),
+      title: title.trim() === '',
+      subtasks: localSubtasks.map((subtask) => subtask.title.trim() === ''),
     };
 
     if (errors.title || errors.subtasks.some((error) => error)) {
       setValidationErrors(errors);
-      console.log(validationErrors);
       return;
     }
-    if (activeTask && state.selectedColumn) {
-      // change column for task
+    if (activeTask && selectedColumn) {
       dispatch(
-        moveTaskToColumn({
-          taskId: activeTask.id,
-          newColumnId: state.selectedColumn,
-        })
+        moveTaskToColumn({ taskId: activeTask.id, newColumnId: selectedColumn })
       );
-
-      // Update title and description in Redux
-      dispatch(updateTaskTitle({ taskId: activeTask.id, title: state.title }));
+      dispatch(updateTaskTitle({ taskId: activeTask.id, title }));
       dispatch(
         updateTaskDescription({
           taskId: activeTask.id,
-          description: state.description,
+          description: description,
         })
       );
 
-      // delete subtask
       subtasks.forEach((subtask) => {
-        if (!state.localSubtasks.some((task) => task.id === subtask.id)) {
+        if (!localSubtasks.some((task) => task.id === subtask.id)) {
           dispatch(deleteSubtask({ subtaskId: subtask.id }));
         }
       });
 
-      // add subtask
-      state.localSubtasks.forEach((localSubtask) => {
+      localSubtasks.forEach((localSubtask) => {
         if (!subtasks.some((subtask) => subtask.id === localSubtask.id)) {
           dispatch(
             addSubtask({ taskId: activeTask.id, subtask: localSubtask })
@@ -146,12 +89,8 @@ export function EditTask({ handleCloseModal }: EditTaskProps) {
         }
       });
 
-      // re-name subtask
       dispatch(
-        updateSubtaskTitles({
-          taskId: activeTask.id,
-          subtasks: state.localSubtasks,
-        })
+        updateSubtaskTitles({ taskId: activeTask.id, subtasks: localSubtasks })
       );
     }
     handleCloseModal();
@@ -168,7 +107,7 @@ export function EditTask({ handleCloseModal }: EditTaskProps) {
               ? 'placeholder:text-red placeholder:text-right outline outline-1 outline-red focus-visible:outline-purple border border-transparent'
               : 'border border-opacity-25 border-slate-400 focus-visible:outline focus-visible:outline-purple'
           } dark:bg-transparent text-[13px] font-medium leading-6 w-full py-2 px-4 rounded `}
-          value={state.title}
+          value={title}
           type='text'
           onChange={(e) => handleTitleChange(e.target.value)}
           placeholder={
@@ -180,18 +119,16 @@ export function EditTask({ handleCloseModal }: EditTaskProps) {
         <p className='text-body-m text-medium-grey font-body-m'>Description</p>
         <textarea
           className='h-auto max-h-[30vh] focus-visible:outline focus-visible:outline-purple dark:bg-transparent pr-6 min-h-[120px] text-[#bfbfc3] text-[13px] font-medium leading-6 w-full py-2 pl-4 border border-opacity-25 rounded border-slate-400'
-          value={state.description}
+          value={description}
           onChange={(e) => handleDescriptionChange(e.target.value)}
           placeholder='Your description here...'
         />
       </div>
       <div className='flex flex-col justify-between w-full gap-3 max-h-[25vh] overflow-y-auto py-0.5'>
-        {state.localSubtasks.map((task, index) => (
+        {localSubtasks.map((task, index) => (
           <div className='flex' key={task.id}>
             <input
-              ref={
-                index === state.localSubtasks.length - 1 ? lastInputRef : null
-              }
+              ref={index === localSubtasks.length - 1 ? lastInputRef : null}
               className={`${
                 validationErrors.subtasks[index]
                   ? 'border-red border-opacity-100'
