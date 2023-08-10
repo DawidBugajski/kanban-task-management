@@ -22,6 +22,7 @@ export function EditTask({ handleCloseModal }: EditTaskProps) {
   const dispatch = useAppDispatch();
   const activeBoard = useAppSelector(getActiveBoard);
   const activeTask = useAppSelector(getActiveTask);
+  const { columns: activeBoardColumns } = activeBoard;
   const { subtasks = [] } = activeTask || {};
   const currentColumnForTask = activeBoard.columns.find((column) =>
     column.tasks.some((task) => task.id === activeTask?.id)
