@@ -1,4 +1,3 @@
-import { useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import {
   addSubtask,
@@ -10,13 +9,15 @@ import {
   updateTaskDescription,
   updateTaskTitle,
 } from '@/redux/slices/boardsSlice';
-import { EditTaskProps } from '@/types/taskTypes';
-import Button from '../shared/Button';
-import Image from 'next/image';
 import { ICON_CROSS_SVG } from '@/constans';
+import { EditTaskProps } from '@/types/taskTypes';
+import Image from 'next/image';
+import Button from '../shared/Button';
 import Dropdown from '../shared/Dropdown';
 import { useTitleAndDescription } from '@/hooks/useTaskTitleAndDescription';
-import { useSubtasks } from '@/hooks/useSubtasks';
+import { useTaskSubtasks } from '@/hooks/useTaskSubtasks';
+import { useSelectedColumn } from '@/hooks/useTaskSelectedColumn';
+import { useValidationErrors } from '@/hooks/useTaskValidationErrors';
 
 export function EditTask({ handleCloseModal }: EditTaskProps) {
   const dispatch = useAppDispatch();
@@ -40,29 +41,20 @@ export function EditTask({ handleCloseModal }: EditTaskProps) {
     handleDeleteSubtask,
     handleSubtaskTitleChange,
     lastInputRef,
-  } = useSubtasks(subtasks);
+  } = useTaskSubtasks(subtasks);
 
-  const [selectedColumn, setSelectedColumn] = useState(
+  const { selectedColumn, handleColumnChange } = useSelectedColumn(
     currentColumnForTask?.id || null
   );
-  const [validationErrors, setValidationErrors] = useState({
+
+  const { validationErrors, validateChanges } = useValidationErrors({
     title: false,
     subtasks: Array(subtasks.length).fill(false),
   });
 
-  const handleColumnChange = (newColumnId: string) =>
-    setSelectedColumn(newColumnId);
-
   const handleSaveChanges = () => {
-    const errors = {
-      title: title.trim() === '',
-      subtasks: localSubtasks.map((subtask) => subtask.title.trim() === ''),
-    };
+    if (!validateChanges(title, localSubtasks)) return;
 
-    if (errors.title || errors.subtasks.some((error) => error)) {
-      setValidationErrors(errors);
-      return;
-    }
     if (activeTask && selectedColumn) {
       dispatch(
         moveTaskToColumn({ taskId: activeTask.id, newColumnId: selectedColumn })

@@ -603,5 +603,69 @@ export const STARTING_DATA = {
         },
       ],
     },
+    {
+      name: 'Project',
+      id: uuidv4(),
+      columns: [
+        {
+          name: 'Features',
+          id: uuidv4(),
+          tasks: [
+            {
+              title: 'Launch version one',
+              description: '',
+              status: '',
+              id: uuidv4(),
+              subtasks: [
+                {
+                  title: 'Launch privately to our waitlist',
+                  id: uuidv4(),
+                  isCompleted: false,
+                },
+                {
+                  title: 'Launch publicly on PH, HN, etc.',
+                  id: uuidv4(),
+                  isCompleted: false,
+                },
+              ],
+            },
+            {
+              title: 'Review early feedback and plan next steps for roadmap',
+              description:
+                "Beyond the initial launch, we're keeping the initial roadmap completely empty. This meeting will help us plan out our next steps based on actual customer feedback.",
+              status: '',
+              id: uuidv4(),
+              subtasks: [
+                {
+                  title: 'Interview 10 customers',
+                  id: uuidv4(),
+                  isCompleted: false,
+                },
+                {
+                  title: 'Review common customer pain points and suggestions',
+                  id: uuidv4(),
+                  isCompleted: false,
+                },
+                {
+                  title: 'Outline next steps for our roadmap',
+                  id: uuidv4(),
+                  isCompleted: false,
+                },
+              ],
+            },
+          ],
+        },
+        {
+          name: 'Bugs',
+          id: uuidv4(),
+          tasks: [],
+        },
+        {
+          name: 'Additional Info',
+          id: uuidv4(),
+          tasks: [],
+        },
+      ],
+    },
   ],
 };

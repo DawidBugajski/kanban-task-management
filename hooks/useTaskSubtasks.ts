@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { Subtask } from '@/types';
 import { v4 as uuidv4 } from 'uuid';
 
-export function useSubtasks(initialSubtasks: Subtask[]) {
+export function useTaskSubtasks(initialSubtasks: Subtask[]) {
   const [localSubtasks, setLocalSubtasks] = useState(initialSubtasks);
   const lastInputRef = useRef<HTMLInputElement>(null);
 
