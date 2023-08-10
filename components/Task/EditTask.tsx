@@ -1,4 +1,4 @@
-import { createRef, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import {
   addSubtask,
@@ -100,7 +100,6 @@ export function EditTask({ handleCloseModal }: EditTaskProps) {
   };
 
   const handleSaveChanges = () => {
-    console.log(validationErrors.title);
     const errors = {
       title: state.title.trim() === '', // title is empty => set error.title = true
       subtasks: state.localSubtasks.map(
@@ -166,9 +165,9 @@ export function EditTask({ handleCloseModal }: EditTaskProps) {
         <input
           className={`${
             validationErrors.title
-              ? 'dark:border-red border-red border-opacity-100 border focus-visible:border-transparent placeholder:text-red placeholder:text-right'
-              : ''
-          } dark:bg-transparent text-[13px] font-medium leading-6 w-full py-2 px-4 border border-opacity-25 rounded border-slate-400 focus-visible:outline focus-visible:outline-purple`}
+              ? 'placeholder:text-red placeholder:text-right outline outline-1 outline-red focus-visible:outline-purple border border-transparent'
+              : 'border border-opacity-25 border-slate-400 focus-visible:outline focus-visible:outline-purple'
+          } dark:bg-transparent text-[13px] font-medium leading-6 w-full py-2 px-4 rounded `}
           value={state.title}
           type='text'
           onChange={(e) => handleTitleChange(e.target.value)}
@@ -180,9 +179,6 @@ export function EditTask({ handleCloseModal }: EditTaskProps) {
       <div className='flex flex-col gap-2'>
         <p className='text-body-m text-medium-grey font-body-m'>Description</p>
         <textarea
-          onClick={(e: React.MouseEvent<HTMLTextAreaElement, MouseEvent>) =>
-            e.currentTarget.select()
-          }
           className='h-auto max-h-[30vh] focus-visible:outline focus-visible:outline-purple dark:bg-transparent pr-6 min-h-[120px] text-[#bfbfc3] text-[13px] font-medium leading-6 w-full py-2 pl-4 border border-opacity-25 rounded border-slate-400'
           value={state.description}
           onChange={(e) => handleDescriptionChange(e.target.value)}
@@ -198,9 +194,9 @@ export function EditTask({ handleCloseModal }: EditTaskProps) {
               }
               className={`${
                 validationErrors.subtasks[index]
-                  ? 'border-red border-opacity-100 placeholder:text-red placeholder:text-right'
-                  : ''
-              } focus-visible:border-purple outline-none focus-visible:outline-none dark:bg-transparent text-[13px] font-medium leading-6 py-2 px-4 border border-opacity-25 rounded border-slate-400 w-11/12`}
+                  ? 'border-red border-opacity-100'
+                  : 'border-slate-400 focus-visible:outline-none border-opacity-25'
+              }  dark:bg-transparent text-[13px] font-medium leading-6 py-2 px-4 border outline-none rounded w-11/12 focus-visible:border-purple `}
               value={task.title}
               type='text'
               onChange={(e) => handleSubtaskTitleChange(index, e.target.value)}

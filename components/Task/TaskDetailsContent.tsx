@@ -12,6 +12,18 @@ export function TaskDetailsContent({
   const totalSubtasks = subtasks.length;
   const completedSubtasks = subtasks.filter((task) => task.isCompleted).length;
 
+  // if the user makes a list after the space, show the same, instead of on 1 line
+  const formatTextWithLineBreaks = (text: string) => {
+    return text
+      .split('\n')
+      .filter((line) => line.trim() !== '')
+      .map((line, index, array) => (
+        <>
+          {line}
+          {index < array.length - 1 && <br />}
+        </>
+      ));
+  };
   return (
     <div className='relative flex flex-col h-auto p-6 md:p-8'>
       {title && (
@@ -22,7 +34,7 @@ export function TaskDetailsContent({
       )}
       {description && (
         <p className='mb-6 text-body-l text-medium-grey font-body-l'>
-          {description}
+          {formatTextWithLineBreaks(description)}
         </p>
       )}
       <p className='mb-4 text-body-m font-body-m text-medium-grey'>
