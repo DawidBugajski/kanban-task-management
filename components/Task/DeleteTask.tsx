@@ -1,8 +1,8 @@
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { deleteTask, getActiveTask } from '@/redux/slices/boardsSlice';
+import { ModalContent } from '@/redux/slices/modalSlice';
 import { DeleteTaskProps } from '@/types/taskTypes';
 import Button from '../shared/Button';
-import { TaskView } from '@/types';
 
 export function DeleteTask({ setView }: DeleteTaskProps) {
   const dispatch = useAppDispatch();
@@ -28,7 +28,7 @@ export function DeleteTask({ setView }: DeleteTaskProps) {
           Delete
         </Button>
         <Button
-          onClick={() => setView(TaskView.Details)}
+          onClick={() => setView(ModalContent.DETAILS)}
           className='transition-colors duration-100 hover:bg-[#d8d7f1] text-body-l font-bold bg-[#f0effa] py-2 text-center text-purple rounded-[20px] grow'
         >
           Cancel

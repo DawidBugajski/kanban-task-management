@@ -1,7 +1,7 @@
-import { Column, Subtask, Task, TaskView } from '.';
+import { ModalContent } from '@/redux/slices/modalSlice';
+import { Column, Subtask, Task } from '.';
 
 export interface TaskDetailsProps {
-  isOpenModal: boolean;
   handleCloseModal: () => void;
 }
 
@@ -9,7 +9,7 @@ export interface TaskDetailsViewProps {
   activeBoardColumns: Column[];
   activeTask: Task | null;
   handleToggleSubtask: (taskId: string, subtaskId: string) => void;
-  setView: React.Dispatch<React.SetStateAction<TaskView>>;
+  setView: (view: ModalContent) => void;
 }
 
 export interface SubtaskListProps {
@@ -19,7 +19,7 @@ export interface SubtaskListProps {
 }
 
 export interface DeleteTaskProps {
-  setView: React.Dispatch<React.SetStateAction<TaskView>>;
+  setView: (view: ModalContent) => void;
 }
 
 export interface EditTaskProps {
