@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { deleteTask, getActiveTask } from '@/redux/slices/boardsSlice';
-import { ModalContent } from '@/redux/slices/modalSlice';
+import { ModalContent, closeModal } from '@/redux/slices/modalSlice';
 import { DeleteTaskProps } from '@/types/taskTypes';
 import Button from '../shared/Button';
 
@@ -10,6 +10,7 @@ export function DeleteTask({ setView }: DeleteTaskProps) {
   const handleDeleteTask = () => {
     if (activeTask) {
       dispatch(deleteTask({ taskId: activeTask?.id }));
+      dispatch(closeModal());
     }
   };
 

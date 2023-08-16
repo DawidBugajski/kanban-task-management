@@ -20,6 +20,7 @@ export const modalSlice = createSlice({
   reducers: {
     openModal: (state) => {
       state.isOpenModal = true;
+      state.conntentInsideModal = ModalContent.DETAILS;
     },
     closeModal: (state) => {
       state.isOpenModal = false;

@@ -22,7 +22,6 @@ export default function TaskCard({ task, index }: TaskCardProps) {
   const handleSetActiveCard = () => {
     dispatch(setActiveTask(task));
     dispatch(openModal());
-    dispatch(setView(ModalContent.DETAILS));
   };
 
   return (
