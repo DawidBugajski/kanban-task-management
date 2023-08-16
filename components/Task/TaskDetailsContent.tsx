@@ -1,16 +1,22 @@
-import { SubtaskListProps, TaskDetailsViewProps } from '@/types/taskTypes';
+import { SubtaskListProps } from '@/types/taskTypes';
 import PopoverItem from '../shared/Popover';
 import Dropdown from '../shared/Dropdown';
 import React from 'react';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import {
+  getActiveBoard,
+  getActiveTask,
+  toggleSubtask,
+} from '@/redux/slices/boardsSlice';
 
-export function TaskDetailsContent({
-  activeBoardColumns,
-  activeTask,
-  handleToggleSubtask,
-}: TaskDetailsViewProps) {
+export function TaskDetailsContent() {
+  const dispatch = useAppDispatch();
+  const activeTask = useAppSelector(getActiveTask);
+  const activeBoard = useAppSelector(getActiveBoard);
   const { title, description, subtasks = [] } = activeTask || {};
   const totalSubtasks = subtasks.length;
   const completedSubtasks = subtasks.filter((task) => task.isCompleted).length;
+  const { columns: activeBoardColumns } = activeBoard;
 
   // if the user makes a list after the space, show the same, instead of on 1 line
   const formatTextWithLineBreaks = (text: string) => {
@@ -23,6 +29,10 @@ export function TaskDetailsContent({
           {index < array.length - 1 && <br />}
         </React.Fragment>
       ));
+  };
+
+  const handleToggleSubtask = (taskId: string, subtaskId: string) => {
+    dispatch(toggleSubtask({ taskId, subtaskId }));
   };
 
   return (
