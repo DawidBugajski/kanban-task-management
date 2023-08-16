@@ -2,6 +2,7 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import {
   getActiveBoard,
   getActiveTask,
+  resetActiveTask,
   toggleSubtask,
 } from '@/redux/slices/boardsSlice';
 import {
@@ -13,13 +14,13 @@ import {
   isDetailsTaskView,
   isEditTaskView,
   isAddTaskView,
-} from '@/redux/slices/modalSlice'; //
+} from '@/redux/slices/modalSlice';
 import Modal from '../shared/Modal';
 import { EditTask } from './EditTask';
 import { DeleteTask } from './DeleteTask';
 import { TaskDetailsContent } from './TaskDetailsContent';
 
-export default function TaskDetailsWrapper() {
+export default function TaskDetailsWrapper({}) {
   const dispatch = useAppDispatch();
   const activeBoard = useAppSelector(getActiveBoard);
   const { columns: activeBoardColumns } = activeBoard;
@@ -31,15 +32,15 @@ export default function TaskDetailsWrapper() {
   const taskDelete = useAppSelector(isDeleteTaskView);
   const taskDetails = useAppSelector(isDetailsTaskView);
   const currentTaskContent = useAppSelector(currentModalContent);
-  console.log(currentTaskContent);
   const handleToggleSubtask = (taskId: string, subtaskId: string) => {
     dispatch(toggleSubtask({ taskId, subtaskId }));
   };
 
   const handleCloseModal = () => {
+    dispatch(resetActiveTask());
     dispatch(closeModal());
   };
-
+  console.log('isOpen', isOpen);
   return (
     <Modal isOpen={isOpen} onClose={handleCloseModal}>
       {taskDetails && (

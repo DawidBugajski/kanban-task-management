@@ -1,6 +1,7 @@
 import { SubtaskListProps, TaskDetailsViewProps } from '@/types/taskTypes';
 import PopoverItem from '../shared/Popover';
 import Dropdown from '../shared/Dropdown';
+import React from 'react';
 
 export function TaskDetailsContent({
   activeBoardColumns,
@@ -18,12 +19,13 @@ export function TaskDetailsContent({
       .split('\n')
       .filter((line) => line.trim() !== '')
       .map((line, index, array) => (
-        <>
+        <React.Fragment key={index}>
           {line}
           {index < array.length - 1 && <br />}
-        </>
+        </React.Fragment>
       ));
   };
+
   return (
     <div className='relative flex flex-col h-auto p-6 md:p-8'>
       {title && (

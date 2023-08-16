@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
 export enum ModalContent {
+  NONE = 'none',
   DETAILS = 'details',
   EDIT = 'edit',
   DELETE = 'delete',
@@ -10,7 +11,7 @@ export enum ModalContent {
 
 const initialState = {
   isOpenModal: false,
-  conntentInsideModal: ModalContent.DETAILS,
+  conntentInsideModal: ModalContent.NONE,
 };
 
 export const modalSlice = createSlice({
@@ -22,6 +23,7 @@ export const modalSlice = createSlice({
     },
     closeModal: (state) => {
       state.isOpenModal = false;
+      state.conntentInsideModal = ModalContent.NONE;
     },
     setView: (state, action: PayloadAction<ModalContent>) => {
       state.conntentInsideModal = action.payload;
