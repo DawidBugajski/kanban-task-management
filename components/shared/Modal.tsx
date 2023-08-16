@@ -1,21 +1,16 @@
 import React from 'react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
-import { useAppSelector, useAppDispatch } from '@/redux/hooks';
-import { closeModal, isOpenModal } from '@/redux/slices/modalSlice';
-import { resetActiveTask } from '@/redux/slices/boardsSlice';
+import { useAppSelector } from '@/redux/hooks';
+import { useCloseModal } from '@/hooks/useCloseModal';
+import { isOpenModal } from '@/redux/slices/modalSlice';
 
 type DialogProps = {
   children: React.ReactNode;
 };
 
 export default function Modal({ children }: DialogProps) {
-  const dispatch = useAppDispatch();
   const isOpen = useAppSelector(isOpenModal);
-
-  const handleCloseModal = () => {
-    dispatch(resetActiveTask());
-    dispatch(closeModal());
-  };
+  const handleCloseModal = useCloseModal();
 
   return (
     <Dialog open={isOpen} onOpenChange={handleCloseModal}>

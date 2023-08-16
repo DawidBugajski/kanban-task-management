@@ -1,14 +1,4 @@
-import { Column, Subtask, Task } from '.';
-
-export interface TaskDetailsProps {
-  handleCloseModal: () => void;
-}
-
-export interface TaskDetailsViewProps {
-  activeBoardColumns: Column[];
-  activeTask: Task | null;
-  handleToggleSubtask: (taskId: string, subtaskId: string) => void;
-}
+import { Subtask } from '.';
 
 export interface SubtaskListProps {
   subtasks: Subtask[];

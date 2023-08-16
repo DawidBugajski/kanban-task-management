@@ -5,7 +5,6 @@ import {
   getActiveBoard,
   getActiveTask,
   moveTaskToColumn,
-  resetActiveTask,
   updateSubtaskTitles,
   updateTaskDescription,
   updateTaskTitle,
@@ -18,7 +17,7 @@ import { useTitleAndDescription } from '@/hooks/useTaskTitleAndDescription';
 import { useTaskSubtasks } from '@/hooks/useTaskSubtasks';
 import { useSelectedColumn } from '@/hooks/useTaskSelectedColumn';
 import { useValidationErrors } from '@/hooks/useTaskValidationErrors';
-import { closeModal } from '@/redux/slices/modalSlice';
+import { useCloseModal } from '@/hooks/useCloseModal';
 
 export function EditTask() {
   const dispatch = useAppDispatch();
@@ -53,10 +52,7 @@ export function EditTask() {
     subtasks: Array(subtasks.length).fill(false),
   });
 
-  const handleCloseModal = () => {
-    dispatch(resetActiveTask());
-    dispatch(closeModal());
-  };
+  const handleCloseModal = useCloseModal();
 
   const handleSaveChanges = () => {
     if (!validateChanges(title, localSubtasks)) return;
