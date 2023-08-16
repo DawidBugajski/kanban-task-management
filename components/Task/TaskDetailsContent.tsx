@@ -7,7 +7,6 @@ export function TaskDetailsContent({
   activeBoardColumns,
   activeTask,
   handleToggleSubtask,
-  setView,
 }: TaskDetailsViewProps) {
   const { title, description, subtasks = [] } = activeTask || {};
   const totalSubtasks = subtasks.length;
@@ -31,7 +30,7 @@ export function TaskDetailsContent({
       {title && (
         <div className='flex items-center mb-6 md:justify-between'>
           <p className='w-11/12 text-heading-l font-heading'>{title}</p>
-          <PopoverItem setView={setView} />
+          <PopoverItem />
         </div>
       )}
       {description && (

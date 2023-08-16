@@ -40,7 +40,6 @@ export default function TaskDetailsWrapper({}) {
     dispatch(resetActiveTask());
     dispatch(closeModal());
   };
-  console.log('isOpen', isOpen);
   return (
     <Modal isOpen={isOpen} onClose={handleCloseModal}>
       {taskDetails && (
@@ -48,7 +47,6 @@ export default function TaskDetailsWrapper({}) {
           activeBoardColumns={activeBoardColumns}
           activeTask={activeTask}
           handleToggleSubtask={handleToggleSubtask}
-          setView={(content) => dispatch(setView(content))}
         />
       )}
       {taskEdit && <EditTask handleCloseModal={handleCloseModal} />}

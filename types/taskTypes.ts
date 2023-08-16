@@ -9,7 +9,6 @@ export interface TaskDetailsViewProps {
   activeBoardColumns: Column[];
   activeTask: Task | null;
   handleToggleSubtask: (taskId: string, subtaskId: string) => void;
-  setView: (view: ModalContent) => void;
 }
 
 export interface SubtaskListProps {
