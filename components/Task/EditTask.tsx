@@ -5,12 +5,12 @@ import {
   getActiveBoard,
   getActiveTask,
   moveTaskToColumn,
+  resetActiveTask,
   updateSubtaskTitles,
   updateTaskDescription,
   updateTaskTitle,
 } from '@/redux/slices/boardsSlice';
 import { ICON_CROSS_SVG } from '@/constans';
-import { EditTaskProps } from '@/types/taskTypes';
 import Image from 'next/image';
 import Button from '../shared/Button';
 import Dropdown from '../shared/Dropdown';
@@ -18,8 +18,9 @@ import { useTitleAndDescription } from '@/hooks/useTaskTitleAndDescription';
 import { useTaskSubtasks } from '@/hooks/useTaskSubtasks';
 import { useSelectedColumn } from '@/hooks/useTaskSelectedColumn';
 import { useValidationErrors } from '@/hooks/useTaskValidationErrors';
+import { closeModal } from '@/redux/slices/modalSlice';
 
-export function EditTask({ handleCloseModal }: EditTaskProps) {
+export function EditTask() {
   const dispatch = useAppDispatch();
   const activeBoard = useAppSelector(getActiveBoard);
   const activeTask = useAppSelector(getActiveTask);
@@ -51,6 +52,11 @@ export function EditTask({ handleCloseModal }: EditTaskProps) {
     title: false,
     subtasks: Array(subtasks.length).fill(false),
   });
+
+  const handleCloseModal = () => {
+    dispatch(resetActiveTask());
+    dispatch(closeModal());
+  };
 
   const handleSaveChanges = () => {
     if (!validateChanges(title, localSubtasks)) return;

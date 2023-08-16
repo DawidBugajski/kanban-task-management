@@ -7,9 +7,7 @@ import {
 } from '@/redux/slices/boardsSlice';
 import {
   closeModal,
-  currentModalContent,
   setView,
-  isOpenModal,
   isDeleteTaskView,
   isDetailsTaskView,
   isEditTaskView,
@@ -20,18 +18,18 @@ import { EditTask } from './EditTask';
 import { DeleteTask } from './DeleteTask';
 import { TaskDetailsContent } from './TaskDetailsContent';
 
-export default function TaskDetailsWrapper({}) {
+export default function TaskDetailsWrapper() {
   const dispatch = useAppDispatch();
   const activeBoard = useAppSelector(getActiveBoard);
   const { columns: activeBoardColumns } = activeBoard;
   const activeTask = useAppSelector(getActiveTask);
-  const isOpen = useAppSelector(isOpenModal);
+
   // content inside modal
   const taskEdit = useAppSelector(isEditTaskView);
   const taskAdd = useAppSelector(isAddTaskView);
   const taskDelete = useAppSelector(isDeleteTaskView);
   const taskDetails = useAppSelector(isDetailsTaskView);
-  const currentTaskContent = useAppSelector(currentModalContent);
+
   const handleToggleSubtask = (taskId: string, subtaskId: string) => {
     dispatch(toggleSubtask({ taskId, subtaskId }));
   };
@@ -41,7 +39,7 @@ export default function TaskDetailsWrapper({}) {
     dispatch(closeModal());
   };
   return (
-    <Modal isOpen={isOpen} onClose={handleCloseModal}>
+    <Modal>
       {taskDetails && (
         <TaskDetailsContent
           activeBoardColumns={activeBoardColumns}
@@ -49,10 +47,8 @@ export default function TaskDetailsWrapper({}) {
           handleToggleSubtask={handleToggleSubtask}
         />
       )}
-      {taskEdit && <EditTask handleCloseModal={handleCloseModal} />}
-      {taskDelete && (
-        <DeleteTask setView={(content) => dispatch(setView(content))} />
-      )}
+      {taskEdit && <EditTask />}
+      {taskDelete && <DeleteTask />}
       {taskAdd && <div>ADD TASK</div>}
     </Modal>
   );
