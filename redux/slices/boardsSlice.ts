@@ -229,6 +229,24 @@ export const boardsSlice = createSlice({
         state.activeTask = { ...task };
       }
     },
+    addTask: (
+      state,
+      action: PayloadAction<{ columnId: string; task: Task }>
+    ) => {
+      const { columnId, task } = action.payload;
+
+      const activeBoard = findActiveBoard(state);
+
+      if (!activeBoard) return;
+
+      const column = activeBoard.columns.find(
+        (column) => column.id === columnId
+      );
+
+      if (!column) return;
+
+      column.tasks.push(task);
+    },
   },
 });
 
@@ -245,6 +263,7 @@ export const {
   updateTaskTitle,
   updateTaskDescription,
   addSubtask,
+  addTask,
 } = boardsSlice.actions;
 export const getBoards = (state: RootState): Board[] => state.boards.boards;
 export const getActiveBoard = (state: RootState): Board =>

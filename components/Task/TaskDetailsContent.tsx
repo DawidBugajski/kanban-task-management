@@ -44,13 +44,15 @@ export function TaskDetailsContent() {
         </div>
       )}
       {description && (
-        <p className='mb-6 text-body-l text-medium-grey font-body-l'>
+        <p className='text-body-l text-medium-grey font-body-l'>
           {formatTextWithLineBreaks(description)}
         </p>
       )}
-      <p className='mb-4 text-body-m font-body-m text-medium-grey'>
-        Subtasks: ({completedSubtasks} of {totalSubtasks})
-      </p>
+      {totalSubtasks !== 0 && (
+        <p className='mb-4 text-body-m font-body-m text-medium-grey'>
+          Subtasks: ({completedSubtasks} of {totalSubtasks})
+        </p>
+      )}
       <SubtaskList
         subtasks={subtasks}
         handleToggleSubtask={handleToggleSubtask}

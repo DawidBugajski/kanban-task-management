@@ -11,6 +11,9 @@ import { useAppDispatch } from '@/redux/hooks';
 export default function PopoverItem() {
   const dispatch = useAppDispatch();
 
+  const handleSetEdit = () => dispatch(setView(ModalContent.EDIT));
+  const handleSetDelete = () => dispatch(setView(ModalContent.DELETE));
+
   return (
     <Popover>
       <PopoverTrigger className='focus-visible:outline-none'>
@@ -25,13 +28,13 @@ export default function PopoverItem() {
       </PopoverTrigger>
       <PopoverContent className='mt-4 font-medium'>
         <p
-          onClick={() => dispatch(setView(ModalContent.EDIT))}
+          onClick={handleSetEdit}
           className='cursor-pointer text-medium-grey hover:underline'
         >
           Edit Task
         </p>
         <p
-          onClick={() => dispatch(setView(ModalContent.DELETE))}
+          onClick={handleSetDelete}
           className='cursor-pointer text-red hover:underline'
         >
           Delete Task
