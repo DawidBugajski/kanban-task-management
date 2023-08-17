@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
+import { Task } from '@/types';
 
 export enum ModalContent {
   NONE = 'none',
@@ -9,18 +10,26 @@ export enum ModalContent {
   ADD = 'add',
 }
 
-const initialState = {
+interface ModalState {
+  isOpenModal: boolean;
+  contentInsideModal: ModalContent;
+  activeTask: Task | null;
+}
+
+const initialState: ModalState = {
   isOpenModal: false,
   contentInsideModal: ModalContent.NONE,
+  activeTask: null,
 };
 
 export const modalSlice = createSlice({
   name: 'modal',
   initialState,
   reducers: {
-    openModal: (state) => {
+    openModal: (state, action: PayloadAction<Task | null>) => {
       state.isOpenModal = true;
       state.contentInsideModal = ModalContent.DETAILS;
+      state.activeTask = action.payload;
     },
     closeModal: (state) => {
       state.isOpenModal = false;
