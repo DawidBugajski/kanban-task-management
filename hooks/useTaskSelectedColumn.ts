@@ -5,6 +5,7 @@ export function useSelectedColumn(initialColumnId: string | null) {
 
   const handleColumnChange = (newColumnId: string) => {
     setSelectedColumn(newColumnId);
+    console.log(selectedColumn);
   };
 
   return {

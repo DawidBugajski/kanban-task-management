@@ -246,6 +246,7 @@ export const boardsSlice = createSlice({
       if (!column) return;
 
       column.tasks.push(task);
+      console.log(task);
     },
   },
 });
