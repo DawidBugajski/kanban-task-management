@@ -29,10 +29,3 @@ export interface Subtask {
   id: string;
   isCompleted: boolean;
 }
-
-export enum TaskView {
-  DETAILS = 'details',
-  EDIT = 'edit',
-  DELETE = 'delete',
-  ADD = 'add',
-}

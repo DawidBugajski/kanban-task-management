@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import boardsReducer from './slices/boardsSlice';
+import modalReducer from './slices/modalSlice';
 
 export const store = configureStore({
   reducer: {
     boards: boardsReducer,
+    modal: modalReducer,
   },
 });
 

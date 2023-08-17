@@ -13,6 +13,7 @@ import {
   moveTaskToColumn,
   getActiveBoard,
 } from '@/redux/slices/boardsSlice';
+import { ModalContent, closeModal, setView } from '@/redux/slices/modalSlice';
 interface DropdownProps {
   options: Column[];
   changeOnSave?: boolean; // if the parent component uses this component with prop === false, then when you change the item in the dropdown, the action in the reducer in redux is called and the component is rendered from scratch making the modal disabled
@@ -50,14 +51,12 @@ export default function Dropdown({
           newColumnId,
         })
       );
+      dispatch(closeModal());
     }
   };
 
   return (
-    <Select
-      value={tempColumn} // Używa lokalnego stanu jako wartości
-      onValueChange={handleMoveTaskToColumn}
-    >
+    <Select value={tempColumn} onValueChange={handleMoveTaskToColumn}>
       <SelectTrigger className='w-full text-body-l font-body-l'>
         <SelectValue placeholder={'Change status'} />
       </SelectTrigger>

@@ -5,13 +5,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { TaskView } from '@/types';
+import { ModalContent, setView } from '@/redux/slices/modalSlice';
+import { useAppDispatch } from '@/redux/hooks';
 
-interface PopoverItemProps {
-  setView: React.Dispatch<React.SetStateAction<TaskView>>;
-}
+export default function PopoverItem() {
+  const dispatch = useAppDispatch();
 
-export default function PopoverItem({ setView }: PopoverItemProps) {
   return (
     <Popover>
       <PopoverTrigger className='focus-visible:outline-none'>
@@ -26,13 +25,13 @@ export default function PopoverItem({ setView }: PopoverItemProps) {
       </PopoverTrigger>
       <PopoverContent className='mt-4 font-medium'>
         <p
-          onClick={() => setView(TaskView.Edit)}
+          onClick={() => dispatch(setView(ModalContent.EDIT))}
           className='cursor-pointer text-medium-grey hover:underline'
         >
           Edit Task
         </p>
         <p
-          onClick={() => setView(TaskView.Delete)}
+          onClick={() => dispatch(setView(ModalContent.DELETE))}
           className='cursor-pointer text-red hover:underline'
         >
           Delete Task

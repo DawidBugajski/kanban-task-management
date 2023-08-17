@@ -1,44 +1,21 @@
-import { useState } from 'react';
 import { Task } from '@/types';
-import { useAppDispatch } from '@/redux/hooks';
-import { setActiveTask, resetActiveTask } from '@/redux/slices/boardsSlice';
+import { useAppSelector } from '@/redux/hooks';
+import { isOpenModal } from '@/redux/slices/modalSlice';
 import { DraggableTaskCard } from './DraggableTaskCard';
 import TaskDetailsWrapper from './TaskDetailsWrapper';
 
 interface TaskCardProps {
   task: Task;
   index: number;
-  handleSetActiveCard?: () => void;
-  handleCloseModal?: () => void;
 }
 
 export default function TaskCard({ task, index }: TaskCardProps) {
-  const [isOpenModal, setIsOpenModal] = useState(false);
-  const dispatch = useAppDispatch();
-
-  const handleSetActiveCard = () => {
-    dispatch(setActiveTask(task));
-    setIsOpenModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsOpenModal(false);
-    dispatch(resetActiveTask());
-  };
+  const isModalOpen = useAppSelector(isOpenModal);
 
   return (
     <>
-      {isOpenModal && (
-        <TaskDetailsWrapper
-          isOpenModal={isOpenModal}
-          handleCloseModal={handleCloseModal}
-        />
-      )}
-      <DraggableTaskCard
-        task={task}
-        index={index}
-        handleSetActiveCard={handleSetActiveCard}
-      />
+      {isModalOpen && <TaskDetailsWrapper />}
+      <DraggableTaskCard task={task} index={index} />
     </>
   );
 }

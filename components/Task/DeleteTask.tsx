@@ -1,15 +1,19 @@
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { deleteTask, getActiveTask } from '@/redux/slices/boardsSlice';
-import { DeleteTaskProps } from '@/types/taskTypes';
-import Button from '../shared/Button';
-import { TaskView } from '@/types';
+import { ModalContent, closeModal, setView } from '@/redux/slices/modalSlice';
 
-export function DeleteTask({ setView }: DeleteTaskProps) {
+import Button from '../shared/Button';
+
+export function DeleteTask() {
   const dispatch = useAppDispatch();
   const activeTask = useAppSelector(getActiveTask);
+
+  const handleBackToDetails = () => dispatch(setView(ModalContent.DETAILS));
+
   const handleDeleteTask = () => {
     if (activeTask) {
       dispatch(deleteTask({ taskId: activeTask?.id }));
+      dispatch(closeModal());
     }
   };
 
@@ -28,7 +32,7 @@ export function DeleteTask({ setView }: DeleteTaskProps) {
           Delete
         </Button>
         <Button
-          onClick={() => setView(TaskView.Details)}
+          onClick={handleBackToDetails}
           className='transition-colors duration-100 hover:bg-[#d8d7f1] text-body-l font-bold bg-[#f0effa] py-2 text-center text-purple rounded-[20px] grow'
         >
           Cancel
