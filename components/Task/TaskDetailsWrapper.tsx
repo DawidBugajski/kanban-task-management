@@ -20,7 +20,7 @@ export default function TaskDetailsWrapper({
   const activeBoard = useAppSelector(getActiveBoard);
   const activeTask = useAppSelector(getActiveTask);
   const { columns: activeBoardColumns } = activeBoard;
-  const [view, setView] = useState(TaskView.Details);
+  const [view, setView] = useState(TaskView.DETAILS);
 
   const handleToggleSubtask = (taskId: string, subtaskId: string) => {
     dispatch(toggleSubtask({ taskId, subtaskId }));
@@ -28,7 +28,7 @@ export default function TaskDetailsWrapper({
 
   return (
     <Modal isOpen={isOpenModal} onClose={handleCloseModal}>
-      {view === TaskView.Details && (
+      {view === TaskView.DETAILS && (
         <TaskDetailsContent
           activeBoardColumns={activeBoardColumns}
           activeTask={activeTask}
@@ -36,10 +36,10 @@ export default function TaskDetailsWrapper({
           setView={setView}
         />
       )}
-      {view === TaskView.Edit && (
+      {view === TaskView.EDIT && (
         <EditTask handleCloseModal={handleCloseModal} />
       )}
-      {view === TaskView.Delete && <DeleteTask setView={setView} />}
+      {view === TaskView.DELETE && <DeleteTask setView={setView} />}
     </Modal>
   );
 }

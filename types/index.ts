@@ -31,7 +31,8 @@ export interface Subtask {
 }
 
 export enum TaskView {
-  Details = 'details',
-  Edit = 'edit',
-  Delete = 'delete',
+  DETAILS = 'details',
+  EDIT = 'edit',
+  DELETE = 'delete',
+  ADD = 'add',
 }

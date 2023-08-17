@@ -8,8 +8,8 @@ import TaskDetailsWrapper from './TaskDetailsWrapper';
 interface TaskCardProps {
   task: Task;
   index: number;
-  handleSetActiveCard: () => void;
-  handleCloseModal: () => void;
+  handleSetActiveCard?: () => void;
+  handleCloseModal?: () => void;
 }
 
 export default function TaskCard({ task, index }: TaskCardProps) {
