@@ -5,10 +5,13 @@ import { getActiveBoard, moveTask } from '@/redux/slices/boardsSlice';
 
 import AddColumn from './AddColumn';
 import TaskCard from './Task/TaskCard';
+import { isOpenModal } from '@/redux/slices/modalSlice';
+import TaskDetailsWrapper from './Task/TaskDetailsWrapper';
 
 export default function Dashboard() {
   const dispatch = useAppDispatch();
   const activeBoard = useAppSelector(getActiveBoard);
+  const isModalOpen = useAppSelector(isOpenModal);
   const dotsColors = ['bg-sky-400', 'bg-violet-500', 'bg-emerald-300'];
 
   const handleOnDragEnd = (result: DropResult) => {
@@ -61,6 +64,7 @@ export default function Dashboard() {
           {activeBoard && activeBoard.columns.length > 0 && <AddColumn />}
         </div>
       </div>
+      {isModalOpen && <TaskDetailsWrapper />}
     </DragDropContext>
   );
 }

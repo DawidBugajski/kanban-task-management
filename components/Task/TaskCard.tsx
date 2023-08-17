@@ -1,6 +1,6 @@
 import { Task } from '@/types';
-import { useAppSelector } from '@/redux/hooks';
-import { isOpenModal } from '@/redux/slices/modalSlice';
+import { useAppDispatch } from '@/redux/hooks';
+import { openModal } from '@/redux/slices/modalSlice';
 import { DraggableTaskCard } from './DraggableTaskCard';
 import TaskDetailsWrapper from './TaskDetailsWrapper';
 
@@ -10,12 +10,12 @@ interface TaskCardProps {
 }
 
 export default function TaskCard({ task, index }: TaskCardProps) {
-  const isModalOpen = useAppSelector(isOpenModal);
+  const dispatch = useAppDispatch();
+  const handleOpenModal = () => dispatch(openModal(task));
 
   return (
-    <>
-      {isModalOpen && <TaskDetailsWrapper />}
+    <div onClick={handleOpenModal}>
       <DraggableTaskCard task={task} index={index} />
-    </>
+    </div>
   );
 }

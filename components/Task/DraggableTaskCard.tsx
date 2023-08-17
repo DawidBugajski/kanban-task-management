@@ -18,7 +18,7 @@ export function DraggableTaskCard({ task, index }: DraggableTaskCardProps) {
 
   const handleSetActiveCard = () => {
     dispatch(setActiveTask(task));
-    dispatch(openModal());
+    dispatch(openModal(task));
   };
 
   return (
