@@ -8,7 +8,7 @@ export function DeleteTask() {
   const dispatch = useAppDispatch();
   const activeTask = useAppSelector(getActiveTask);
 
-  const handleBackToDetails = () => dispatch(setView(ModalContent.DETAILS));
+  const handleCancel = () => dispatch(setView(ModalContent.DETAILS));
 
   const handleDeleteTask = () => {
     if (activeTask) {
@@ -32,7 +32,7 @@ export function DeleteTask() {
           Delete
         </Button>
         <Button
-          onClick={handleBackToDetails}
+          onClick={handleCancel}
           className='transition-colors duration-100 hover:bg-[#d8d7f1] text-body-l font-bold bg-[#f0effa] py-2 text-center text-purple rounded-[20px] grow'
         >
           Cancel

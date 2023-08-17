@@ -84,7 +84,7 @@ function MobileSidebarIconToggle({
 
 interface AddNewTaskProps {
   isMobileOrDesktop: boolean;
-  handleAddNewTask: () => void;
+  handleAddNewTask?: () => void;
 }
 
 function AddNewTask({ isMobileOrDesktop }: AddNewTaskProps) {
