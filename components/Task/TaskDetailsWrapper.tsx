@@ -11,6 +11,7 @@ import { TaskDetailsProps } from '@/types/taskTypes';
 import { EditTask } from './EditTask';
 import { DeleteTask } from './DeleteTask';
 import { TaskDetailsContent } from './TaskDetailsContent';
+import AddTask from './AddTask';
 
 export default function TaskDetailsWrapper({
   isOpenModal,
@@ -40,6 +41,7 @@ export default function TaskDetailsWrapper({
         <EditTask handleCloseModal={handleCloseModal} />
       )}
       {view === TaskView.DELETE && <DeleteTask setView={setView} />}
+      {view === TaskView.ADD && <AddTask />}
     </Modal>
   );
 }
