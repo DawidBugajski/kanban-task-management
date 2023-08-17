@@ -13,6 +13,8 @@ import { useResponsive } from '@/hooks/useResponsive';
 import SidebarBoards from './Sidebar/SidebarBoards';
 import SidebarThemeToggle from './Sidebar/SidebarThemeToggle';
 import { EditStateButton } from './shared/EditStateButton';
+import { useAppDispatch } from '@/redux/hooks';
+import { openModal } from '@/redux/slices/modalSlice';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,10 +41,7 @@ export default function Header() {
             )}
           </div>
           <div className='flex items-center gap-3 md:gap-6'>
-            <AddNewTask
-              toggleSidebar={toggleSidebar}
-              isMobileOrDesktop={isMobileOrDesktop}
-            />
+            <AddNewTask isMobileOrDesktop={isMobileOrDesktop} />
             <EditStateButton onClick={() => console.log('clicked')} />
           </div>
         </div>
@@ -83,15 +82,20 @@ function MobileSidebarIconToggle({
   );
 }
 
-interface AddNewTaskProps extends ToggleSidebarProps {
+interface AddNewTaskProps {
   isMobileOrDesktop: boolean;
+  handleAddNewTask: () => void;
 }
 
-function AddNewTask({ toggleSidebar, isMobileOrDesktop }: AddNewTaskProps) {
+function AddNewTask({ isMobileOrDesktop }: AddNewTaskProps) {
+  const dispatch = useAppDispatch();
+  const handleAddNewTask = () => {
+    dispatch(openModal('addNewTask'));
+  };
   return (
     <Button
       title={isMobileOrDesktop ? '+ Add new task' : undefined}
-      onClick={toggleSidebar}
+      onClick={handleAddNewTask}
       className='flex items-center justify-center md:w-[164px] md:h-12 w-12 h-8 leading-none text-white transition-colors duration-100 rounded-full md:text-heading-m font-heading bg-purple hover:bg-purple-hover md:rounded-3xl'
     >
       {!isMobileOrDesktop && (

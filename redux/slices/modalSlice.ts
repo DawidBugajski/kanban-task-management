@@ -26,10 +26,15 @@ export const modalSlice = createSlice({
   name: 'modal',
   initialState,
   reducers: {
-    openModal: (state, action: PayloadAction<Task | null>) => {
+    openModal: (state, action: PayloadAction<Task | null | 'addNewTask'>) => {
       state.isOpenModal = true;
-      state.contentInsideModal = ModalContent.DETAILS;
-      state.activeTask = action.payload;
+      if (action.payload === 'addNewTask') {
+        state.contentInsideModal = ModalContent.ADD;
+        state.activeTask = null;
+      } else {
+        state.contentInsideModal = ModalContent.DETAILS;
+        state.activeTask = action.payload;
+      }
     },
     closeModal: (state) => {
       state.isOpenModal = false;

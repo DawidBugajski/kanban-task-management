@@ -1,31 +1,22 @@
 import { Draggable } from 'react-beautiful-dnd';
 import { Task } from '@/types';
-import { setActiveTask } from '@/redux/slices/boardsSlice';
-import { openModal } from '@/redux/slices/modalSlice';
-import { useAppDispatch } from '@/redux/hooks';
+import handleSetActiveCard from '@/hooks/useSetActiveTask';
 
 interface DraggableTaskCardProps {
   task: Task;
   index: number;
-  handleSetActiveCard?: () => void;
-  openModal?: () => void;
 }
 
 export function DraggableTaskCard({ task, index }: DraggableTaskCardProps) {
-  const dispatch = useAppDispatch();
   const { subtasks } = task;
   const completedSubtasks = subtasks.filter((subtask) => subtask.isCompleted);
-
-  const handleSetActiveCard = () => {
-    dispatch(setActiveTask(task));
-    dispatch(openModal(task));
-  };
+  const handleOpenModal = handleSetActiveCard(task);
 
   return (
     <Draggable draggableId={task.id} index={index}>
       {(provided, snapshot) => (
         <div
-          onClick={handleSetActiveCard}
+          onClick={handleOpenModal}
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
