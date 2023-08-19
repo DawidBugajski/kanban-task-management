@@ -17,13 +17,15 @@ import { closeModal } from '@/redux/slices/modalSlice';
 interface DropdownProps {
   options: Column[];
   changeOnSave?: boolean; // if the parent component uses this component with prop === false, then when you change the item in the dropdown, the action in the reducer in redux is called and the component is rendered from scratch making the modal disabled
-  onValueChange?: (newColumnId: string) => void;
+  onValueChange: (newColumnId: string) => void;
+  isEditMode?: boolean;
 }
 
 export default function Dropdown({
   options,
   changeOnSave,
   onValueChange,
+  isEditMode,
 }: DropdownProps) {
   const dispatch = useAppDispatch();
   const activeTask = useAppSelector(getActiveTask);
@@ -37,8 +39,13 @@ export default function Dropdown({
     currentColumnForTask?.id
   );
 
+  console.log(activeTask);
+
   const handleMoveTaskToColumn = (newColumnId: string) => {
-    if (!activeTask) return;
+    if (isEditMode && !activeTask) return;
+
+    const taskId = activeTask?.id;
+    if (!taskId) return;
 
     if (changeOnSave) {
       setTempColumn(newColumnId);

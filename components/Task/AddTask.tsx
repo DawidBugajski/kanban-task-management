@@ -1,11 +1,7 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useAppSelector, useAppDispatch } from '@/redux/hooks';
-import {
-  addTask,
-  getActiveBoard,
-  getActiveTask,
-} from '@/redux/slices/boardsSlice';
+import { addTask, getActiveBoard } from '@/redux/slices/boardsSlice';
 import Image from 'next/image';
 import Button from '../shared/Button';
 import { useTitleAndDescription } from '@/hooks/useTaskTitleAndDescription';
@@ -21,10 +17,10 @@ export default function AddTask() {
   const activeBoard = useAppSelector(getActiveBoard);
 
   const { columns: activeBoardColumns } = activeBoard;
-  console.log(activeBoardColumns);
+
   //title&desc
   const { title, description, handleTitleChange, handleDescriptionChange } =
-    useTitleAndDescription('enter title', '');
+    useTitleAndDescription('', '');
   //subtasks
   const {
     localSubtasks,
