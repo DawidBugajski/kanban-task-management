@@ -36,16 +36,13 @@ export default function Dropdown({
 
   // update values in a component which do nothing, before clicking saveButton in parent Component
   const [tempColumn, setTempColumn] = useState<string | undefined>(
-    currentColumnForTask?.id
+    currentColumnForTask?.id || options[0]?.id
   );
 
   console.log(activeTask);
 
   const handleMoveTaskToColumn = (newColumnId: string) => {
     if (isEditMode && !activeTask) return;
-
-    const taskId = activeTask?.id;
-    if (!taskId) return;
 
     if (changeOnSave) {
       setTempColumn(newColumnId);
@@ -54,7 +51,7 @@ export default function Dropdown({
       // changeOnSave === false
       dispatch(
         moveTaskToColumn({
-          taskId: activeTask.id,
+          taskId: activeTask!.id, // "! => inform TypeScript that there is no null here, if you are absolutely sure that null is not possible."
           newColumnId,
         })
       );
