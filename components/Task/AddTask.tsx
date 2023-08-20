@@ -18,10 +18,9 @@ export default function AddTask() {
 
   const { columns: activeBoardColumns } = activeBoard;
 
-  //title&desc
   const { title, description, handleTitleChange, handleDescriptionChange } =
     useTitleAndDescription('', '');
-  //subtasks
+
   const {
     localSubtasks,
     handleAddSubtask,
@@ -29,7 +28,7 @@ export default function AddTask() {
     handleSubtaskTitleChange,
     lastInputRef,
   } = useTaskSubtasks([]);
-  //validate
+
   const { validationErrors, validateChanges } = useValidationErrors({
     title: false,
     subtasks: Array(localSubtasks.length).fill(false),
@@ -40,15 +39,10 @@ export default function AddTask() {
   );
   const handleCloseModal = useCloseModal();
 
-  // save all => redux
   const handleAddNewTask = () => {
     if (!validateChanges(title, localSubtasks)) return;
 
-    if (selectedColumn === null) {
-      // Tutaj możesz dodać logikę obsługi błędu, jeśli kolumna nie została wybrana
-      console.log('error');
-      return;
-    }
+    if (selectedColumn === null) return;
 
     const newTask = {
       id: uuidv4(),
