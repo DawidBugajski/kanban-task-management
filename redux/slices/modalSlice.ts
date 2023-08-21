@@ -4,10 +4,10 @@ import { Task } from '@/types';
 
 export enum ModalContent {
   NONE = 'none',
-  DETAILS = 'details',
-  EDIT = 'edit',
-  DELETE = 'delete',
-  ADD = 'add',
+  TASK_DETAILS = 'task_details',
+  TASK_EDIT = 'task_edit',
+  TASK_DELETE = 'task_delete',
+  TASK_ADD = 'task_add',
 }
 
 interface ModalState {
@@ -29,10 +29,10 @@ export const modalSlice = createSlice({
     openModal: (state, action: PayloadAction<Task | null | 'addNewTask'>) => {
       state.isOpenModal = true;
       if (action.payload === 'addNewTask') {
-        state.contentInsideModal = ModalContent.ADD;
+        state.contentInsideModal = ModalContent.TASK_ADD;
         state.activeTask = null;
       } else {
-        state.contentInsideModal = ModalContent.DETAILS;
+        state.contentInsideModal = ModalContent.TASK_DETAILS;
         state.activeTask = action.payload;
       }
     },
@@ -50,13 +50,13 @@ export const { openModal, closeModal, setView } = modalSlice.actions;
 export const isOpenModal = (state: RootState): boolean =>
   state.modal.isOpenModal;
 export const isDetailsTaskView = (state: RootState): boolean =>
-  state.modal.contentInsideModal === ModalContent.DETAILS;
+  state.modal.contentInsideModal === ModalContent.TASK_DETAILS;
 export const isEditTaskView = (state: RootState): boolean =>
-  state.modal.contentInsideModal === ModalContent.EDIT;
+  state.modal.contentInsideModal === ModalContent.TASK_EDIT;
 export const isDeleteTaskView = (state: RootState): boolean =>
-  state.modal.contentInsideModal === ModalContent.DELETE;
+  state.modal.contentInsideModal === ModalContent.TASK_DELETE;
 export const isAddTaskView = (state: RootState): boolean =>
-  state.modal.contentInsideModal === ModalContent.ADD;
+  state.modal.contentInsideModal === ModalContent.TASK_ADD;
 export const currentModalContent = (state: RootState): ModalContent =>
   state.modal.contentInsideModal;
 

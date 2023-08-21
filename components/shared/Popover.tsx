@@ -11,8 +11,8 @@ import { useAppDispatch } from '@/redux/hooks';
 export default function PopoverItem() {
   const dispatch = useAppDispatch();
 
-  const handleSetEdit = () => dispatch(setView(ModalContent.EDIT));
-  const handleSetDelete = () => dispatch(setView(ModalContent.DELETE));
+  const handleSetEdit = () => dispatch(setView(ModalContent.TASK_EDIT));
+  const handleSetDelete = () => dispatch(setView(ModalContent.TASK_DELETE));
 
   return (
     <Popover>

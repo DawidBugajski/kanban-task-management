@@ -8,7 +8,7 @@ export function DeleteTask() {
   const dispatch = useAppDispatch();
   const activeTask = useAppSelector(getActiveTask);
 
-  const handleCancel = () => dispatch(setView(ModalContent.DETAILS));
+  const handleCancel = () => dispatch(setView(ModalContent.TASK_DETAILS));
 
   const handleDeleteTask = () => {
     if (activeTask) {
