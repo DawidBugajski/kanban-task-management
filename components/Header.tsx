@@ -15,6 +15,7 @@ import SidebarThemeToggle from './Sidebar/SidebarThemeToggle';
 import { EditStateButton } from './shared/EditStateButton';
 import { useAppDispatch } from '@/redux/hooks';
 import { openModal } from '@/redux/slices/modalSlice';
+import PopoverItem from './shared/Popover';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -42,7 +43,7 @@ export default function Header() {
           </div>
           <div className='flex items-center gap-3 md:gap-6'>
             <AddNewTask isMobileOrDesktop={isMobileOrDesktop} />
-            <EditStateButton onClick={() => console.log('clicked')} />
+            <PopoverItem />
           </div>
         </div>
       </div>
