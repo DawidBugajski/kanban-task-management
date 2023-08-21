@@ -39,8 +39,6 @@ export default function Dropdown({
     currentColumnForTask?.id || options[0]?.id
   );
 
-  console.log(activeTask);
-
   const handleMoveTaskToColumn = (newColumnId: string) => {
     if (isEditMode && !activeTask) return;
 
