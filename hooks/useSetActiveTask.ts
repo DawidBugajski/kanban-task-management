@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { Task } from '@/types';
-import { openModal } from '@/redux/slices/modalSlice';
+import { ModalContent, openModal, setView } from '@/redux/slices/modalSlice';
 import { setActiveTask } from '@/redux/slices/boardsSlice';
 
 const useSetActiveTask = (task: Task) => {
@@ -8,7 +8,8 @@ const useSetActiveTask = (task: Task) => {
 
   const handleSetActiveCard = () => {
     dispatch(setActiveTask(task));
-    dispatch(openModal({ type: 'task', task: task, action: 'details' }));
+    dispatch(openModal());
+    dispatch(setView(ModalContent.TASK_DETAILS));
   };
 
   return handleSetActiveCard;

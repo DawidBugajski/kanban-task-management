@@ -12,10 +12,6 @@ export enum ModalContent {
   BOARD_DELETE = 'board_delete',
 }
 
-type ModalAction =
-  | { type: 'task'; task: Task | null; action: 'details' | 'addNewTask' }
-  | { type: 'board'; board: Board | null; action: 'edit' | 'delete' };
-
 interface ModalState {
   isOpenModal: boolean;
   contentInsideModal: ModalContent;
@@ -34,25 +30,8 @@ export const modalSlice = createSlice({
   name: 'modal',
   initialState,
   reducers: {
-    openModal: (state, action: PayloadAction<ModalAction>) => {
+    openModal: (state) => {
       state.isOpenModal = true;
-      if (action.payload.type === 'task') {
-        if (action.payload.action === 'addNewTask') {
-          state.contentInsideModal = ModalContent.TASK_ADD;
-          state.activeTask = null;
-        } else {
-          state.contentInsideModal = ModalContent.TASK_DETAILS;
-          state.activeTask = action.payload.task;
-        }
-      } else if (action.payload.type === 'board') {
-        if (action.payload.action === 'delete') {
-          state.contentInsideModal = ModalContent.BOARD_DELETE;
-          state.activeBoard = action.payload.board;
-        } else {
-          state.contentInsideModal = ModalContent.BOARD_EDIT;
-          state.activeBoard = action.payload.board;
-        }
-      }
     },
     closeModal: (state) => {
       state.isOpenModal = false;
@@ -60,7 +39,6 @@ export const modalSlice = createSlice({
     },
     setView: (state, action: PayloadAction<ModalContent>) => {
       state.contentInsideModal = action.payload;
-      console.log(state.contentInsideModal);
     },
   },
 });

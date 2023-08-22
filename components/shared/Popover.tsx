@@ -22,17 +22,19 @@ export default function PopoverItem({ context, board }: PopoverItemProps) {
   const handleSetEdit = () => {
     if (context === 'Task') {
       dispatch(setView(ModalContent.TASK_EDIT));
-    } else if (context === 'Board' && board) {
-      dispatch(openModal({ type: 'board', board: board, action: 'edit' }));
+    } else if (context === 'Board') {
+      dispatch(setView(ModalContent.BOARD_EDIT));
     }
+    dispatch(openModal());
   };
 
   const handleSetDelete = () => {
     if (context === 'Task') {
       dispatch(setView(ModalContent.TASK_DELETE));
-    } else if (context === 'Board' && board) {
-      dispatch(openModal({ type: 'board', board: board, action: 'delete' }));
+    } else if (context === 'Board') {
+      dispatch(setView(ModalContent.BOARD_DELETE));
     }
+    dispatch(openModal());
   };
 
   return (
