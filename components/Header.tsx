@@ -13,7 +13,7 @@ import { useResponsive } from '@/hooks/useResponsive';
 import SidebarBoards from './Sidebar/SidebarBoards';
 import SidebarThemeToggle from './Sidebar/SidebarThemeToggle';
 import { useAppDispatch } from '@/redux/hooks';
-import { openModal } from '@/redux/slices/modalSlice';
+import { ModalContent, openModal, setView } from '@/redux/slices/modalSlice';
 import PopoverItem from './shared/Popover';
 
 export default function Header() {
@@ -90,7 +90,8 @@ interface AddNewTaskProps {
 function AddNewTask({ isMobileOrDesktop }: AddNewTaskProps) {
   const dispatch = useAppDispatch();
   const handleAddNewTask = () => {
-    dispatch(openModal({ type: 'task', task: null, action: 'addNewTask' }));
+    dispatch(openModal());
+    dispatch(setView(ModalContent.TASK_ADD));
   };
   return (
     <Button
