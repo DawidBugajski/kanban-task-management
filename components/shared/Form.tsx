@@ -31,7 +31,7 @@ export const Form = ({ context }: FormProps) => {
 
   const { title, description, handleTitleChange, handleDescriptionChange } =
     useTitleAndDescription(
-      activeTask?.title || 'enter title',
+      activeTask?.title || '',
       activeTask?.description || ''
     );
 
@@ -91,10 +91,21 @@ export const Form = ({ context }: FormProps) => {
   };
 
   const handleButtonClick = () => {
-    if (context === 'Edit Task') {
-      handleSaveChanges();
-    } else if (context === 'Add Task') {
-      handleAddNewTask();
+    switch (context) {
+      case 'Edit Task':
+        handleSaveChanges();
+        break;
+      case 'Add Task':
+        handleAddNewTask();
+        break;
+      // case 'Edit Board':
+      //   handleEditBoard();
+      //   break;
+      // case 'Add Board':
+      //   handleAddBoard();
+      //   break;
+      // default:
+      //   break;
     }
   };
 
