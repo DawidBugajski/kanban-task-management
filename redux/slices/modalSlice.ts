@@ -8,6 +8,10 @@ export enum ModalContent {
   TASK_EDIT = 'task_edit',
   TASK_DELETE = 'task_delete',
   TASK_ADD = 'task_add',
+  BOARD_DETAILS = 'board_details',
+  BOARD_DELETE = 'board_delete',
+  BOARD_ADD = 'board_add',
+  BOARD_EDIT = 'board_edit',
 }
 
 interface ModalState {
