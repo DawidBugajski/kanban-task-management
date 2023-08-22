@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import { Task } from '@/types';
+import { Board, Task } from '@/types';
 
 export enum ModalContent {
   NONE = 'none',
@@ -18,12 +18,14 @@ interface ModalState {
   isOpenModal: boolean;
   contentInsideModal: ModalContent;
   activeTask: Task | null;
+  activeBoard: Board | null;
 }
 
 const initialState: ModalState = {
   isOpenModal: false,
   contentInsideModal: ModalContent.NONE,
   activeTask: null,
+  activeBoard: null,
 };
 
 export const modalSlice = createSlice({
@@ -40,6 +42,19 @@ export const modalSlice = createSlice({
         state.activeTask = action.payload;
       }
     },
+    openBoardModal: (
+      state,
+      action: PayloadAction<Board | null | 'addNewBoard'>
+    ) => {
+      state.isOpenModal = true;
+      if (action.payload === 'addNewBoard') {
+        state.contentInsideModal = ModalContent.BOARD_ADD;
+        state.activeBoard = null;
+      } else {
+        state.contentInsideModal = ModalContent.BOARD_DETAILS;
+        state.activeBoard = action.payload;
+      }
+    },
     closeModal: (state) => {
       state.isOpenModal = false;
       state.contentInsideModal = ModalContent.NONE;
@@ -50,7 +65,8 @@ export const modalSlice = createSlice({
   },
 });
 
-export const { openModal, closeModal, setView } = modalSlice.actions;
+export const { openModal, closeModal, setView, openBoardModal } =
+  modalSlice.actions;
 export const isOpenModal = (state: RootState): boolean =>
   state.modal.isOpenModal;
 export const isDetailsTaskView = (state: RootState): boolean =>
@@ -61,6 +77,10 @@ export const isDeleteTaskView = (state: RootState): boolean =>
   state.modal.contentInsideModal === ModalContent.TASK_DELETE;
 export const isAddTaskView = (state: RootState): boolean =>
   state.modal.contentInsideModal === ModalContent.TASK_ADD;
+export const isEditBoardView = (state: RootState): boolean =>
+  state.modal.contentInsideModal === ModalContent.BOARD_DETAILS;
+export const isDeleteBoardView = (state: RootState): boolean =>
+  state.modal.contentInsideModal === ModalContent.BOARD_DELETE;
 export const currentModalContent = (state: RootState): ModalContent =>
   state.modal.contentInsideModal;
 

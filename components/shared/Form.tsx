@@ -6,17 +6,25 @@ import Image from 'next/image';
 import { useValidationErrors } from '@/hooks/useTaskValidationErrors';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import {
+  addSubtask,
   addTask,
+  deleteSubtask,
   getActiveBoard,
   getActiveTask,
+  moveTaskToColumn,
+  updateSubtaskTitles,
+  updateTaskDescription,
+  updateTaskTitle,
 } from '@/redux/slices/boardsSlice';
 import { useTitleAndDescription } from '@/hooks/useTaskTitleAndDescription';
 import { useTaskSubtasks } from '@/hooks/useTaskSubtasks';
 import { useSelectedColumn } from '@/hooks/useTaskSelectedColumn';
 import { useCloseModal } from '@/hooks/useCloseModal';
 
+type ContextType = 'Edit Task' | 'Add Task';
+
 interface FormProps {
-  context: string;
+  context: ContextType;
 }
 
 export const Form = ({ context }: FormProps) => {
@@ -58,17 +66,36 @@ export const Form = ({ context }: FormProps) => {
   const handleSaveChanges = () => {
     if (!validateChanges(title, localSubtasks)) return;
 
-    if (selectedColumn === null) return;
+    if (activeTask && selectedColumn) {
+      dispatch(
+        moveTaskToColumn({ taskId: activeTask.id, newColumnId: selectedColumn })
+      );
+      dispatch(updateTaskTitle({ taskId: activeTask.id, title }));
+      dispatch(
+        updateTaskDescription({
+          taskId: activeTask.id,
+          description: description,
+        })
+      );
 
-    const newTask = {
-      id: uuidv4(),
-      title,
-      description,
-      status: selectedColumn,
-      subtasks: localSubtasks,
-    };
+      subtasks.forEach((subtask) => {
+        if (!localSubtasks.some((task) => task.id === subtask.id)) {
+          dispatch(deleteSubtask({ subtaskId: subtask.id }));
+        }
+      });
 
-    dispatch(addTask({ columnId: selectedColumn, task: newTask }));
+      localSubtasks.forEach((localSubtask) => {
+        if (!subtasks.some((subtask) => subtask.id === localSubtask.id)) {
+          dispatch(
+            addSubtask({ taskId: activeTask.id, subtask: localSubtask })
+          );
+        }
+      });
+
+      dispatch(
+        updateSubtaskTitles({ taskId: activeTask.id, subtasks: localSubtasks })
+      );
+    }
     handleCloseModal();
   };
 
@@ -91,21 +118,14 @@ export const Form = ({ context }: FormProps) => {
   };
 
   const handleButtonClick = () => {
-    switch (context) {
-      case 'Edit Task':
-        handleSaveChanges();
-        break;
-      case 'Add Task':
-        handleAddNewTask();
-        break;
-      // case 'Edit Board':
-      //   handleEditBoard();
-      //   break;
-      // case 'Add Board':
-      //   handleAddBoard();
-      //   break;
-      // default:
-      //   break;
+    const actions = {
+      'Edit Task': handleSaveChanges,
+      'Add Task': handleAddNewTask,
+    };
+
+    const action = actions[context];
+    if (action) {
+      action();
     }
   };
 

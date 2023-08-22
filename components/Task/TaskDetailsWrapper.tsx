@@ -4,9 +4,12 @@ import { EditTask } from './EditTask';
 import { DeleteTask } from './DeleteTask';
 import { TaskDetailsContent } from './TaskDetailsContent';
 import AddTask from './AddTask';
+import EditBoard from '../board/EditBoard';
+import DeleteBoard from '../board/DeleteBoard';
 
 export default function TaskDetailsWrapper() {
-  const { taskEdit, taskAdd, taskDelete, taskDetails } = useTaskContent();
+  const { taskEdit, taskAdd, taskDelete, taskDetails, boardEdit, boardDelete } =
+    useTaskContent();
 
   return (
     <Modal>
@@ -14,6 +17,8 @@ export default function TaskDetailsWrapper() {
       {taskEdit && <EditTask />}
       {taskDelete && <DeleteTask />}
       {taskAdd && <AddTask />}
+      {boardEdit && <EditBoard />}
+      {boardDelete && <DeleteBoard />}
     </Modal>
   );
 }

@@ -12,7 +12,6 @@ import {
 import { useResponsive } from '@/hooks/useResponsive';
 import SidebarBoards from './Sidebar/SidebarBoards';
 import SidebarThemeToggle from './Sidebar/SidebarThemeToggle';
-import { EditStateButton } from './shared/EditStateButton';
 import { useAppDispatch } from '@/redux/hooks';
 import { openModal } from '@/redux/slices/modalSlice';
 import PopoverItem from './shared/Popover';
