@@ -60,6 +60,7 @@ export const modalSlice = createSlice({
     },
     setView: (state, action: PayloadAction<ModalContent>) => {
       state.contentInsideModal = action.payload;
+      console.log(state.contentInsideModal);
     },
   },
 });

@@ -42,7 +42,7 @@ export default function Header() {
           </div>
           <div className='flex items-center gap-3 md:gap-6'>
             <AddNewTask isMobileOrDesktop={isMobileOrDesktop} />
-            <PopoverItem context='Task' />
+            <PopoverItem context='Board' board={activeBoard} />
           </div>
         </div>
       </div>
