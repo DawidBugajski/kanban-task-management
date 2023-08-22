@@ -21,7 +21,7 @@ import { useTaskSubtasks } from '@/hooks/useTaskSubtasks';
 import { useSelectedColumn } from '@/hooks/useTaskSelectedColumn';
 import { useCloseModal } from '@/hooks/useCloseModal';
 
-type ContextType = 'Edit Task' | 'Add Task';
+type ContextType = 'Edit Task' | 'Add Task' | 'Edit Board' | 'Delete Board';
 
 interface FormProps {
   context: ContextType;
@@ -117,10 +117,41 @@ export const Form = ({ context }: FormProps) => {
     handleCloseModal();
   };
 
+  // const handleSaveBoardChanges = () => {
+  //   if (!validateChanges(title, localColumns)) return; // Załóżmy, że walidacja działa na tytule i kolumnach
+
+  //   if (activeBoard) {
+  //     dispatch(updateBoardTitle({ boardId: activeBoard.id, title }));
+
+  //     columns.forEach((column) => {
+  //       if (!localColumns.some((localColumn) => localColumn.id === column.id)) {
+  //         dispatch(deleteColumn({ columnId: column.id }));
+  //       }
+  //     });
+
+  //     localColumns.forEach((localColumn) => {
+  //       if (!columns.some((column) => column.id === localColumn.id)) {
+  //         dispatch(addColumn({ boardId: activeBoard.id, column: localColumn }));
+  //       }
+  //     });
+
+  //     dispatch(updateColumnTitles({ boardId: activeBoard.id, columns: localColumns }));
+  //     // Inne akcje, które mogą być potrzebne do zapisania zmian w tablicy
+
+  //     handleCloseModal();
+  //   }
+  // };
+
+  //! Add functions for board
+  const handleSaveBoardChanges = () => console.log('Save board changes');
+  const handleDeleteBoard = () => console.log('Delete board changes');
+
   const handleButtonClick = () => {
     const actions = {
       'Edit Task': handleSaveChanges,
       'Add Task': handleAddNewTask,
+      'Edit Board': handleSaveBoardChanges,
+      'Delete Board': handleDeleteBoard,
     };
 
     const action = actions[context];

@@ -17,15 +17,17 @@ interface PopoverItemProps {
 export default function PopoverItem({ context }: PopoverItemProps) {
   const dispatch = useAppDispatch();
 
-  const handleSetTaskEdit = () =>
+  const handleSetTaskEdit = () => {
     context === 'Task'
       ? dispatch(setView(ModalContent.TASK_EDIT))
       : dispatch(setView(ModalContent.BOARD_EDIT));
+  };
 
-  const handleSetTaskDelete = () =>
+  const handleSetTaskDelete = () => {
     context === 'Task'
       ? dispatch(setView(ModalContent.TASK_DELETE))
       : dispatch(setView(ModalContent.BOARD_DELETE));
+  };
 
   return (
     <Popover>

@@ -1,5 +1,9 @@
-import React from 'react';
+import { Form } from '../shared/Form';
 
 export default function DeleteBoard() {
-  return <div>DeleteBoard</div>;
+  return (
+    <>
+      <Form context='Delete Board' />
+    </>
+  );
 }
