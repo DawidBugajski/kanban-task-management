@@ -8,15 +8,24 @@ import {
 import { ModalContent, setView } from '@/redux/slices/modalSlice';
 import { useAppDispatch } from '@/redux/hooks';
 
-export default function PopoverItem() {
+type ContextType = 'Task' | 'Board';
+
+interface PopoverItemProps {
+  context: ContextType;
+}
+
+export default function PopoverItem({ context }: PopoverItemProps) {
   const dispatch = useAppDispatch();
 
-  const handleSetTaskEdit = () => dispatch(setView(ModalContent.TASK_EDIT));
-  const handleSetTaskDelete = () => dispatch(setView(ModalContent.TASK_DELETE));
+  const handleSetTaskEdit = () =>
+    context === 'Task'
+      ? dispatch(setView(ModalContent.TASK_EDIT))
+      : dispatch(setView(ModalContent.BOARD_EDIT));
 
-  const handleSetBoardEdit = () => dispatch(setView(ModalContent.BOARD_EDIT));
-  const handleSetBoardDelete = () =>
-    dispatch(setView(ModalContent.BOARD_DELETE));
+  const handleSetTaskDelete = () =>
+    context === 'Task'
+      ? dispatch(setView(ModalContent.TASK_DELETE))
+      : dispatch(setView(ModalContent.BOARD_DELETE));
 
   return (
     <Popover>
@@ -30,18 +39,24 @@ export default function PopoverItem() {
           />
         </>
       </PopoverTrigger>
-      <PopoverContent className='mt-4 font-medium'>
+      <PopoverContent
+        className={` font-medium ${
+          context === 'Board'
+            ? 'w-32 md:w-48 mt-3 mr-4 lg:mr-8 md:mt-6'
+            : 'mt-4'
+        }`}
+      >
         <p
           onClick={handleSetTaskEdit}
           className='cursor-pointer text-medium-grey hover:underline'
         >
-          Edit Task
+          Edit {context}
         </p>
         <p
           onClick={handleSetTaskDelete}
           className='cursor-pointer text-red hover:underline'
         >
-          Delete Task
+          Delete {context}
         </p>
       </PopoverContent>
     </Popover>

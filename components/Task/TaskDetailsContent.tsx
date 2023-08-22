@@ -40,7 +40,7 @@ export function TaskDetailsContent() {
       {title && (
         <div className='flex items-center mb-6 md:justify-between'>
           <p className='w-11/12 text-heading-l font-heading'>{title}</p>
-          <PopoverItem />
+          <PopoverItem context='Task' />
         </div>
       )}
       {description && (
