@@ -1,7 +1,7 @@
 import { ICON_CROSS_SVG } from '@/constans';
-import Button from './Button';
+import Button from '../shared/Button';
 import { v4 as uuidv4 } from 'uuid';
-import Dropdown from './Dropdown';
+import Dropdown from '../shared/Dropdown';
 import Image from 'next/image';
 import { useValidationErrors } from '@/hooks/useTaskValidationErrors';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
@@ -21,13 +21,13 @@ import { useTaskSubtasks } from '@/hooks/useTaskSubtasks';
 import { useSelectedColumn } from '@/hooks/useTaskSelectedColumn';
 import { useCloseModal } from '@/hooks/useCloseModal';
 
-type ContextType = 'Edit Task' | 'Add Task' | 'Edit Board' | 'Delete Board';
+type ContextType = 'Edit Task' | 'Add Task';
 
 interface FormProps {
   context: ContextType;
 }
 
-export const Form = ({ context }: FormProps) => {
+export const TaskForm = ({ context }: FormProps) => {
   const dispatch = useAppDispatch();
   const activeBoard = useAppSelector(getActiveBoard);
   const activeTask = useAppSelector(getActiveTask);
@@ -62,7 +62,6 @@ export const Form = ({ context }: FormProps) => {
 
   const handleCloseModal = useCloseModal();
 
-  // For editTask
   const handleSaveChanges = () => {
     if (!validateChanges(title, localSubtasks)) return;
 
@@ -99,7 +98,6 @@ export const Form = ({ context }: FormProps) => {
     handleCloseModal();
   };
 
-  // For addtask
   const handleAddNewTask = () => {
     if (!validateChanges(title, localSubtasks)) return;
 
@@ -117,41 +115,10 @@ export const Form = ({ context }: FormProps) => {
     handleCloseModal();
   };
 
-  // const handleSaveBoardChanges = () => {
-  //   if (!validateChanges(title, localColumns)) return; // Załóżmy, że walidacja działa na tytule i kolumnach
-
-  //   if (activeBoard) {
-  //     dispatch(updateBoardTitle({ boardId: activeBoard.id, title }));
-
-  //     columns.forEach((column) => {
-  //       if (!localColumns.some((localColumn) => localColumn.id === column.id)) {
-  //         dispatch(deleteColumn({ columnId: column.id }));
-  //       }
-  //     });
-
-  //     localColumns.forEach((localColumn) => {
-  //       if (!columns.some((column) => column.id === localColumn.id)) {
-  //         dispatch(addColumn({ boardId: activeBoard.id, column: localColumn }));
-  //       }
-  //     });
-
-  //     dispatch(updateColumnTitles({ boardId: activeBoard.id, columns: localColumns }));
-  //     // Inne akcje, które mogą być potrzebne do zapisania zmian w tablicy
-
-  //     handleCloseModal();
-  //   }
-  // };
-
-  //! Add functions for board
-  const handleSaveBoardChanges = () => console.log('Save board changes');
-  const handleDeleteBoard = () => console.log('Delete board changes');
-
   const handleButtonClick = () => {
     const actions = {
       'Edit Task': handleSaveChanges,
       'Add Task': handleAddNewTask,
-      'Edit Board': handleSaveBoardChanges,
-      'Delete Board': handleDeleteBoard,
     };
 
     const action = actions[context];

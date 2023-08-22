@@ -1,9 +1,9 @@
-import { Form } from '../shared/Form';
+import { TaskForm } from './TaskForm';
 
 export function EditTask() {
   return (
     <>
-      <Form context='Edit Task' />
+      <TaskForm context='Edit Task' />
     </>
   );
 }

@@ -1,10 +1,5 @@
-import { Form } from '../shared/Form';
+import React from 'react';
 
 export default function EditBoard() {
-  console.log('EDIT BOARD');
-  return (
-    <>
-      <Form context='Edit Board' />
-    </>
-  );
+  return <div>EditBoard</div>;
 }

@@ -1,10 +1,10 @@
 import React from 'react';
-import { Form } from '../shared/Form';
+import { TaskForm } from './TaskForm';
 
 export default function AddTask() {
   return (
     <>
-      <Form context='Add Task' />
+      <TaskForm context='Add Task' />
     </>
   );
 }
