@@ -8,11 +8,13 @@ export enum ModalContent {
   TASK_EDIT = 'task_edit',
   TASK_DELETE = 'task_delete',
   TASK_ADD = 'task_add',
-  BOARD_DETAILS = 'board_details',
-  BOARD_DELETE = 'board_delete',
-  BOARD_ADD = 'board_add',
   BOARD_EDIT = 'board_edit',
+  BOARD_DELETE = 'board_delete',
 }
+
+type ModalAction =
+  | { type: 'task'; task: Task | null; action: 'details' | 'addNewTask' }
+  | { type: 'board'; board: Board | null; action: 'edit' | 'delete' };
 
 interface ModalState {
   isOpenModal: boolean;
@@ -32,27 +34,24 @@ export const modalSlice = createSlice({
   name: 'modal',
   initialState,
   reducers: {
-    openModal: (state, action: PayloadAction<Task | null | 'addNewTask'>) => {
+    openModal: (state, action: PayloadAction<ModalAction>) => {
       state.isOpenModal = true;
-      if (action.payload === 'addNewTask') {
-        state.contentInsideModal = ModalContent.TASK_ADD;
-        state.activeTask = null;
-      } else {
-        state.contentInsideModal = ModalContent.TASK_DETAILS;
-        state.activeTask = action.payload;
-      }
-    },
-    openBoardModal: (
-      state,
-      action: PayloadAction<Board | null | 'addNewBoard'>
-    ) => {
-      state.isOpenModal = true;
-      if (action.payload === 'addNewBoard') {
-        state.contentInsideModal = ModalContent.BOARD_ADD;
-        state.activeBoard = null;
-      } else {
-        state.contentInsideModal = ModalContent.BOARD_DETAILS;
-        state.activeBoard = action.payload;
+      if (action.payload.type === 'task') {
+        if (action.payload.action === 'addNewTask') {
+          state.contentInsideModal = ModalContent.TASK_ADD;
+          state.activeTask = null;
+        } else {
+          state.contentInsideModal = ModalContent.TASK_DETAILS;
+          state.activeTask = action.payload.task;
+        }
+      } else if (action.payload.type === 'board') {
+        if (action.payload.action === 'delete') {
+          state.contentInsideModal = ModalContent.BOARD_DELETE;
+          state.activeBoard = action.payload.board;
+        } else {
+          state.contentInsideModal = ModalContent.BOARD_EDIT;
+          state.activeBoard = action.payload.board;
+        }
       }
     },
     closeModal: (state) => {
@@ -65,8 +64,7 @@ export const modalSlice = createSlice({
   },
 });
 
-export const { openModal, closeModal, setView, openBoardModal } =
-  modalSlice.actions;
+export const { openModal, closeModal, setView } = modalSlice.actions;
 export const isOpenModal = (state: RootState): boolean =>
   state.modal.isOpenModal;
 export const isDetailsTaskView = (state: RootState): boolean =>
@@ -78,7 +76,7 @@ export const isDeleteTaskView = (state: RootState): boolean =>
 export const isAddTaskView = (state: RootState): boolean =>
   state.modal.contentInsideModal === ModalContent.TASK_ADD;
 export const isEditBoardView = (state: RootState): boolean =>
-  state.modal.contentInsideModal === ModalContent.BOARD_DETAILS;
+  state.modal.contentInsideModal === ModalContent.BOARD_EDIT;
 export const isDeleteBoardView = (state: RootState): boolean =>
   state.modal.contentInsideModal === ModalContent.BOARD_DELETE;
 export const currentModalContent = (state: RootState): ModalContent =>

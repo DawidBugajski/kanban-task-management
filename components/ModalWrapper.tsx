@@ -1,13 +1,13 @@
 import { useTaskContent } from '@/hooks/useTaskContent';
-import Modal from '../shared/Modal';
-import { EditTask } from './EditTask';
-import { DeleteTask } from './DeleteTask';
-import { TaskDetailsContent } from './TaskDetailsContent';
-import AddTask from './AddTask';
-import EditBoard from '../board/EditBoard';
-import DeleteBoard from '../board/DeleteBoard';
+import Modal from './shared/Modal';
+import { EditTask } from './Task/EditTask';
+import { DeleteTask } from './Task/DeleteTask';
+import { TaskDetailsContent } from './Task/TaskDetailsContent';
+import AddTask from './Task/AddTask';
+import EditBoard from './board/EditBoard';
+import DeleteBoard from './board/DeleteBoard';
 
-export default function TaskDetailsWrapper() {
+export default function ModalWrapper() {
   const { taskEdit, taskAdd, taskDelete, taskDetails, boardEdit, boardDelete } =
     useTaskContent();
 

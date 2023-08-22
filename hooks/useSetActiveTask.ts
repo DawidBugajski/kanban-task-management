@@ -8,7 +8,7 @@ const useSetActiveTask = (task: Task) => {
 
   const handleSetActiveCard = () => {
     dispatch(setActiveTask(task));
-    dispatch(openModal(task));
+    dispatch(openModal({ type: 'task', task: task, action: 'details' }));
   };
 
   return handleSetActiveCard;

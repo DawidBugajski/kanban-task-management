@@ -5,16 +5,18 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { ModalContent, setView } from '@/redux/slices/modalSlice';
+import { ModalContent, openModal, setView } from '@/redux/slices/modalSlice';
 import { useAppDispatch } from '@/redux/hooks';
+import { Board } from '@/types';
 
 type ContextType = 'Task' | 'Board';
 
 interface PopoverItemProps {
   context: ContextType;
+  board?: Board;
 }
 
-export default function PopoverItem({ context }: PopoverItemProps) {
+export default function PopoverItem({ context, board }: PopoverItemProps) {
   const dispatch = useAppDispatch();
 
   const handleSetTaskEdit = () => {
@@ -29,9 +31,18 @@ export default function PopoverItem({ context }: PopoverItemProps) {
       : dispatch(setView(ModalContent.BOARD_DELETE));
   };
 
+  const handleOpenBoardModal = () => {
+    if (context === 'Board' && board) {
+      dispatch(openModal({ type: 'board', board: board, action: 'edit' }));
+    }
+  };
+
   return (
     <Popover>
-      <PopoverTrigger className='focus-visible:outline-none'>
+      <PopoverTrigger
+        onClick={handleOpenBoardModal}
+        className='focus-visible:outline-none'
+      >
         <>
           <Image
             src={ICON_VERTICAL_ELLIPSIS_SVG}

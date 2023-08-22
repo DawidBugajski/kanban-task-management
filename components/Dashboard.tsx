@@ -6,7 +6,7 @@ import { getActiveBoard, moveTask } from '@/redux/slices/boardsSlice';
 import AddColumn from './AddColumn';
 import TaskCard from './Task/TaskCard';
 import { isOpenModal } from '@/redux/slices/modalSlice';
-import TaskDetailsWrapper from './Task/TaskDetailsWrapper';
+import ModalWrapper from './ModalWrapper';
 
 export default function Dashboard() {
   const dispatch = useAppDispatch();
@@ -64,7 +64,7 @@ export default function Dashboard() {
           {activeBoard && activeBoard.columns.length > 0 && <AddColumn />}
         </div>
       </div>
-      {isModalOpen && <TaskDetailsWrapper />}
+      {isModalOpen && <ModalWrapper />}
     </DragDropContext>
   );
 }

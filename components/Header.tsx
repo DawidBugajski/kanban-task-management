@@ -42,7 +42,7 @@ export default function Header() {
           </div>
           <div className='flex items-center gap-3 md:gap-6'>
             <AddNewTask isMobileOrDesktop={isMobileOrDesktop} />
-            <PopoverItem context='Board' />
+            <PopoverItem context='Task' />
           </div>
         </div>
       </div>
@@ -90,7 +90,7 @@ interface AddNewTaskProps {
 function AddNewTask({ isMobileOrDesktop }: AddNewTaskProps) {
   const dispatch = useAppDispatch();
   const handleAddNewTask = () => {
-    dispatch(openModal('addNewTask'));
+    dispatch(openModal({ type: 'task', task: null, action: 'addNewTask' }));
   };
   return (
     <Button
