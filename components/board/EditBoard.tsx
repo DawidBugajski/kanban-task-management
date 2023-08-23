@@ -1,5 +1,5 @@
-import React from 'react';
+import BoardForm from './BoardForm';
 
 export default function EditBoard() {
-  return <div>EditBoard</div>;
+  return <BoardForm context='Edit Board' />;
 }
