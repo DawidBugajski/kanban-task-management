@@ -2,11 +2,11 @@ import React from 'react';
 import Button from '../shared/Button';
 import { ICON_CROSS_SVG } from '@/constans';
 import Image from 'next/image';
-import Dropdown from '../shared/Dropdown';
 import { useBoardValidationErrors } from '@/hooks/useBoardValidationErrors';
 import { useAppSelector } from '@/redux/hooks';
 import { getActiveBoard } from '@/redux/slices/boardsSlice';
 import { useBoardTitle } from '@/hooks/useBoardTitle';
+import { useBoardColumns } from '@/hooks/useBoardColumns';
 
 type ContextType = 'Edit Board' | 'Add Board';
 
@@ -22,6 +22,16 @@ export default function BoardForm({ context }: BoardForm) {
     columns: Array(columns.length).fill(false),
   });
   const { title, handleTitleChange } = useBoardTitle(activeBoard?.name || '');
+
+  const {
+    localColumns,
+    handleAddColumn,
+    handleDeleteColumn,
+    handleColumnNameChange,
+    lastInputRef,
+  } = useBoardColumns(columns);
+
+  const handleSaveChanges = () => console.log('save');
 
   return (
     <div className='relative flex flex-col h-auto gap-6 p-6 md:p-8'>
@@ -40,23 +50,23 @@ export default function BoardForm({ context }: BoardForm) {
           type='text'
           onChange={(e) => handleTitleChange(e.target.value)}
           placeholder={
-            validationErrors.title ? "Can't be empty!" : 'Enter name'
+            validationErrors.title ? "Can't be empty!" : 'Enter Board'
           }
         />
       </div>
-      {/* <div className='flex flex-col justify-between w-full gap-3 max-h-[25vh] overflow-y-auto py-0.5'>
+      <div className='flex flex-col justify-between w-full gap-3 max-h-[25vh] overflow-y-auto py-0.5'>
         {localColumns.map((column, index) => (
-          <div className='flex' key={task.id}>
+          <div className='flex' key={column.id}>
             <input
               ref={index === localColumns.length - 1 ? lastInputRef : null}
               className={`${
                 validationErrors.columns[index]
                   ? 'border-red border-opacity-100 placeholder:text-red placeholder:text-right'
                   : 'border-slate-400 focus-visible:outline-none border-opacity-25'
-              }  dark:bg-transparent text-[13px] font-medium leading-6 py-2 px-4 border outline-none rounded w-11/12 focus-visible:border-purple `}
-              value={task.title}
+              }  dark:bg-transparent text-[13px] font-medium leading-6 py-2 px-4 border outline-none rounded w-[93%] focus-visible:border-purple `}
+              value={column.name}
               type='text'
-              onChange={(e) => handleSubtaskTitleChange(index, e.target.value)}
+              onChange={(e) => handleColumnNameChange(index, e.target.value)}
               placeholder={
                 validationErrors.columns[index]
                   ? "Can't be empty!"
@@ -64,8 +74,8 @@ export default function BoardForm({ context }: BoardForm) {
               }
             />
             <Button
-              onClick={() => handleDeleteSubtask(column.id)}
-              className='mx-auto shrink-0'
+              onClick={() => handleDeleteColumn(column.id)}
+              className='ml-auto shrink-0'
             >
               <Image
                 src={ICON_CROSS_SVG}
@@ -78,22 +88,17 @@ export default function BoardForm({ context }: BoardForm) {
         ))}
       </div>
       <Button
-        onClick={handleAddSubtask}
+        onClick={handleAddColumn}
         className='transition-colors duration-100 hover:bg-[#d8d7f1] text-body-l font-bold bg-[#f0effa] py-2 text-center text-purple rounded-[20px] grow'
       >
         +Add New Subtask
       </Button>
-      <Dropdown
-        options={activeBoardColumns}
-        changeOnSave={true}
-        onValueChange={handleColumnChange}
-      />
       <Button
-        onClick={handleButtonClick}
+        onClick={handleSaveChanges}
         className='transition-colors duration-100 hover:bg-purple-hover text-body-l font-bold bg-purple py-2 text-center text-white rounded-[20px] grow'
       >
         {context === 'Edit Board' ? 'Save Changes' : 'Create Board'}
-      </Button> */}
+      </Button>
     </div>
   );
 }
