@@ -6,8 +6,9 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { ModalContent, openModal, setView } from '@/redux/slices/modalSlice';
-import { useAppDispatch } from '@/redux/hooks';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { Board } from '@/types';
+import { getBoards } from '@/redux/slices/boardsSlice';
 
 type ContextType = 'Task' | 'Board';
 
@@ -16,8 +17,10 @@ interface PopoverItemProps {
   board?: Board;
 }
 
-export default function PopoverItem({ context, board }: PopoverItemProps) {
+export default function PopoverItem({ context }: PopoverItemProps) {
   const dispatch = useAppDispatch();
+  const boards = useAppSelector(getBoards);
+  const canDeleteBoard = boards.length > 1;
 
   const handleSetEdit = () => {
     if (context === 'Task') {
@@ -52,7 +55,7 @@ export default function PopoverItem({ context, board }: PopoverItemProps) {
           context === 'Board'
             ? 'w-32 md:w-48 mt-3 mr-4 lg:mr-8 md:mt-6'
             : 'mt-4'
-        }`}
+        } ${canDeleteBoard && 'h-[94px]'}`}
       >
         <p
           onClick={handleSetEdit}
@@ -60,12 +63,14 @@ export default function PopoverItem({ context, board }: PopoverItemProps) {
         >
           Edit {context}
         </p>
-        <p
-          onClick={handleSetDelete}
-          className='cursor-pointer text-red hover:underline'
-        >
-          Delete {context}
-        </p>
+        {canDeleteBoard && (
+          <p
+            onClick={handleSetDelete}
+            className='cursor-pointer text-red hover:underline'
+          >
+            Delete {context}
+          </p>
+        )}
       </PopoverContent>
     </Popover>
   );

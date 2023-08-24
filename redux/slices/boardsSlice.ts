@@ -176,16 +176,14 @@ export const boardsSlice = createSlice({
       const boardIndex = state.boards.findIndex(
         (board) => board.id === boardId
       );
+
+      if (state.boards.length <= 1) return;
+
       if (boardIndex !== -1) {
+        state.boards.splice(boardIndex, 1);
+
         if (state.activeBoardId === boardId) {
-          state.boards.splice(boardIndex, 1);
-          if (state.boards.length > 0) {
-            state.activeBoardId = state.boards[0].id;
-          } else {
-            state.activeBoardId = uuidv4();
-          }
-        } else {
-          state.boards.splice(boardIndex, 1);
+          state.activeBoardId = state.boards[0].id;
         }
       }
     },
