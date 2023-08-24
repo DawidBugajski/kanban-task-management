@@ -289,6 +289,9 @@ export const boardsSlice = createSlice({
 
       activeBoard.columns.push(column);
     },
+    addBoard: (state, action: PayloadAction<Board>) => {
+      state.boards.push(action.payload);
+    },
   },
 });
 
@@ -310,6 +313,7 @@ export const {
   addSubtask,
   addTask,
   addColumn,
+  addBoard,
 } = boardsSlice.actions;
 export const getBoards = (state: RootState): Board[] => state.boards.boards;
 export const getActiveBoard = (state: RootState): Board =>

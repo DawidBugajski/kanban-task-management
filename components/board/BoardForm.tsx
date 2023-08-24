@@ -1,10 +1,12 @@
 import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import Button from '../shared/Button';
 import { ICON_CROSS_SVG } from '@/constans';
 import Image from 'next/image';
 import { useBoardValidationErrors } from '@/hooks/useBoardValidationErrors';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import {
+  addBoard,
   addColumn,
   deleteColumn,
   getActiveBoard,
@@ -14,6 +16,7 @@ import {
 import { useBoardTitle } from '@/hooks/useBoardTitle';
 import { useBoardColumns } from '@/hooks/useBoardColumns';
 import { useCloseModal } from '@/hooks/useCloseModal';
+import { Task, Column } from '@/types';
 
 type ContextType = 'Edit Board' | 'Add Board';
 
@@ -30,6 +33,11 @@ export default function BoardForm({ context }: BoardForm) {
     title: false,
     columns: Array(columns.length).fill(false),
   });
+  const CreateNewBoardDefaultColumn: Column[] = [
+    { id: uuidv4(), name: 'Todo', tasks: [] as Task[] },
+    { id: uuidv4(), name: 'Doing', tasks: [] as Task[] },
+    { id: uuidv4(), name: 'Done', tasks: [] as Task[] },
+  ];
   const { title, handleTitleChange } = useBoardTitle(
     context === 'Add Board' ? '' : activeBoard?.name || ''
   );
@@ -40,7 +48,9 @@ export default function BoardForm({ context }: BoardForm) {
     handleDeleteColumn,
     handleColumnNameChange,
     lastInputRef,
-  } = useBoardColumns(context === 'Add Board' ? [] : columns);
+  } = useBoardColumns(
+    context === 'Add Board' ? CreateNewBoardDefaultColumn : columns
+  );
 
   const handleSaveChanges = () => {
     if (!validateChanges(title, localColumns)) return;
@@ -69,6 +79,29 @@ export default function BoardForm({ context }: BoardForm) {
     }
 
     handleCloseModal();
+  };
+
+  const handleAddNewBoard = () => {
+    if (!validateChanges(title, localColumns)) return;
+    const newBoard = {
+      id: uuidv4(),
+      name: title,
+      columns: localColumns,
+    };
+    dispatch(addBoard(newBoard));
+    handleCloseModal();
+  };
+
+  const handleButtonClick = () => {
+    const actions = {
+      'Edit Board': handleSaveChanges,
+      'Add Board': handleAddNewBoard,
+    };
+
+    const action = actions[context];
+    if (action) {
+      action();
+    }
   };
 
   return (
@@ -132,10 +165,10 @@ export default function BoardForm({ context }: BoardForm) {
         +Add New Column
       </Button>
       <Button
-        onClick={handleSaveChanges}
+        onClick={handleButtonClick}
         className='transition-colors duration-100 hover:bg-purple-hover text-body-l font-bold bg-purple py-2 text-center text-white rounded-[20px] grow'
       >
-        {context === 'Edit Board' ? 'Save Changes' : 'Create Board'}
+        {context === 'Edit Board' ? 'Save Changes' : 'Create New Board'}
       </Button>
     </div>
   );
