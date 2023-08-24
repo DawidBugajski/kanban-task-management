@@ -3,10 +3,17 @@ import Button from '../shared/Button';
 import { ICON_CROSS_SVG } from '@/constans';
 import Image from 'next/image';
 import { useBoardValidationErrors } from '@/hooks/useBoardValidationErrors';
-import { useAppSelector } from '@/redux/hooks';
-import { getActiveBoard } from '@/redux/slices/boardsSlice';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import {
+  addColumn,
+  deleteColumn,
+  getActiveBoard,
+  updateBoardTitle,
+  updateColumnName,
+} from '@/redux/slices/boardsSlice';
 import { useBoardTitle } from '@/hooks/useBoardTitle';
 import { useBoardColumns } from '@/hooks/useBoardColumns';
+import { useCloseModal } from '@/hooks/useCloseModal';
 
 type ContextType = 'Edit Board' | 'Add Board';
 
@@ -15,7 +22,9 @@ interface BoardForm {
 }
 
 export default function BoardForm({ context }: BoardForm) {
+  const dispatch = useAppDispatch();
   const activeBoard = useAppSelector(getActiveBoard);
+  const handleCloseModal = useCloseModal();
   const { columns } = activeBoard;
   const { validationErrors, validateChanges } = useBoardValidationErrors({
     title: false,
@@ -31,7 +40,34 @@ export default function BoardForm({ context }: BoardForm) {
     lastInputRef,
   } = useBoardColumns(columns);
 
-  const handleSaveChanges = () => console.log('save');
+  const handleSaveChanges = () => {
+    if (!validateChanges(title, localColumns)) return;
+
+    if (activeBoard) {
+      dispatch(updateBoardTitle({ title }));
+
+      columns.forEach((column) => {
+        if (!localColumns.some((localColumn) => localColumn.id === column.id)) {
+          dispatch(deleteColumn({ columnId: column.id }));
+        }
+      });
+
+      localColumns.forEach((localColumn) => {
+        if (!columns.some((column) => column.id === localColumn.id)) {
+          dispatch(addColumn({ column: localColumn }));
+        } else {
+          dispatch(
+            updateColumnName({
+              columnId: localColumn.id,
+              name: localColumn.name,
+            })
+          );
+        }
+      });
+    }
+
+    handleCloseModal();
+  };
 
   return (
     <div className='relative flex flex-col h-auto gap-6 p-6 md:p-8'>

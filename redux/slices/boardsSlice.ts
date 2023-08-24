@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import { Board, Data, Subtask, Task } from '@/types';
+import { Board, Column, Data, Subtask, Task } from '@/types';
 import { STARTING_DATA } from '@/constans';
 import { findActiveBoard, findTaskById } from '@/utils/helpers/reduxHelpers';
 
@@ -157,6 +157,19 @@ export const boardsSlice = createSlice({
         });
       });
     },
+    deleteColumn: (state, action: PayloadAction<{ columnId: string }>) => {
+      const { columnId } = action.payload;
+      const activeBoard = findActiveBoard(state);
+
+      if (!activeBoard) return;
+
+      const columnIndex = activeBoard.columns.findIndex(
+        (column) => column.id === columnId
+      );
+      if (columnIndex !== -1) {
+        activeBoard.columns.splice(columnIndex, 1);
+      }
+    },
     updateSubtaskTitles: (
       state,
       action: PayloadAction<{ taskId: string; subtasks: Subtask[] }>
@@ -177,6 +190,21 @@ export const boardsSlice = createSlice({
         state.activeTask = { ...task };
       }
     },
+    updateColumnName: (
+      state,
+      action: PayloadAction<{ columnId: string; name: string }>
+    ) => {
+      const { columnId, name } = action.payload;
+      const activeBoard = findActiveBoard(state);
+      if (!activeBoard) return;
+
+      const column = activeBoard.columns.find(
+        (column) => column.id === columnId
+      );
+      if (column) {
+        column.name = name;
+      }
+    },
     updateTaskTitle: (
       state,
       action: PayloadAction<{ taskId: string; title: string }>
@@ -192,6 +220,12 @@ export const boardsSlice = createSlice({
       if (!task) return;
 
       task.title = title;
+    },
+    updateBoardTitle: (state, action: PayloadAction<{ title: string }>) => {
+      const { title } = action.payload;
+      const activeBoard = findActiveBoard(state);
+      if (!activeBoard) return;
+      activeBoard.name = title;
     },
     updateTaskDescription: (
       state,
@@ -247,6 +281,14 @@ export const boardsSlice = createSlice({
 
       column.tasks.push(task);
     },
+    addColumn: (state, action: PayloadAction<{ column: Column }>) => {
+      const { column } = action.payload;
+
+      const activeBoard = findActiveBoard(state);
+      if (!activeBoard) return;
+
+      activeBoard.columns.push(column);
+    },
   },
 });
 
@@ -259,11 +301,15 @@ export const {
   moveTaskToColumn,
   deleteTask,
   deleteSubtask,
+  deleteColumn,
   updateSubtaskTitles,
   updateTaskTitle,
   updateTaskDescription,
+  updateBoardTitle,
+  updateColumnName,
   addSubtask,
   addTask,
+  addColumn,
 } = boardsSlice.actions;
 export const getBoards = (state: RootState): Board[] => state.boards.boards;
 export const getActiveBoard = (state: RootState): Board =>
