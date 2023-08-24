@@ -170,6 +170,24 @@ export const boardsSlice = createSlice({
         activeBoard.columns.splice(columnIndex, 1);
       }
     },
+    deleteBoard: (state, action: PayloadAction<{ boardId: string }>) => {
+      const { boardId } = action.payload;
+      const boardIndex = state.boards.findIndex(
+        (board) => board.id === boardId
+      );
+      if (boardIndex !== -1) {
+        if (state.activeBoardId === boardId) {
+          state.boards.splice(boardIndex, 1);
+          if (state.boards.length > 0) {
+            state.activeBoardId = state.boards[0].id;
+          } else {
+            state.activeBoardId = null;
+          }
+        } else {
+          state.boards.splice(boardIndex, 1);
+        }
+      }
+    },
     updateSubtaskTitles: (
       state,
       action: PayloadAction<{ taskId: string; subtasks: Subtask[] }>
@@ -305,6 +323,7 @@ export const {
   deleteTask,
   deleteSubtask,
   deleteColumn,
+  deleteBoard,
   updateSubtaskTitles,
   updateTaskTitle,
   updateTaskDescription,
@@ -316,9 +335,10 @@ export const {
   addBoard,
 } = boardsSlice.actions;
 export const getBoards = (state: RootState): Board[] => state.boards.boards;
-export const getActiveBoard = (state: RootState): Board =>
-  state.boards.boards.find((board) => board.id === state.boards.activeBoardId)!;
-// "!" - the expression before it will never be null or undefined - here always some board must be active
+export const getActiveBoard = (state: RootState): Board | null =>
+  state.boards.boards.find(
+    (board) => board.id === state.boards.activeBoardId
+  ) || null;
 export const getActiveTask = (state: RootState): Task | null => {
   const activeBoard = state.boards.boards.find(
     (board) => board.id === state.boards.activeBoardId
