@@ -59,6 +59,8 @@ export const isEditBoardView = (state: RootState): boolean =>
   state.modal.contentInsideModal === ModalContent.BOARD_EDIT;
 export const isDeleteBoardView = (state: RootState): boolean =>
   state.modal.contentInsideModal === ModalContent.BOARD_DELETE;
+export const isAddBoardView = (state: RootState): boolean =>
+  state.modal.contentInsideModal === ModalContent.BOARD_ADD;
 export const currentModalContent = (state: RootState): ModalContent =>
   state.modal.contentInsideModal;
 

@@ -6,10 +6,18 @@ import { TaskDetailsContent } from './Task/TaskDetailsContent';
 import AddTask from './Task/AddTask';
 import EditBoard from './board/EditBoard';
 import DeleteBoard from './board/DeleteBoard';
+import AddBoard from './board/AddBoard';
 
 export default function ModalWrapper() {
-  const { taskEdit, taskAdd, taskDelete, taskDetails, boardEdit, boardDelete } =
-    useTaskContent();
+  const {
+    taskEdit,
+    taskAdd,
+    taskDelete,
+    taskDetails,
+    boardEdit,
+    boardDelete,
+    boardAdd,
+  } = useTaskContent();
 
   return (
     <Modal>
@@ -19,6 +27,7 @@ export default function ModalWrapper() {
       {taskAdd && <AddTask />}
       {boardEdit && <EditBoard />}
       {boardDelete && <DeleteBoard />}
+      {boardAdd && <AddBoard />}
     </Modal>
   );
 }

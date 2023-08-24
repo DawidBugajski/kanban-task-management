@@ -30,7 +30,9 @@ export default function BoardForm({ context }: BoardForm) {
     title: false,
     columns: Array(columns.length).fill(false),
   });
-  const { title, handleTitleChange } = useBoardTitle(activeBoard?.name || '');
+  const { title, handleTitleChange } = useBoardTitle(
+    context === 'Add Board' ? '' : activeBoard?.name || ''
+  );
 
   const {
     localColumns,
@@ -38,7 +40,7 @@ export default function BoardForm({ context }: BoardForm) {
     handleDeleteColumn,
     handleColumnNameChange,
     lastInputRef,
-  } = useBoardColumns(columns);
+  } = useBoardColumns(context === 'Add Board' ? [] : columns);
 
   const handleSaveChanges = () => {
     if (!validateChanges(title, localColumns)) return;
@@ -72,7 +74,7 @@ export default function BoardForm({ context }: BoardForm) {
   return (
     <div className='relative flex flex-col h-auto gap-6 p-6 md:p-8'>
       <h2 className='text-heading-l font-heading'>
-        {context === 'Edit Board' ? 'Edit Board' : 'Add board'}
+        {context === 'Edit Board' ? 'Edit Board' : 'Add New Board'}
       </h2>
       <div className='flex flex-col gap-2'>
         <p className='text-body-m text-medium-grey font-body-m'>Board name</p>
@@ -86,7 +88,7 @@ export default function BoardForm({ context }: BoardForm) {
           type='text'
           onChange={(e) => handleTitleChange(e.target.value)}
           placeholder={
-            validationErrors.title ? "Can't be empty!" : 'Enter Board'
+            validationErrors.title ? "Can't be empty!" : 'e.g. Backend Tasks'
           }
         />
       </div>
@@ -111,7 +113,7 @@ export default function BoardForm({ context }: BoardForm) {
             />
             <Button
               onClick={() => handleDeleteColumn(column.id)}
-              className='ml-auto shrink-0'
+              className='mx-auto shrink-0'
             >
               <Image
                 src={ICON_CROSS_SVG}
@@ -127,7 +129,7 @@ export default function BoardForm({ context }: BoardForm) {
         onClick={handleAddColumn}
         className='transition-colors duration-100 hover:bg-[#d8d7f1] text-body-l font-bold bg-[#f0effa] py-2 text-center text-purple rounded-[20px] grow'
       >
-        +Add New Subtask
+        +Add New Column
       </Button>
       <Button
         onClick={handleSaveChanges}

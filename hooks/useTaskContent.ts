@@ -6,6 +6,7 @@ import {
   isDetailsTaskView,
   isEditBoardView,
   isDeleteBoardView,
+  isAddBoardView,
 } from '@/redux/slices/modalSlice';
 
 export function useTaskContent() {
@@ -15,6 +16,15 @@ export function useTaskContent() {
   const taskDetails = useAppSelector(isDetailsTaskView);
   const boardEdit = useAppSelector(isEditBoardView);
   const boardDelete = useAppSelector(isDeleteBoardView);
+  const boardAdd = useAppSelector(isAddBoardView);
 
-  return { taskEdit, taskAdd, taskDelete, taskDetails, boardEdit, boardDelete };
+  return {
+    taskEdit,
+    taskAdd,
+    taskDelete,
+    taskDetails,
+    boardEdit,
+    boardDelete,
+    boardAdd,
+  };
 }
