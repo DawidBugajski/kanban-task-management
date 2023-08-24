@@ -336,10 +336,9 @@ export const {
   addBoard,
 } = boardsSlice.actions;
 export const getBoards = (state: RootState): Board[] => state.boards.boards;
-export const getActiveBoard = (state: RootState): Board | null =>
-  state.boards.boards.find(
-    (board) => board.id === state.boards.activeBoardId
-  ) || null;
+export const getActiveBoard = (state: RootState): Board =>
+  state.boards.boards.find((board) => board.id === state.boards.activeBoardId)!;
+// "!" - the expression before it will never be null or undefined - here always some board must be active
 export const getActiveTask = (state: RootState): Task | null => {
   const activeBoard = state.boards.boards.find(
     (board) => board.id === state.boards.activeBoardId
