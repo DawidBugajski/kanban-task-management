@@ -3,6 +3,7 @@ import { RootState } from '../store';
 import { Board, Column, Data, Subtask, Task } from '@/types';
 import { STARTING_DATA } from '@/constans';
 import { findActiveBoard, findTaskById } from '@/utils/helpers/reduxHelpers';
+import { v4 as uuidv4 } from 'uuid';
 
 let savedState;
 
@@ -181,7 +182,7 @@ export const boardsSlice = createSlice({
           if (state.boards.length > 0) {
             state.activeBoardId = state.boards[0].id;
           } else {
-            state.activeBoardId = null;
+            state.activeBoardId = uuidv4();
           }
         } else {
           state.boards.splice(boardIndex, 1);
