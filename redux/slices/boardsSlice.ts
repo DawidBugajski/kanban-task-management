@@ -308,6 +308,7 @@ export const boardsSlice = createSlice({
     },
     addBoard: (state, action: PayloadAction<Board>) => {
       state.boards.push(action.payload);
+      state.activeBoardId = action.payload.id;
     },
   },
 });

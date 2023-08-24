@@ -33,11 +33,11 @@ export default function BoardForm({ context }: BoardForm) {
     title: false,
     columns: Array(columns.length).fill(false),
   });
-  const CreateNewBoardDefaultColumn: Column[] = [
-    { id: uuidv4(), name: 'Todo', tasks: [] as Task[] },
-    { id: uuidv4(), name: 'Doing', tasks: [] as Task[] },
-    { id: uuidv4(), name: 'Done', tasks: [] as Task[] },
-  ];
+  // const CreateNewBoardDefaultColumn: Column[] = [
+  //   { id: uuidv4(), name: 'Todo', tasks: [] as Task[] },
+  //   { id: uuidv4(), name: 'Doing', tasks: [] as Task[] },
+  //   { id: uuidv4(), name: 'Done', tasks: [] as Task[] },
+  // ];
   const { title, handleTitleChange } = useBoardTitle(
     context === 'Add Board' ? '' : activeBoard?.name || ''
   );
@@ -48,9 +48,7 @@ export default function BoardForm({ context }: BoardForm) {
     handleDeleteColumn,
     handleColumnNameChange,
     lastInputRef,
-  } = useBoardColumns(
-    context === 'Add Board' ? CreateNewBoardDefaultColumn : columns
-  );
+  } = useBoardColumns(context === 'Add Board' ? [] : columns);
 
   const handleSaveChanges = () => {
     if (!validateChanges(title, localColumns)) return;
