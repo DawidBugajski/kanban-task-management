@@ -20,8 +20,8 @@ interface PopoverItemProps {
 export default function PopoverItem({ context }: PopoverItemProps) {
   const dispatch = useAppDispatch();
   const boards = useAppSelector(getBoards);
-  const canDeleteBoard = boards.length > 1;
-
+  const canDeleteBoard = context === 'Board' && boards.length > 1;
+  console.log(canDeleteBoard);
   const handleSetEdit = () => {
     if (context === 'Task') {
       dispatch(setView(ModalContent.TASK_EDIT));
@@ -63,10 +63,10 @@ export default function PopoverItem({ context }: PopoverItemProps) {
         >
           Edit {context}
         </p>
-        {canDeleteBoard && (
+        {(context === 'Task' || canDeleteBoard) && (
           <p
             onClick={handleSetDelete}
-            className='cursor-pointer text-red hover:underline'
+            className='mt-4 cursor-pointer text-red hover:underline'
           >
             Delete {context}
           </p>
