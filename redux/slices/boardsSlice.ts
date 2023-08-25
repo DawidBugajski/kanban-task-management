@@ -3,7 +3,6 @@ import { RootState } from '../store';
 import { Board, Column, Data, Subtask, Task } from '@/types';
 import { STARTING_DATA } from '@/constans';
 import { findActiveBoard, findTaskById } from '@/utils/helpers/reduxHelpers';
-import { v4 as uuidv4 } from 'uuid';
 
 let savedState;
 
