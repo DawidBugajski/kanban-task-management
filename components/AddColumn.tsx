@@ -10,7 +10,7 @@ export default function AddColumn() {
   const handleAddColumn = () => {
     const localColumn = {
       id: uuidv4(),
-      name: 'Default Title',
+      name: 'New column',
       tasks: [] as Task[],
     };
 

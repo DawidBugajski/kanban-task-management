@@ -95,7 +95,7 @@ function AddNewTask({ isMobileOrDesktop }: AddNewTaskProps) {
   };
   return (
     <Button
-      title={isMobileOrDesktop ? '+ Add new task' : undefined}
+      title={isMobileOrDesktop ? '+ Add New Task' : undefined}
       onClick={handleAddNewTask}
       className='flex items-center justify-center md:w-[164px] md:h-12 w-12 h-8 leading-none text-white transition-colors duration-100 rounded-full md:text-heading-m font-heading bg-purple hover:bg-purple-hover md:rounded-3xl'
     >

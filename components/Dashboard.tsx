@@ -15,7 +15,6 @@ import ModalWrapper from './ModalWrapper';
 export default function Dashboard() {
   const dispatch = useAppDispatch();
   const activeBoard = useAppSelector(getActiveBoard);
-  const boards = useAppSelector(getBoards);
   const isModalOpen = useAppSelector(isOpenModal);
   const dotsColors = ['bg-sky-400', 'bg-violet-500', 'bg-emerald-300'];
 
