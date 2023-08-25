@@ -13,9 +13,10 @@ export default function Button({
   className,
   onClick,
   children,
+  disabled,
 }: ButtonProps) {
   return (
-    <button onClick={onClick} className={className}>
+    <button onClick={onClick} className={className} disabled={disabled}>
       {title && <span>{title}</span>}
       {children}
     </button>

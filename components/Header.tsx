@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAppSelector } from '@/redux/hooks';
-import { getActiveBoard } from '@/redux/slices/boardsSlice';
+import { getActiveBoard, getBoards } from '@/redux/slices/boardsSlice';
 import LogoMobile from './LogoMobile';
 import Button from './shared/Button';
 import Image from 'next/image';
@@ -89,6 +89,8 @@ interface AddNewTaskProps {
 
 function AddNewTask({ isMobileOrDesktop }: AddNewTaskProps) {
   const dispatch = useAppDispatch();
+  const activeBoard = useAppSelector(getActiveBoard);
+  const disableButton = activeBoard.columns.length < 1;
   const handleAddNewTask = () => {
     dispatch(openModal());
     dispatch(setView(ModalContent.TASK_ADD));
@@ -97,7 +99,8 @@ function AddNewTask({ isMobileOrDesktop }: AddNewTaskProps) {
     <Button
       title={isMobileOrDesktop ? '+ Add New Task' : undefined}
       onClick={handleAddNewTask}
-      className='flex items-center justify-center md:w-[164px] md:h-12 w-12 h-8 leading-none text-white transition-colors duration-100 rounded-full md:text-heading-m font-heading bg-purple hover:bg-purple-hover md:rounded-3xl'
+      disabled={disableButton}
+      className='disabled:bg-[#d7d7f1] disabled:cursor-not-allowed flex items-center justify-center md:w-[164px] md:h-12 w-12 h-8 leading-none text-white transition-colors duration-100 rounded-full md:text-heading-m font-heading bg-purple hover:bg-purple-hover md:rounded-3xl'
     >
       {!isMobileOrDesktop && (
         <Image
