@@ -21,7 +21,6 @@ export default function PopoverItem({ context }: PopoverItemProps) {
   const dispatch = useAppDispatch();
   const boards = useAppSelector(getBoards);
   const canDeleteBoard = context === 'Board' && boards.length > 1;
-  console.log(canDeleteBoard);
   const handleSetEdit = () => {
     if (context === 'Task') {
       dispatch(setView(ModalContent.TASK_EDIT));
