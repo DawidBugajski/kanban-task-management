@@ -3,7 +3,6 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { DropResult } from 'react-beautiful-dnd';
 import {
   getActiveBoard,
-  getBoards,
   moveTask,
   setActiveColumn,
 } from '@/redux/slices/boardsSlice';
@@ -22,7 +21,12 @@ export default function Dashboard() {
   const dispatch = useAppDispatch();
   const activeBoard = useAppSelector(getActiveBoard);
   const isModalOpen = useAppSelector(isOpenModal);
-  const dotsColors = ['bg-sky-400', 'bg-violet-500', 'bg-emerald-300'];
+  const dotsColors = [
+    'bg-[#38bdf8]',
+    'bg-[#8b5cf6]',
+    'bg-[#6ee7b7]',
+    'bg-[#facc15]',
+  ];
 
   const handleSetActiveColumn = (columnId: string) => {
     const column = activeBoard.columns.find((col) => col.id === columnId);
@@ -53,7 +57,7 @@ export default function Dashboard() {
       <div className='flex flex-col flex-grow p-6 text-black dark:text-white bg-lightbg-light-grey dark:bg-darkbg-very-dark-grey min-w-max'>
         {activeBoard.columns.length > 0 ? (
           <div className='flex flex-grow gap-6'>
-            {activeBoard.columns.map(({ id, name, tasks }, index) => (
+            {activeBoard.columns.map(({ id, name, tasks, color }, index) => (
               <Droppable droppableId={id} key={id}>
                 {(provided) => (
                   <div
@@ -63,10 +67,13 @@ export default function Dashboard() {
                   >
                     <div className='flex gap-3'>
                       <span
+                        style={{
+                          backgroundColor: color
+                            .replace('bg-[', '')
+                            .replace(']', ''),
+                        }}
                         onClick={() => handleSetActiveColumn(id)}
-                        className={`block w-[15px] h-[15px] rounded-full ${
-                          dotsColors[index % dotsColors.length]
-                        }`}
+                        className='block w-[15px] h-[15px] rounded-full'
                       />
                       <h2 className='mb-6 uppercase text-heading-s font-heading tracking-heading-s text-medium-grey'>
                         {name} ({tasks.length})

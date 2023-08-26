@@ -306,6 +306,7 @@ export const boardsSlice = createSlice({
     },
     addColumn: (state, action: PayloadAction<{ column: Column }>) => {
       const { column } = action.payload;
+      column.color = column.color || 'bg-[#FACC15]';
 
       const activeBoard = findActiveBoard(state);
       if (!activeBoard) return;
