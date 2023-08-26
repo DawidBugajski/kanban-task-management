@@ -306,14 +306,14 @@ export const boardsSlice = createSlice({
     },
     addColumn: (state, action: PayloadAction<{ column: Column }>) => {
       const { column } = action.payload;
-      column.color = column.color || 'bg-[#FACC15]';
+      column.color = column.color || COLOR_MAP.yellow;
 
       const activeBoard = findActiveBoard(state);
       if (!activeBoard) return;
 
       activeBoard.columns.push(column);
     },
-    addBoard2: (state, action: PayloadAction<Board>) => {
+    addBoard: (state, action: PayloadAction<Board>) => {
       const defaultColors = Object.values(COLOR_MAP).slice(0, 3);
       console.log(defaultColors);
 
@@ -328,20 +328,7 @@ export const boardsSlice = createSlice({
       state.boards.push(action.payload);
       state.activeBoardId = action.payload.id;
     },
-    addBoard: (state, action: PayloadAction<Board>) => {
-      const defaultColors = ['bg-[#38BDF8]', 'bg-[#8B5CF6]', 'bg-[#6EE7B7]'];
 
-      action.payload.columns.forEach((column, index) => {
-        if (index < defaultColors.length) {
-          column.color = defaultColors[index];
-        } else {
-          column.color = 'bg-[#FACC15]';
-        }
-      });
-
-      state.boards.push(action.payload);
-      state.activeBoardId = action.payload.id;
-    },
     updateDotColorColumn: (
       state,
       action: PayloadAction<{ columnId: string; color: string }>
@@ -380,6 +367,7 @@ export const {
   addTask,
   addColumn,
   addBoard,
+  updateDotColorColumn,
 } = boardsSlice.actions;
 export const getBoards = (state: RootState): Board[] => state.boards.boards;
 export const getActiveBoard = (state: RootState): Board =>
