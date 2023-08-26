@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import Button from '../shared/Button';
 import { ICON_CROSS_SVG } from '@/constans';
@@ -41,7 +41,6 @@ export default function BoardForm({ context }: BoardForm) {
   const { title, handleTitleChange } = useBoardTitle(
     context === 'Add Board' ? '' : activeBoard?.name || ''
   );
-
   const {
     localColumns,
     handleAddColumn,
@@ -51,6 +50,13 @@ export default function BoardForm({ context }: BoardForm) {
   } = useBoardColumns(
     context === 'Add Board' ? CreateNewBoardDefaultColumn : columns
   );
+
+  //? prevent first input for auto focus - dunno why this bug is happening
+  const dummyRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    dummyRef.current && dummyRef.current.focus();
+  }, []);
 
   const handleSaveChanges = () => {
     if (!validateChanges(title, localColumns)) return;
@@ -106,6 +112,7 @@ export default function BoardForm({ context }: BoardForm) {
 
   return (
     <div className='relative flex flex-col h-auto gap-6 p-6 md:p-8'>
+      <div className='absolute -top-full' tabIndex={-1} ref={dummyRef}></div>
       <h2 className='text-heading-l font-heading'>
         {context === 'Edit Board' ? 'Edit Board' : 'Add New Board'}
       </h2>

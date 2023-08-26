@@ -40,13 +40,14 @@ export default function Dropdown({
   );
 
   const handleMoveTaskToColumn = (newColumnId: string) => {
-    if (isEditMode && !activeTask) return;
+    if (isEditMode && !activeTask) {
+      return;
+    }
 
     if (changeOnSave) {
       setTempColumn(newColumnId);
       if (onValueChange) onValueChange(newColumnId);
     } else {
-      // changeOnSave === false
       dispatch(
         moveTaskToColumn({
           taskId: activeTask!.id, // "! => inform TypeScript that there is no null here, if you are absolutely sure that null is not possible."
