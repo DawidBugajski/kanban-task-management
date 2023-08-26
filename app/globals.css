@@ -26,6 +26,12 @@
   animation-delay: 0.4s;
 }
 
+.react-colorful {
+  margin: 0 auto !important;
+  width: 80% !important;
+  height: 400px !important;
+}
+
 @media (min-width: 768px) {
   ::-webkit-scrollbar {
     width: 10px;

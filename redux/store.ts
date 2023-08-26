@@ -11,7 +11,8 @@ export const store = configureStore({
 
 // When the state changes, save it to localStorage.
 store.subscribe(() => {
-  const { activeTask, ...stateWithoutActiveTask } = store.getState().boards; // remove activeTask from storage
+  const { activeTask, activeColumn, ...stateWithoutActiveTask } =
+    store.getState().boards; // remove activeTask from storage
   localStorage.setItem('state', JSON.stringify(stateWithoutActiveTask));
 });
 

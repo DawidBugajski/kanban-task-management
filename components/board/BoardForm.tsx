@@ -34,9 +34,14 @@ export default function BoardForm({ context }: BoardForm) {
     columns: Array(columns.length).fill(false),
   });
   const CreateNewBoardDefaultColumn: Column[] = [
-    { id: uuidv4(), name: 'Todo', tasks: [] as Task[] },
-    { id: uuidv4(), name: 'Doing', tasks: [] as Task[] },
-    { id: uuidv4(), name: 'Done', tasks: [] as Task[] },
+    { id: uuidv4(), name: 'Todo', tasks: [] as Task[], color: '' },
+    {
+      id: uuidv4(),
+      name: 'Doing',
+      tasks: [] as Task[],
+      color: '',
+    },
+    { id: uuidv4(), name: 'Done', tasks: [] as Task[], color: '' },
   ];
   const { title, handleTitleChange } = useBoardTitle(
     context === 'Add Board' ? '' : activeBoard?.name || ''

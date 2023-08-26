@@ -11,6 +11,7 @@ export enum ModalContent {
   BOARD_EDIT = 'board_edit',
   BOARD_DELETE = 'board_delete',
   BOARD_ADD = 'board_add',
+  COLUMN_COLOR = 'column_color',
 }
 
 interface ModalState {
@@ -61,6 +62,8 @@ export const isDeleteBoardView = (state: RootState): boolean =>
   state.modal.contentInsideModal === ModalContent.BOARD_DELETE;
 export const isAddBoardView = (state: RootState): boolean =>
   state.modal.contentInsideModal === ModalContent.BOARD_ADD;
+export const isColumnColorView = (state: RootState): boolean =>
+  state.modal.contentInsideModal === ModalContent.COLUMN_COLOR;
 export const currentModalContent = (state: RootState): ModalContent =>
   state.modal.contentInsideModal;
 

@@ -7,6 +7,7 @@ import AddTask from './Task/AddTask';
 import EditBoard from './board/EditBoard';
 import DeleteBoard from './board/DeleteBoard';
 import AddBoard from './board/AddBoard';
+import ColorPicker from './shared/ColorPicker';
 
 export default function ModalWrapper() {
   const {
@@ -17,6 +18,7 @@ export default function ModalWrapper() {
     boardEdit,
     boardDelete,
     boardAdd,
+    columnDotColor,
   } = useTaskContent();
 
   return (
@@ -28,6 +30,7 @@ export default function ModalWrapper() {
       {boardEdit && <EditBoard />}
       {boardDelete && <DeleteBoard />}
       {boardAdd && <AddBoard />}
+      {columnDotColor && <ColorPicker />}
     </Modal>
   );
 }

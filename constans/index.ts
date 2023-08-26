@@ -21,6 +21,7 @@ export const STARTING_DATA = {
         {
           name: 'Todo',
           id: uuidv4(),
+          color: 'bg-[#38bdf8]',
           tasks: [
             {
               title: 'Build a kanban task management application',
@@ -162,6 +163,7 @@ export const STARTING_DATA = {
         },
         {
           name: 'Doing',
+          color: 'bg-[#8b5cf6]',
           id: uuidv4(),
           tasks: [
             {
@@ -299,6 +301,7 @@ export const STARTING_DATA = {
         },
         {
           name: 'Done',
+          color: 'bg-[#6ee7b7]',
           id: uuidv4(),
           tasks: [
             {
@@ -435,6 +438,7 @@ export const STARTING_DATA = {
         {
           name: 'Todo',
           id: uuidv4(),
+          color: 'bg-[#38bdf8]',
           tasks: [
             {
               title: 'Plan Product Hunt launch',
@@ -529,11 +533,13 @@ export const STARTING_DATA = {
         },
         {
           name: 'Doing',
+          color: 'bg-[#8b5cf6]',
           id: uuidv4(),
           tasks: [],
         },
         {
           name: 'Done',
+          color: 'bg-[#6ee7b7]',
           id: uuidv4(),
           tasks: [],
         },
@@ -545,6 +551,7 @@ export const STARTING_DATA = {
       columns: [
         {
           name: 'Now',
+          color: 'bg-[#38bdf8]',
           id: uuidv4(),
           tasks: [
             {
@@ -593,11 +600,13 @@ export const STARTING_DATA = {
         },
         {
           name: 'Next',
+          color: 'bg-[#8b5cf6]',
           id: uuidv4(),
           tasks: [],
         },
         {
           name: 'Later',
+          color: 'bg-[#6ee7b7]',
           id: uuidv4(),
           tasks: [],
         },

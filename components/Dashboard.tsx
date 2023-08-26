@@ -5,11 +5,17 @@ import {
   getActiveBoard,
   getBoards,
   moveTask,
+  setActiveColumn,
 } from '@/redux/slices/boardsSlice';
 import NewEmptyBoard from './board/NewEmptyBoard';
 import AddColumn from './AddColumn';
 import TaskCard from './Task/TaskCard';
-import { isOpenModal } from '@/redux/slices/modalSlice';
+import {
+  ModalContent,
+  isOpenModal,
+  openModal,
+  setView,
+} from '@/redux/slices/modalSlice';
 import ModalWrapper from './ModalWrapper';
 
 export default function Dashboard() {
@@ -17,6 +23,15 @@ export default function Dashboard() {
   const activeBoard = useAppSelector(getActiveBoard);
   const isModalOpen = useAppSelector(isOpenModal);
   const dotsColors = ['bg-sky-400', 'bg-violet-500', 'bg-emerald-300'];
+
+  const handleSetActiveColumn = (columnId: string) => {
+    const column = activeBoard.columns.find((col) => col.id === columnId);
+    if (column) {
+      dispatch(setActiveColumn(column));
+      dispatch(setView(ModalContent.COLUMN_COLOR));
+      dispatch(openModal());
+    }
+  };
 
   const handleOnDragEnd = (result: DropResult) => {
     const { source, destination } = result;
@@ -48,6 +63,7 @@ export default function Dashboard() {
                   >
                     <div className='flex gap-3'>
                       <span
+                        onClick={() => handleSetActiveColumn(id)}
                         className={`block w-[15px] h-[15px] rounded-full ${
                           dotsColors[index % dotsColors.length]
                         }`}

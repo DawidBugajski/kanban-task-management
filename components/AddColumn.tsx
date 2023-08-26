@@ -12,6 +12,7 @@ export default function AddColumn() {
       id: uuidv4(),
       name: 'New column',
       tasks: [] as Task[],
+      color: '',
     };
 
     dispatch(addColumn({ column: localColumn }));

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import { Board, Column, Data, Subtask, Task } from '@/types';
+import { Board, Column, Data, Subtask, Task, COLOR_MAP } from '@/types';
 import { STARTING_DATA } from '@/constans';
 import { findActiveBoard, findTaskById } from '@/utils/helpers/reduxHelpers';
 
@@ -16,6 +16,7 @@ const initialState: Data = savedState
       ...STARTING_DATA,
       activeBoardId: STARTING_DATA.boards[0].id,
       activeTask: null,
+      activeColumn: null,
     };
 
 export const boardsSlice = createSlice({
@@ -30,6 +31,12 @@ export const boardsSlice = createSlice({
     },
     resetActiveTask: (state) => {
       state.activeTask = null;
+    },
+    setActiveColumn: (state, action: PayloadAction<Column>) => {
+      state.activeColumn = action.payload;
+    },
+    resetActiveColumn: (state) => {
+      state.activeColumn = null;
     },
     moveTask: (
       state,
@@ -305,15 +312,55 @@ export const boardsSlice = createSlice({
 
       activeBoard.columns.push(column);
     },
-    addBoard: (state, action: PayloadAction<Board>) => {
+    addBoard2: (state, action: PayloadAction<Board>) => {
+      const defaultColors = Object.values(COLOR_MAP).slice(0, 3);
+      console.log(defaultColors);
+
+      action.payload.columns.forEach((column, index) => {
+        if (index < defaultColors.length) {
+          column.color = defaultColors[index];
+        } else {
+          column.color = COLOR_MAP.yellow;
+        }
+      });
+
       state.boards.push(action.payload);
       state.activeBoardId = action.payload.id;
+    },
+    addBoard: (state, action: PayloadAction<Board>) => {
+      const defaultColors = ['bg-[#38BDF8]', 'bg-[#8B5CF6]', 'bg-[#6EE7B7]'];
+
+      action.payload.columns.forEach((column, index) => {
+        if (index < defaultColors.length) {
+          column.color = defaultColors[index];
+        } else {
+          column.color = 'bg-[#FACC15]';
+        }
+      });
+
+      state.boards.push(action.payload);
+      state.activeBoardId = action.payload.id;
+    },
+    updateDotColorColumn: (
+      state,
+      action: PayloadAction<{ columnId: string; color: string }>
+    ) => {
+      const { columnId, color } = action.payload;
+      const activeBoard = findActiveBoard(state);
+      if (!activeBoard) return;
+
+      const column = activeBoard.columns.find(
+        (column) => column.id === columnId
+      );
+      if (column) column.color = color;
     },
   },
 });
 
 export const {
   setActiveBoard,
+  setActiveColumn,
+  resetActiveColumn,
   moveTask,
   setActiveTask,
   resetActiveTask,
@@ -348,6 +395,17 @@ export const getActiveTask = (state: RootState): Task | null => {
         .find((task) => task.id === state.boards.activeTask?.id) || null
     : null;
   // Prevent tasks to flip to other boards when refreshing the page
+};
+export const getActiveColumn = (state: RootState): Column | null => {
+  const activeBoard = state.boards.boards.find(
+    (board) => board.id === state.boards.activeBoardId
+  );
+
+  return activeBoard
+    ? activeBoard.columns.find(
+        (column) => column.id === state.boards.activeColumn?.id
+      ) || null
+    : null;
 };
 
 export default boardsSlice.reducer;

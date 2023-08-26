@@ -7,6 +7,7 @@ import {
   isEditBoardView,
   isDeleteBoardView,
   isAddBoardView,
+  isColumnColorView,
 } from '@/redux/slices/modalSlice';
 
 export function useTaskContent() {
@@ -17,6 +18,7 @@ export function useTaskContent() {
   const boardEdit = useAppSelector(isEditBoardView);
   const boardDelete = useAppSelector(isDeleteBoardView);
   const boardAdd = useAppSelector(isAddBoardView);
+  const columnDotColor = useAppSelector(isColumnColorView);
 
   return {
     taskEdit,
@@ -26,5 +28,6 @@ export function useTaskContent() {
     boardEdit,
     boardDelete,
     boardAdd,
+    columnDotColor,
   };
 }
