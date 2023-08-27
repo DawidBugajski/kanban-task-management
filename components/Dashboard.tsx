@@ -73,9 +73,9 @@ export default function Dashboard() {
                             .replace(']', ''),
                         }}
                         onClick={() => handleSetActiveColumn(id)}
-                        className='block w-[15px] h-[15px] rounded-full cursor-pointer'
+                        className='block w-[15px] h-[15px] rounded-full cursor-pointer shrink-0'
                       />
-                      <h2 className='mb-6 uppercase text-heading-s font-heading tracking-heading-s text-medium-grey'>
+                      <h2 className='mb-6 uppercase truncate text-heading-s font-heading tracking-heading-s text-medium-grey'>
                         {name} ({tasks.length})
                       </h2>
                     </div>

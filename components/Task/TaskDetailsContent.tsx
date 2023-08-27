@@ -36,7 +36,7 @@ export function TaskDetailsContent() {
   };
 
   return (
-    <div className='relative flex flex-col h-auto p-6 md:p-8'>
+    <div className='relative flex flex-col h-auto p-6 overflow-hidden md:p-8'>
       {title && (
         <div className='flex items-center mb-6 md:justify-between'>
           <p className='w-11/12 text-heading-l font-heading'>{title}</p>
