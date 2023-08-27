@@ -28,9 +28,9 @@ export default function Header() {
     <>
       <div className='flex-none w-full border-b-[1px] border-b-light-lines dark:border-b-dark-lines flex items-center justify-start h-16 text-center md:h-24 dark:bg-dark-grey'>
         {mobileUser && <LogoMobileWrapper />}
-        <div className='relative flex items-center justify-between flex-grow gap-5 px-4 lg:px-8'>
-          <div className='flex items-center gap-2'>
-            <h1 className='text-black text-heading-l md:text-xl xl:text-heading-xl dark:text-white font-heading'>
+        <div className='relative flex items-center justify-between flex-grow gap-5 px-4 overflow-hidden lg:px-8'>
+          <div className='flex items-center gap-2 overflow-hidden'>
+            <h1 className='text-black truncate text-heading-l md:text-xl xl:text-heading-xl dark:text-white font-heading'>
               {activeBoard.name}
             </h1>
             {mobileUser && (
@@ -57,7 +57,7 @@ interface ToggleSidebarProps {
 
 function LogoMobileWrapper() {
   return (
-    <div className='flex items-center h-full md:w-[200px] xl:w-[300px] md:border-r-[1px] border-r-light-lines dark:border-dark-lines'>
+    <div className='flex items-center h-full md:w-[200px] xl:w-[300px] md:border-r-[1px] border-r-light-lines dark:border-dark-lines shrink-0'>
       <LogoMobile />
     </div>
   );
