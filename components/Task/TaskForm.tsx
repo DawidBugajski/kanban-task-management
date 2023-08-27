@@ -128,7 +128,7 @@ export const TaskForm = ({ context }: FormProps) => {
   };
 
   return (
-    <div className='relative flex flex-col h-auto gap-6 p-6 md:p-8'>
+    <div className='relative flex flex-col h-auto gap-6 p-6 overflow-hidden md:p-8'>
       <h2 className='text-heading-l font-heading'>
         {context === 'Edit Task' ? 'Edit Task' : 'Add Task'}
       </h2>
