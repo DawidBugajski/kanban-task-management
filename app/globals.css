@@ -28,8 +28,8 @@
 
 .react-colorful {
   width: 100% !important;
-  padding: 20px !important;
-  height: 400px !important;
+  padding: 16px !important;
+  height: 100% !important;
 }
 
 .react-colorful__saturation {

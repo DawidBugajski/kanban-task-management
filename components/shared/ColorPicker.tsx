@@ -7,6 +7,7 @@ import {
 import { ModalContent, setView } from '@/redux/slices/modalSlice';
 import React, { useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
+import Button from './Button';
 
 export default function ColorPicker() {
   const dispatch = useAppDispatch();
@@ -31,14 +32,14 @@ export default function ColorPicker() {
   };
 
   return (
-    <div className='flex flex-col items-center'>
-      <HexColorPicker color={color} onChange={setColor} />
-      <button
+    <div className='flex flex-col items-center min-h-[500px]'>
+      <HexColorPicker className='' color={color} onChange={setColor} />
+      <Button
         onClick={handleSaveChanges}
-        className='w-1/3 p-2 mb-2 rounded-lg bg-purple'
+        className='transition-colors duration-100 hover:bg-purple-hover text-body-l font-bold bg-purple py-2 text-center text-white rounded-[20px] w-1/2 mx-auto mb-2'
       >
         Save
-      </button>
+      </Button>
     </div>
   );
 }
