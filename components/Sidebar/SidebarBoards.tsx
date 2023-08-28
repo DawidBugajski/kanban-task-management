@@ -63,7 +63,7 @@ const BoardItem = ({ board }: { board: Board }) => {
     >
       <div className='flex items-center w-full gap-4 overflow-hidden ml-9'>
         <svg
-          className='shrink-0 min-w-16 min-h-16'
+          className='shrink-0 min-w-[16px] min-h-[16px]'
           width='16'
           height='16'
           xmlns='http://www.w3.org/2000/svg'

@@ -122,7 +122,7 @@ function MobileSidebar({ toggleSidebar }: ToggleSidebarProps) {
       onClick={toggleSidebar}
       className='absolute top-0 left-0 z-20 w-full h-full bg-bg-modal'
     >
-      <div className='w-[16.5rem] left-1/2 transform -translate-x-1/2 h-auto border-r-0 rounded-md border-b-0 top-[5rem] shadow-md bg-white absolute dark:bg-dark-grey'>
+      <div className='overflow-auto max-h-[80vh] w-[16.5rem] left-1/2 transform -translate-x-1/2 h-auto border-r-0 rounded-md border-b-0 top-[5rem] shadow-md bg-white absolute dark:bg-dark-grey'>
         <SidebarBoards />
         <div onClick={innerClick} className='py-4'>
           <SidebarThemeToggle />
