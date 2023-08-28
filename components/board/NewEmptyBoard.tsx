@@ -14,6 +14,7 @@ export default function NewEmptyBoard() {
       name: 'New Column',
       id: uuidv4(),
       tasks: [] as Task[],
+      color: '',
     };
     dispatch(addColumn({ column: newColumn }));
     handleCloseModal();
