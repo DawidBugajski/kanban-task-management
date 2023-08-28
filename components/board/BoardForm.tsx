@@ -116,7 +116,7 @@ export default function BoardForm({ context }: BoardForm) {
   };
 
   return (
-    <div className='relative flex flex-col h-auto gap-6 p-6 md:p-8'>
+    <div className='relative flex flex-col h-auto gap-6 p-6 overflow-hidden md:p-8'>
       <div className='absolute -top-full' tabIndex={-1} ref={dummyRef}></div>
       <h2 className='text-heading-l font-heading'>
         {context === 'Edit Board' ? 'Edit Board' : 'Add New Board'}

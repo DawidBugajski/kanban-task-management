@@ -53,7 +53,7 @@ const SelectContent = React.forwardRef<
         className={cn(
           'p-1',
           position === 'popper' &&
-            'h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]'
+            'h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)] max-w-[448px] truncate'
         )}
       >
         {children}
@@ -89,7 +89,7 @@ const SelectItem = React.forwardRef<
   >
     <span className='absolute left-2 flex h-3.5 w-3.5 items-center justify-center'>
       <SelectPrimitive.ItemIndicator>
-        <Check className='w-4 h-4' />
+        <Check className='w-4 h-4 shrink-0' />
       </SelectPrimitive.ItemIndicator>
     </span>
 

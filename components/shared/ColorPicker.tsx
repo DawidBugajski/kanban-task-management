@@ -4,6 +4,7 @@ import {
   getActiveColumn,
   updateDotColorColumn,
 } from '@/redux/slices/boardsSlice';
+import { ModalContent, setView } from '@/redux/slices/modalSlice';
 import React, { useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
 
@@ -26,6 +27,7 @@ export default function ColorPicker() {
       })
     );
     dispatch(handleCloseModal);
+    dispatch(setView(ModalContent.NONE));
   };
 
   return (
