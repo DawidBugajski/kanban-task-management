@@ -11,6 +11,7 @@ export function useBoardColumns(initialColumns: Column[]) {
       id: uuidv4(),
       name: '',
       tasks: [],
+      color: '',
     };
     setLocalColumns([...localColumns, newColumn]);
 
